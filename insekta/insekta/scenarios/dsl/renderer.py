@@ -16,11 +16,11 @@ def collect_to_str(fn):
         for token in fn(*args, **kwargs):
             buf.write(token)
         return buf.getvalue()
+
     return functools.update_wrapper(_wrap, fn)
 
 
 class Renderer:
-
     def __init__(self, scenario, user, csrf_token):
         self.scenario = scenario
         self.user = user

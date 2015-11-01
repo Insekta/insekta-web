@@ -120,5 +120,3 @@ task_classes = {
     MultipleChoiceTask.task_type: MultipleChoiceTask,
     QuestionTask.task_type: QuestionTask
 }
-
-

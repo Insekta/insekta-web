@@ -1,10 +1,13 @@
 from django.test import TestCase
+
 from django.contrib.auth import get_user_model
+
 from jinja2 import Environment
 
 from .dsl.taskparser import TaskParser
 from .dsl.renderer import Renderer
 from .models import Scenario
+
 
 template = '''
 {% call task(identifier='hello', type='multiple_choice') %}
@@ -21,6 +24,7 @@ Hello World!
 
 {% endcall %}
 '''
+
 
 class ParserTestCase(TestCase):
     def setUp(self):
@@ -50,6 +54,7 @@ class ParserTestCase(TestCase):
         self.assertEqual(question.answers, ['42'])
         self.assertEqual(question.strip, False)
         self.assertEqual(question.case_sensitive, False)
+
 
 class RendererTestCase(TestCase):
     def setUp(self):

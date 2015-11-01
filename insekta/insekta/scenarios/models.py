@@ -1,7 +1,6 @@
 import json
 import os
 
-from jinja2 import Environment
 from django.db import models
 from django.conf import settings
 
@@ -18,7 +17,7 @@ class Scenario(models.Model):
     challenge = models.BooleanField(default=False)
     num_tasks = models.IntegerField()
     enabled = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return self.title
 

@@ -19,6 +19,7 @@ from django.contrib.auth import views as auth_views
 
 from .base import views as base_views
 
+
 urlpatterns = [
     url(r'^$', base_views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),

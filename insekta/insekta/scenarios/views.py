@@ -5,6 +5,7 @@ from django.middleware.csrf import get_token
 from .dsl.renderer import Renderer
 from .models import Scenario, ScenarioGroup, Task
 
+
 @login_required
 def index(request):
     scenario_groups = ScenarioGroup.objects.filter(
@@ -24,6 +25,7 @@ def index(request):
     return render(request, 'scenarios/index.html', {
         'scenario_groups': scenario_groups
     })
+
 
 @login_required
 def view(request, scenario_key):

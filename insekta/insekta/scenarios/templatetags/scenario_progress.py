@@ -1,7 +1,9 @@
 from django import template
 from django.conf import settings
 
+
 register = template.Library()
+
 
 @register.simple_tag
 def scenario_progress(num_submitted, num_available):
@@ -12,5 +14,6 @@ def scenario_progress(num_submitted, num_available):
 
     num_missing = num_available - num_submitted
     return solved_dot * num_submitted + unsolved_dot * num_missing
+
 
 scenario_progress.is_safe = True
