@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Ethics in computer security' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Ethics in computer security' %}</h2>
+{% blocktrans %}
+<p>
+    We want to defend against attackers, this means we have to know how they
+    think and try to archive their goal. Therefore, to obtain a deep understanding
+    about security issues, Insekta will not only show the perspective of the
+    defender, but also the perspective of the attacker.
+</p>
+
+<p>For this reason we want you to understand the following points:</p>
+<ol>
+    <li>
+        We are not criminals. Attacking others without their consent is not
+        something you should do. Not even for fun.
+    </li>
+    <li>
+        We do not support secret services who do mass surveillance
+        and attack others. Their behavior harms society, independently if it
+        might be legal under some legislation. Do not join their evil forces.
+    </li>
+    <li>
+        We want to make the world a better and more secure place.
+        Understanding security issues and attacks is nothing evil, but a step
+        toward this goal.
+    </li>
+</ol>
+
+<p>And whenever you use a computer, keep the following things in mind:</p>
+<ol>
+    <li>Respect to privacy of others.</li>
+    <li>Think before you type.</li>
+    <li>With great power comes great responsibility.</li>
+</ol>
+{% endblocktrans %}
+
+{% if not user.accepted_ethics %}
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {% if disagreed %}
+    <p class="alert alert-warning">We are serious about the ethical issues. Please think about it.</p>
+    {% endif %}
+    <div class="checkbox{% if disagreed %} has-error{% endif %}">
+        <label>
+            <input type="checkbox" name="accept" value="1">
+            {% trans 'I understand what you want to say and I agree.' %}
+        </label>
+    </div>
+    <p>
+        <button class="btn btn-primary">Let's start</button>
+        <a href="{% url 'ethics:arguments' %}" class="btn btn-default">I have to think about it</a>
+    </p>
+</form>
+{% endif %}
+{% endblock content %}

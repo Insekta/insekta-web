@@ -1,0 +1,47 @@
+{% load staticfiles %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Insekta security teaching platform">
+        <link rel="icon" href="{% static 'favicon.ico' %}">
+
+        <title>{% block title %}{% endblock %} - Insekta</title>
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/insekta.min.css' %}" rel="stylesheet">
+        {% block additional_styles %}{% endblock %}
+    </head>
+
+    <body>
+{% block nav %}
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'index' %}">Insekta</a>
+                </div>
+                <div id="navbar">
+                    <ul class="nav navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'scenarios:index' %}">{% trans 'Scenarios' %}</a></li>
+                        <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                        {% else %}
+                        <li{% if active_nav == 'login' %} class="active"{% endif %}><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+{% endblock nav %}
+{% block precontent %}{% endblock %}
+        <div class="container">
+{% block content %}{% endblock %}
+        </div>
+{% block postcontent %}{% endblock %}
+{% block additional_scripts %}{% endblock %}
+    </body>
+</html>
+

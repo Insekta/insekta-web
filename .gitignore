@@ -1,0 +1,4 @@
+**/__pycache__
+*.min.css
+*.min.js
+insekta/insekta/settings.py

@@ -1,0 +1,7 @@
+.herebedragons {
+    background-image:url('../scenarios/images/herebedragons.png');
+    background-repeat:no-repeat;
+    background-position:left bottom;
+    padding-left:60px;
+    min-height:50px;
+}

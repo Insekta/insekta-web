@@ -1,0 +1,9 @@
+#welcome-header {
+	background:url(../images/background.jpg);
+	color:#fff;
+	padding:10px;
+}
+
+#welcome-header a {
+	color:#a0ebff;
+}

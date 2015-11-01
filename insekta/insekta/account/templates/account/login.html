@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h2>Login</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">{{ form.non_field_errors.0 }}</div>
+    {% endif %}
+    <div class="form-group{% if form.errors.username %} has-error has-feedback{% endif %}">
+        <label for="id_username">{% trans 'Username' %}</label>
+        {% render_field form.username class+="form-control" %}
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+    </div>
+    <div class="form-group{% if form.errors.password %} has-error has-feedback{% endif %}">
+        <label for="id_password">{% trans 'Password' %}</label>
+        {% render_field form.password class+="form-control" %}
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+    </div>
+    <p><button class="btn btn-primary">{% trans 'Sign in' %}</button></p>
+</form>
+
+{% endblock content %}

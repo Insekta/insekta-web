@@ -1,0 +1,12 @@
+Django
+Jinja2
+MarkupSafe
+cffi
+cryptography
+django-widget-tweaks
+idna
+psycopg2
+pyasn1
+pycparser
+requests
+six
