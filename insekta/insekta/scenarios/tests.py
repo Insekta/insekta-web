@@ -1,7 +1,8 @@
+import os
+import tempfile
+
 from django.test import TestCase
-
 from django.contrib.auth import get_user_model
-
 from jinja2 import Environment
 
 from .dsl.taskparser import TaskParser
@@ -9,7 +10,7 @@ from .dsl.renderer import Renderer
 from .models import Scenario
 
 
-template = '''
+TEMPLATE = '''
 {% call task(identifier='hello', type='multiple_choice') %}
 Hello World!
 {% call choice(name='cookies', correct=True) %}I like cookies{% endcall %}
@@ -31,7 +32,7 @@ class ParserTestCase(TestCase):
         self.env = Environment()
 
     def test_question(self):
-        ast = self.env.parse(template)
+        ast = self.env.parse(TEMPLATE)
         p = TaskParser(ast)
         tasks = p.get_tasks()
         self.assertEqual(len(tasks), 2)
@@ -63,6 +64,14 @@ class RendererTestCase(TestCase):
         self.scenario = Scenario.objects.create(key='test', title='Test', num_tasks=2)
 
     def test_renderer(self):
+        with tempfile.TemporaryDirectory() as scenario_dir:
+            os.makedirs(os.path.join(scenario_dir, 'test'))
+            with open(os.path.join(scenario_dir, 'test', 'scenario.html'), 'w') as f:
+                f.write(TEMPLATE)
+            with self.settings(SCENARIO_DIR=scenario_dir):
+                self._run_test_renderer()
+
+    def _run_test_renderer(self):
         renderer = Renderer(self.scenario, self.user, 'somecsrftoken')
         hello = renderer.template_tasks['hello']
         cookies_key = hello.choices['cookies'].get_mac(
