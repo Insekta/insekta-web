@@ -55,10 +55,10 @@ class RendererTestCase(TestCase):
     def setUp(self):
         User = get_user_model()
         self.user = User.objects.create(username='test')
-        self.scenario = Scenario.objects.create(key='test', title='Test', num_secrets=2)
+        self.scenario = Scenario.objects.create(key='test', title='Test', num_tasks=2)
 
     def test_renderer(self):
-        renderer = Renderer(self.scenario, self.user)
+        renderer = Renderer(self.scenario, self.user, 'somecsrftoken')
         hello = renderer.template_tasks['hello']
         cookies_key = hello.choices['cookies'].get_mac(
             self.user, self.scenario, hello.identifier)
