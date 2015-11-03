@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Your certificates' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Your certificates' %}</h2>
+
+{% comment %}FIXME: Change to VPN configuration page{% endcomment %}
+{% url 'pki:index' as vpn_link %}
+{% if has_valid_certificate %}
+<p class="alert alert-info">
+{% blocktrans %}You have a valid certificate. You should now go and <a href="{{ vpn_link }}">configure VPN</a>{% endblocktrans %}.
+</p>
+{% endif %}
+
+{% if certificates %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>{% trans 'Fingerprint (SHA256)' %}</th>
+            <th>{% trans 'Expire date' %}</th>
+            <th>{% trans 'Status' %}</th>
+            <th>{% trans 'Action' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for certificate in certificates %}
+        <tr>
+            <td>{{ certificate.fingerprint }}</td>
+            <td>{{ certificate.expires|date:'SHORT_DATE_FORMAT' }}</td>
+            <td>
+            {% if certificate.is_revoked %}
+            <span class="label label-warning">Revoked</span>
+            {% elif certificate.is_expired %}
+            <span class="label label-warning">Expired</span>
+            {% else %}
+            <span class="label label-success">Valid</span>
+            {% endif %}
+            </td>
+            <td>
+                {% if not certificate.is_revoked %}
+                <form method="post" action="{% url 'pki:revoke_certificate' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="fingerprint" value="{{ certificate.fingerprint }}">
+                    <button class="btn btn-warning">Revoke</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>{% blocktrans %}You don't have any certificates yet. If you want to connect to the VPN you have create one.{%  endblocktrans %}</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'pki:create_certificate' %}" class="btn btn-primary">
+    {% trans 'Create new certificate' %}
+    </a>
+</p>
+{% endblock content %}

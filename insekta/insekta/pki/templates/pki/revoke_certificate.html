@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Revoke certificate' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Revoke certificate' %}</h2>
+<p>
+{% blocktrans with fingerprint=certificate.fingerprint %}
+Do you really want to revoke the certificate with the fingerprint <strong>{{ fingerprint }}</strong>?
+{% endblocktrans %}
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="fingerprint" value="{{ certificate.fingerprint }}">
+    <input type="hidden" name="really" value="1">
+    <p>
+        <button class="btn btn-warning">{% trans 'Yes, revoke it' %}</button>
+        <a class="btn btn-default" href="{% url 'pki:index' %}">{% trans 'No, please not' %}</a>
+    </p>
+</form>
+
+{% endblock content %}

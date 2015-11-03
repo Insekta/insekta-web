@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}{% trans 'Create certificate' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Create certificate' %}</h2>
+{% url 'pki:index' as revoke_link %}
+{% blocktrans %}
+<p>
+    To create a Certificate Signing Request (CSR) you have to create a private
+    key first. You can use the following command to create an RSA private key
+    with a key size of 2048 bit:
+</p>
+<p>
+    <kbd>openssl genrsa -out client.key 2048</kbd>
+</p>
+<p>
+    You should now have a file called "client.key". <strong>Keep this file safe and
+    don't share it with anyone!</strong> Otherwise your account is compromised.
+    If this happens, you should <a href="{{ revoke_link }}">revoke your
+    certificate</a> immediately and create a new private key.
+</p>
+<p>
+    Next step is to create a the CSR itself. A CSR is used to ask a Certificate
+    Authority (CA) to issue a certificate for you. The CSR basically contains
+    the public key counterpart of your private key and some information about
+    you. It is signed with your private key. Since a CSR contains no sensitive
+    information, it is safe to share. In this case you will share it with us
+    (the CA) to get a certificate from us.
+</p>
+<p>
+    You can use the following command to create a CSR. It will ask for some
+    information. You can type anything (or just hit <kbd>enter</kbd>), we will
+    ignore it anyway:
+</p>
+<p>
+    <kbd>openssl req -new -key client.key -out client.csr</kbd>
+</p>
+<p>Congratulation! You should now have a file named "client.csr" containing
+    the CSR. Paste the content of that file into the following text box to
+    obtain your certificate.
+</p>
+{% endblocktrans %}
+
+<form method="post">
+{% csrf_token %}
+{% if error %}<p class="alert alert-danger">{{ error }}</p>{% endif %}
+<div class="form-group">
+    <label for="id_csr_pem">{% trans 'CSR (pem encoded)' %}</label>
+    {% render_field form.csr_pem class+="form-control" %}
+</div>
+<p>
+    <button class="btn btn-primary">{% trans 'Create certificate' %}</button>
+    <a class="btn btn-default" href="{% url 'pki:index' %}">{% trans 'Cancel' %}</a>
+</p>
+</form>
+
+{% endblock content %}

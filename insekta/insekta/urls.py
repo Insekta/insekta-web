@@ -31,4 +31,5 @@ urlpatterns = [
     }),
     url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     url(r'^scenarios/', include('insekta.scenarios.urls', namespace='scenarios')),
+    url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
 ]
