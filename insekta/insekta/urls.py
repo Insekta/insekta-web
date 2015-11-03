@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 
 from .base import views as base_views
 
@@ -23,12 +22,6 @@ from .base import views as base_views
 urlpatterns = [
     url(r'^$', base_views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login$', auth_views.login, name='login', kwargs={
-        'template_name': 'account/login.html'
-    }),
-    url(r'logout$', auth_views.logout, name='logout', kwargs={
-        'next_page': '/'
-    }),
     url(r'^account/', include('insekta.account.urls', namespace='account')),
     url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     url(r'^scenarios/', include('insekta.scenarios.urls', namespace='scenarios')),
