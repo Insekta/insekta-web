@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'logout$', auth_views.logout, name='logout', kwargs={
         'next_page': '/'
     }),
+    url(r'^account/', include('insekta.account.urls', namespace='account')),
     url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     url(r'^scenarios/', include('insekta.scenarios.urls', namespace='scenarios')),
     url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
