@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'insekta.account',
     'insekta.ethics',
     'insekta.scenarios',
+    'insekta.pki',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,4 +116,12 @@ AUTH_USER_MODEL = 'account.User'
 
 LOGIN_REDIRECT_URL = '/'
 
-SCENARIO_DIR = os.path.join(BASE_DIR, '..', 'scenarios')
+LOGIN_URL = '/account/login'
+
+SCENARIO_DIR = os.path.join(BASE_DIR, 'testenv', 'scenarios')
+
+CA_PRIVATE_KEYFILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
+
+CA_CERTIFICATE_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.crt')
+
+CA_CN = 'Insekta (TEST)'
