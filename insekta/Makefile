@@ -1,6 +1,11 @@
 base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
+components_static = ${base_static}components/
+
 katex_download = https://github.com/Khan/KaTeX/releases/download/v0.5.1/katex.tar.gz
+raphaeljs_download = http://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js
+flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
+flot_tmp := $(shell mktemp -u).zip
 
 all: css js components
 
@@ -8,7 +13,7 @@ css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
 
 js: ${base_static}js/bootstrap.min.js
 
-components: ${base_static}components/katex
+components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
 
 ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
@@ -22,9 +27,18 @@ ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_stat
 %.mo: %.po
 	msgfmt -o $@ $<
 
-${base_static}components/katex:
+${components_static}katex:
 	mkdir -p $@
 	wget -O - '${katex_download}' | tar -xzC $(dir $@)
+
+${components_static}raphaeljs:
+	mkdir -p $@
+	wget -P $@ ${raphaeljs_download}
+
+${components_static}flot:
+	wget -O ${flot_tmp} '${flot_download}'
+	unzip ${flot_tmp} -d $(dir $@)
+	rm ${flot_tmp}
 
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
 
