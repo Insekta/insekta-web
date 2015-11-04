@@ -6,8 +6,7 @@
 {% block content %}
 <h2>{% trans 'Your certificates' %}</h2>
 
-{% comment %}FIXME: Change to VPN configuration page{% endcomment %}
-{% url 'pki:index' as vpn_link %}
+{% url 'vpn:index' as vpn_link %}
 {% if has_valid_certificate %}
 <p class="alert alert-info">
 {% blocktrans %}You have a valid certificate. You should now go and <a href="{{ vpn_link }}">configure VPN</a>{% endblocktrans %}.
