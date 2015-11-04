@@ -3,3 +3,4 @@
 *.min.js
 insekta/insekta/settings.py
 insekta/testenv
+insekta/insekta/base/static/components
