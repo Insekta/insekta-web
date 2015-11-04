@@ -25,6 +25,12 @@ class Scenario(models.Model):
         self._load_extra()
         return self._extra.get('required_components', [])
 
+    def get_javascript_files(self):
+        return self._get_static_files('js')
+
+    def get_css_files(self):
+        return self._get_static_files('css')
+
     def get_scenario_dir(self):
         return os.path.join(settings.SCENARIO_DIR, self.key)
 
@@ -68,6 +74,20 @@ class Scenario(models.Model):
             raise ScenarioError('Could not load meta.json')
         self._extra = extra
 
+    def _get_static_files(self, static_type):
+        self._load_extra()
+        static_files = []
+        if 'static' not in self._extra or static_type not in self._extra['static']:
+            return static_files
+        for static_file in self._extra['static'][static_type]:
+            if isinstance(static_file, list):
+                scenario_key = static_file[0]
+                filename = static_file[1]
+            else:
+                scenario_key = self.key
+                filename = static_file
+            static_files.append(os.path.join(scenario_key, 'static', filename))
+        return static_files
 
 
 class Task(models.Model):

@@ -63,6 +63,13 @@ def view(request, scenario_key):
         for script in COMPONENT_SCRIPTS.get(component, []):
             script = os.path.join(component_path, script)
             additional_scripts.append(script)
+    scenario_path = settings.MEDIA_URL + 'scenarios/'
+    for stylesheet in scenario.get_css_files():
+        stylesheet = os.path.join(scenario_path, stylesheet)
+        additional_stylesheets.append(stylesheet)
+    for script in scenario.get_javascript_files():
+        script = os.path.join(scenario_path, script)
+        additional_scripts.append(script)
 
     return render(request, 'scenarios/view.html', {
         'scenario': scenario,
