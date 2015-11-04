@@ -27,6 +27,7 @@
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'scenarios:index' %}">{% trans 'Scenarios' %}</a></li>
+                        <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
                         <li><a href="{% url 'account:logout' %}">{% trans 'Logout' %}</a></li>
                         {% else %}
                         <li{% if active_nav == 'login' %} class="active"{% endif %}><a href="{% url 'account:login' %}">Login</a></li>
