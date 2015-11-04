@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'VPN' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'VPN' %}</h2>
+
+{% if has_valid_certificate %}
+<p>
+    <a class="btn btn-primary" href="{% url 'vpn:download_bundle' code %}">
+    {% trans 'Download VPN bundle' %}
+    </a>
+</p>
+{% else %}
+<p class="alert alert-warning">
+{% url 'pki:index' as cert_url %}
+{% blocktrans %}You have no valid certificates. Please <a href="{{ cert_url }}">get one</a> first.{% endblocktrans %}
+</p>
+{% endif %}
+{% endblock content %}
