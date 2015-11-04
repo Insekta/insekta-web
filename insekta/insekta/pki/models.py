@@ -59,6 +59,6 @@ class Certificate(models.Model):
 
     def _update_fields(self, cert):
         self.pem_data = cert_to_pem(cert)
-        self.expires = cert.not_valid_after
+        self.expires = cert.not_valid_after.replace(tzinfo=pytz.UTC)
         fingerprint = binascii.hexlify(cert.fingerprint(hashes.SHA256()))
         self.fingerprint = fingerprint.decode()
