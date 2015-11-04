@@ -6,3 +6,17 @@
 <h2>{{ scenario.title }}</h2>
 {{ rendered_scenario }}
 {%  endblock content %}
+
+{% block additional_styles %}
+{{ block.super }}
+{% for stylesheet in additional_stylesheets %}
+    <link href="{{ stylesheet }}" rel="stylesheet">
+{% endfor %}
+{% endblock %}
+
+{% block additional_scripts %}
+{{ block.super }}
+{% for script in additional_scripts %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+{% endblock %}

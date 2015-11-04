@@ -21,12 +21,9 @@ class Scenario(models.Model):
     def __str__(self):
         return self.title
 
-    def load_extra(self):
-        try:
-            with open(os.path.join(self.get_scenario_dir(), 'meta.json')) as f:
-                meta = json.load(f)
-        except (IOError, ValueError):
-            raise ScenarioError('Could not load meta.json')
+    def get_required_components(self):
+        self._load_extra()
+        return self._extra.get('required_components', [])
 
     def get_scenario_dir(self):
         return os.path.join(settings.SCENARIO_DIR, self.key)
@@ -60,6 +57,17 @@ class Scenario(models.Model):
     def get_absolute_url(self):
         # FIXME
         return '/scenarios/view/{}'.format(self.key)
+
+    def _load_extra(self):
+        if hasattr(self, '_extra'):
+            return
+        try:
+            with open(os.path.join(self.get_scenario_dir(), 'meta.json')) as f:
+                extra = json.load(f)
+        except (IOError, ValueError):
+            raise ScenarioError('Could not load meta.json')
+        self._extra = extra
+
 
 
 class Task(models.Model):
