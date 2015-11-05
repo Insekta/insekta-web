@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 from django.db import models
 from django.conf import settings
@@ -51,7 +52,6 @@ class Scenario(models.Model):
             if tpl_task.identifier not in existing_tasks:
                 Task.objects.create(scenario=self, identifier=tpl_task.identifier)
         self.num_tasks = len(template_tasks)
-        self.save()
 
         if purge:
             for unused_task_identifier in unused_task_identifiers:
@@ -88,6 +88,38 @@ class Scenario(models.Model):
                 filename = static_file
             static_files.append(os.path.join(scenario_key, 'static', filename))
         return static_files
+
+    @classmethod
+    def update_or_create_from_key(cls, key):
+        if not re.match('^[a-z0-9][a-z0-9-]*$', key):
+            raise ScenarioError('Invalid characters in key: {}'.format(key))
+        try:
+            with open(os.path.join(settings.SCENARIO_DIR, key, 'meta.json')) as f:
+                meta = json.load(f)
+        except IOError as e:
+            raise ScenarioError("Can't open meta.json: {}".format(e))
+        except ValueError as e:
+            raise ScenarioError('meta.json contains syntax errors: {}'.format(e))
+
+        if 'title' not in meta:
+            raise ScenarioError('meta.json must specify a title.')
+
+        title = meta['title']
+        is_challenge = meta.get('is_challenge', False)
+        requires_vpn = meta.get('requires_vpn', False)
+
+        if not isinstance(title, str):
+            raise ScenarioError('title must be of type str')
+        if not isinstance(is_challenge, bool):
+            raise ScenarioError('is_challenge must be of type str')
+
+        scenario, _created = cls.objects.get_or_create(key=key)
+        scenario.title = title
+        scenario.challenge = is_challenge
+        scenario.requires_vpn = requires_vpn
+        scenario.update_tasks()
+        scenario.save()
+        return scenario
 
 
 class Task(models.Model):
