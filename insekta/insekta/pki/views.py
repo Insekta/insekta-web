@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-from .models import Certificate, SignError
-from .forms import CreateCertificateForm
+from insekta.pki.models import Certificate, SignError
+from insekta.pki.forms import CreateCertificateForm
 
 
 @login_required

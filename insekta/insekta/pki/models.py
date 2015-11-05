@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 import pytz
 
-from .certs import CSRSigner, SignError, pem_to_cert, cert_to_pem
+from insekta.pki.certs import CSRSigner, SignError, pem_to_cert, cert_to_pem
 
 
 class Certificate(models.Model):

@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 
-from .bundlebuilder import write_vpn_bundle
-from ..pki.models import Certificate
+from insekta.vpn.bundlebuilder import write_vpn_bundle
+from insekta.pki.models import Certificate
 
 
 @login_required

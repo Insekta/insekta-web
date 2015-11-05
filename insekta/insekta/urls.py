@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from .base import views as base_views
+from insekta.base import views as base_views
 
 
 urlpatterns = [

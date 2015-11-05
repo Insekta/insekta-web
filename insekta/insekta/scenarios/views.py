@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
 from django.conf import settings
 
-from .dsl.renderer import Renderer
-from .models import Scenario, ScenarioGroup, Task
+from insekta.scenarios.dsl.renderer import Renderer
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task
 
 
 COMPONENT_STYLESHEETS = {

@@ -2,7 +2,7 @@ import tempfile
 from cryptography import x509
 from django.test import TestCase
 
-from .certs import CSRSigner, SignError, cert_to_pem, pem_to_cert
+from insekta.pki.certs import CSRSigner, SignError, cert_to_pem, pem_to_cert
 
 
 PRIVATE_KEY = '''

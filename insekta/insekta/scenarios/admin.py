@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Scenario, ScenarioGroup, Task
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task
 
 
 admin.site.register(Scenario)

@@ -2,7 +2,7 @@ import re
 
 from jinja2 import Environment, nodes
 
-from .tasks import Choice, TemplateTaskError, task_classes
+from insekta.scenarios.dsl.tasks import Choice, TemplateTaskError, task_classes
 
 
 __all__ = ['ParserError', 'TaskParser']

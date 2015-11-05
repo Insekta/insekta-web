@@ -5,9 +5,9 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from jinja2 import Environment
 
-from .dsl.taskparser import TaskParser
-from .dsl.renderer import Renderer
-from .models import Scenario
+from insekta.scenarios.dsl.taskparser import TaskParser
+from insekta.scenarios.dsl.renderer import Renderer
+from insekta.scenarios.models import Scenario
 
 
 TEMPLATE = '''

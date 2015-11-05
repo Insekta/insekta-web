@@ -3,8 +3,8 @@ import io
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from .bundlebuilder import write_vpn_bundle
-from ..pki.models import Certificate
+from insekta.vpn.bundlebuilder import write_vpn_bundle
+from insekta.pki.models import Certificate
 
 
 VALID_CSR = '''

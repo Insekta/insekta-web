@@ -5,7 +5,7 @@ import re
 from django.db import models
 from django.conf import settings
 
-from .dsl.taskparser import TaskParser
+from insekta.scenarios.dsl.taskparser import TaskParser
 
 
 class ScenarioError(Exception):

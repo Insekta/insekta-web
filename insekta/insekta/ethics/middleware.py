@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 
-from . import views
+from insekta.ethics import views
 
 
 class EthicsMiddleware:

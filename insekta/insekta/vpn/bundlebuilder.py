@@ -7,7 +7,7 @@ from operator import attrgetter
 from django.conf import settings
 from django.template import loader
 
-from ..pki.models import Certificate
+from insekta.pki.models import Certificate
 
 
 _CertEntry = namedtuple('_CertEntry', ['filename', 'cert', 'enabled'])
