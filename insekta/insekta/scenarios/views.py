@@ -21,7 +21,7 @@ COMPONENT_SCRIPTS = {
 @login_required
 def index(request):
     scenario_groups = ScenarioGroup.objects.filter(
-        scenarios__enabled=True, scenarios__challenge=False).prefetch_related()
+        scenarios__enabled=True, scenarios__is_challenge=False).prefetch_related()
 
     scenario_lookup = {}
     for scenario_group in scenario_groups:

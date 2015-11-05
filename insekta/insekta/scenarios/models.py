@@ -15,7 +15,7 @@ class ScenarioError(Exception):
 class Scenario(models.Model):
     key = models.CharField(max_length=120, unique=True)
     title = models.CharField(max_length=255)
-    challenge = models.BooleanField(default=False)
+    is_challenge = models.BooleanField(default=False)
     num_tasks = models.IntegerField()
     enabled = models.BooleanField(default=False)
 
@@ -115,7 +115,7 @@ class Scenario(models.Model):
 
         scenario, _created = cls.objects.get_or_create(key=key)
         scenario.title = title
-        scenario.challenge = is_challenge
+        scenario.is_challenge = is_challenge
         scenario.requires_vpn = requires_vpn
         scenario.update_tasks()
         scenario.save()
