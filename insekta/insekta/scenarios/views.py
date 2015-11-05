@@ -55,21 +55,17 @@ def view(request, scenario_key):
 
     additional_stylesheets = []
     additional_scripts = []
-    component_path = os.path.join(settings.STATIC_URL, 'components')
+    component_path = settings.STATIC_URL + 'components/'
     for component in scenario.get_required_components():
         for stylesheet in COMPONENT_STYLESHEETS.get(component, []):
-            stylesheet = os.path.join(component_path, stylesheet)
-            additional_stylesheets.append(stylesheet)
+            additional_stylesheets.append(component_path + stylesheet)
         for script in COMPONENT_SCRIPTS.get(component, []):
-            script = os.path.join(component_path, script)
-            additional_scripts.append(script)
+            additional_scripts.append(component_path + script)
     scenario_path = settings.MEDIA_URL + 'scenarios/'
     for stylesheet in scenario.get_css_files():
-        stylesheet = os.path.join(scenario_path, stylesheet)
-        additional_stylesheets.append(stylesheet)
+        additional_stylesheets.append(scenario_path + stylesheet)
     for script in scenario.get_javascript_files():
-        script = os.path.join(scenario_path, script)
-        additional_scripts.append(script)
+        additional_scripts.append(scenario_path + script)
 
     return render(request, 'scenarios/view.html', {
         'scenario': scenario,
