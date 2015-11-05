@@ -14,7 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from django.conf import settings
 from django.contrib import admin
+from django.views.static import serve
 
 from insekta.base import views as base_views
 
@@ -28,3 +30,10 @@ urlpatterns = [
     url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
     url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   ]
