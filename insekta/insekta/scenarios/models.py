@@ -1,6 +1,8 @@
+import errno
 import json
 import os
 import re
+import shutil
 
 from django.db import models
 from django.conf import settings
@@ -112,6 +114,13 @@ class Scenario(models.Model):
             raise ScenarioError('title must be of type str')
         if not isinstance(is_challenge, bool):
             raise ScenarioError('is_challenge must be of type str')
+
+        # Copy scenario static files to media_root/scenario_key/static
+        scenario_media = os.path.join(settings.MEDIA_ROOT, 'scenarios', key, 'static')
+        scenario_static = os.path.join(settings.SCENARIO_DIR, key, 'static')
+        if os.path.exists(scenario_static):
+            shutil.rmtree(scenario_media, ignore_errors=True)
+            shutil.copytree(scenario_static, scenario_media)
 
         scenario, _created = cls.objects.get_or_create(key=key)
         scenario.title = title
