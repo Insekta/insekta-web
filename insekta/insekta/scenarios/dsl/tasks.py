@@ -59,6 +59,42 @@ class MultipleChoiceTask(TemplateTask):
         return '{}(choices={!r})'.format(self.__class__.__name__, self.choices)
 
 
+class SingleChoiceTask(TemplateTask):
+    task_type = 'single_choice'
+
+    def __init__(self, identifier, **kwargs):
+        super().__init__(identifier)
+        self.choices = {}
+
+    def check_for_errors(self):
+        if not self.choices:
+            raise TemplateTaskError('Empty choices')
+
+        num_correct = 0
+        for choice in self.choices.values():
+            if choice.correct:
+                num_correct += 1
+        if num_correct != 1:
+            raise TemplateTaskError('Require exactly 1 correct answer.')
+
+    def extract_values(self, user, scenario, form_values):
+        values = {'answer': None}
+        for choice in self.choices.values():
+            choice_mac = choice.get_mac(user, scenario, self.identifier)
+            if form_values.get('answer') == choice_mac:
+                values['answer'] = choice.name
+                break
+        return values
+
+    def validate(self, values):
+        if values['answer'] is None:
+            return False
+        return self.choices[values['answer']].correct
+
+    def __repr__(self):
+        return '{}(choices={!r})'.format(self.__class__.__name__, self.choices)
+
+
 class Choice:
     def __init__(self, name, correct=False, **kwargs):
         self.name = name
@@ -118,5 +154,6 @@ class QuestionTask(TemplateTask):
 
 task_classes = {
     MultipleChoiceTask.task_type: MultipleChoiceTask,
+    SingleChoiceTask.task_type: SingleChoiceTask,
     QuestionTask.task_type: QuestionTask
 }

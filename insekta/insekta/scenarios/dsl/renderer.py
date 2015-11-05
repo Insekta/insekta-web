@@ -95,7 +95,8 @@ class Renderer:
         tpl_task = self._get_current_task()
         option_mac = tpl_task.choices[name].get_mac(self.user, self.scenario,
                                                     tpl_task.identifier)
-        yield '<div class="checkbox">\n'
+        choice_type = 'radio' if tpl_task.task_type == 'single_choice' else 'checkbox'
+        yield '<div class="{}">\n'.format(choice_type)
         yield '<label>\n'
         extra = ''
         if is_solved:
@@ -103,9 +104,16 @@ class Renderer:
             if correct:
                 extra += ' checked'
         else:
-            if self._is_submitted_task() and self.submitted_values[name]:
+            add_check =  (self._is_submitted_task() and
+                          (choice_type == 'checkbox' and self.submitted_values[name]) or
+                          (choice_type == 'radio' and self.submitted_values['answer'] == name))
+            if add_check:
                 extra += ' checked'
-        yield '<input type="checkbox" name="{}" value="1"{}>'.format(option_mac, extra)
+        if choice_type == 'radio':
+            input_str = '<input type="radio" name="answer" value="{}"{}>'
+        else:
+            input_str = '<input type="checkbox" name="{}" value="1"{}>'
+        yield input_str.format(option_mac, extra)
         yield caller()
         yield '</label>\n'
         yield '</div>\n'
