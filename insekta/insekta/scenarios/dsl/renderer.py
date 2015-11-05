@@ -5,6 +5,7 @@ import functools
 from jinja2 import Environment, FileSystemLoader, escape
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
+from django.conf import settings
 
 
 __all__ = ['Renderer']
@@ -130,6 +131,15 @@ class Renderer:
                'value="{}" id="answer_{}"{}>\n').format(value, task_mac, extra)
         yield '</div>'
 
+    def _call_media(self, path):
+        if isinstance(path, list):
+            if len(path) != 2:
+                raise ValueError('If path is a list, it must be [scenario_key, path]')
+            scenario_key, path = path
+        else:
+            scenario_key = self.scenario.key
+        return '{}scenarios/{}/static/{}'.format(settings.MEDIA_URL, scenario_key, path)
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -145,7 +155,8 @@ class Renderer:
             'task': self._call_task,
             'require_task': self._call_require_task,
             'choice': self._call_choice,
-            'answer': self._call_answer
+            'answer': self._call_answer,
+            'media': self._call_media,
         }
 
     def render(self, context=None):
