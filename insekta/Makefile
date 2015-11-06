@@ -8,6 +8,8 @@ raphaeljs_download = http://github.com/DmitryBaranovskiy/raphael/raw/master/raph
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
 flot_tmp := $(shell mktemp -u).zip
 
+static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min    .js' -o -name '*.min.css' \))
+
 all: css js components
 
 css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
@@ -71,3 +73,9 @@ clean:
 		   ${base_static}css/insekta.min.css \
 		   ${base_static}css/bootstrap.min.css \
 		   ${base_static}components
+
+watchstatic:
+	@while true; do \
+		make css js; \
+		inotifywait -qre close_write ${static_files}; \
+	done
