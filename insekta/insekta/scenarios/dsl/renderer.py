@@ -1,15 +1,14 @@
+import functools
 import hmac
 import io
-import functools
 import os
-
-from jinja2 import Environment, FileSystemLoader, escape
-from django.utils.translation import ugettext_lazy as _
-from django.utils.safestring import mark_safe
 from django.conf import settings
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
+from jinja2 import Environment, FileSystemLoader, escape
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 
 
 __all__ = ['Renderer']
