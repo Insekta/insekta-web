@@ -5,3 +5,8 @@
     padding-left:60px;
     min-height:50px;
 }
+
+.linenodiv pre {
+    background:transparent;
+    border:0;
+}
