@@ -6,6 +6,9 @@ from jinja2 import Environment, FileSystemLoader, escape
 from django.utils.translation import ugettext_lazy as _
 from django.utils.safestring import mark_safe
 from django.conf import settings
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 
 
 __all__ = ['Renderer']
@@ -148,6 +151,13 @@ class Renderer:
             scenario_key = self.scenario.key
         return '{}scenarios/{}/static/{}'.format(settings.MEDIA_URL, scenario_key, path)
 
+    def _call_code(self, language, linonos=False, caller=None):
+        lexer = get_lexer_by_name(language, stripall=True)
+        formatter = HtmlFormatter(linenos=True)
+        if not caller:
+            caller = lambda: 'ERROR: No source code given'
+        return highlight(caller(), lexer, formatter)
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -165,6 +175,7 @@ class Renderer:
             'choice': self._call_choice,
             'answer': self._call_answer,
             'media': self._call_media,
+            'code': self._call_code,
         }
 
     def render(self, context=None):

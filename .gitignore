@@ -4,3 +4,4 @@
 insekta/insekta/settings.py
 insekta/testenv
 insekta/insekta/base/static/components
+insekta/insekta/scenarios/static/scenarios/css/pygments.css

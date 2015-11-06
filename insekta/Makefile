@@ -19,7 +19,10 @@ components: ${components_static}katex ${components_static}katex/katex-scenario.m
 ${base_static}js/jquery.min.js:
 	wget -O $@ '${jquery_download}'
 
-${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css
+${scenarios_static}css/pygments.css:
+	pygmentize -S default -f html -a .highlight > $@
+
+${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
 
 %.min.css: %.css

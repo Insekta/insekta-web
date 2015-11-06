@@ -11,3 +11,4 @@ pycparser
 requests
 six
 pytz
+pygments
