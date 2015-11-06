@@ -151,9 +151,9 @@ class Renderer:
             scenario_key = self.scenario.key
         return '{}scenarios/{}/static/{}'.format(settings.MEDIA_URL, scenario_key, path)
 
-    def _call_code(self, language, linonos=False, caller=None):
+    def _call_code(self, language, linenos=True, caller=None):
         lexer = get_lexer_by_name(language, stripall=True)
-        formatter = HtmlFormatter(linenos=True)
+        formatter = HtmlFormatter(linenos=linenos)
         if not caller:
             caller = lambda: 'ERROR: No source code given'
         return highlight(caller(), lexer, formatter)
