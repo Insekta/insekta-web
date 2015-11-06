@@ -1,3 +1,5 @@
+.PHONY: all css js components clean watchstatic
+
 base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
