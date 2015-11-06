@@ -2,6 +2,7 @@ base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
+jquery_download = http://code.jquery.com/jquery-2.1.4.min.js
 katex_download = https://github.com/Khan/KaTeX/releases/download/v0.5.1/katex.tar.gz
 raphaeljs_download = http://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
@@ -11,9 +12,12 @@ all: css js components
 
 css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
 
-js: ${base_static}js/bootstrap.min.js
+js: ${base_static}js/bootstrap.min.js ${base_static}js/jquery.min.js
 
 components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
+
+${base_static}js/jquery.min.js:
+	wget -O $@ '${jquery_download}'
 
 ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
