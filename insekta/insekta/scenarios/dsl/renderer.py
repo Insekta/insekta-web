@@ -4,7 +4,7 @@ import io
 import os
 from django.conf import settings
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from jinja2 import Environment, FileSystemLoader, escape
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -170,6 +170,17 @@ class Renderer:
         formatter = HtmlFormatter(linenos=linenos, linenostart=linestart)
         return highlight(source_code, lexer, formatter)
 
+    @collect_to_str
+    def _call_hint(self, caller):
+        yield '<form class="hint-form">\n'
+        yield '<button class="btn btn-sm btn-default hint-button">\n'
+        yield ' <span class="hint-text">' + _('Show hint') + '</span>\n'
+        yield '</button>\n'
+        yield '<div class="alert alert-hint hint-content">\n'
+        yield caller()
+        yield '</div>\n'
+        yield '</form>'
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -188,6 +199,7 @@ class Renderer:
             'answer': self._call_answer,
             'media': self._call_media,
             'code': self._call_code,
+            'hint': self._call_hint,
         }
 
     def render(self, context=None):

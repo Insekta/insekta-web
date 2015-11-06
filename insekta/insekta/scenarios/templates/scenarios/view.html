@@ -1,4 +1,5 @@
 {%  extends "base.html" %}
+{% load staticfiles %}
 
 {%  block title %}{{ scenario.title }}{% endblock %}
 
@@ -16,6 +17,7 @@
 
 {% block additional_scripts %}
 {{ block.super }}
+    <script type="text/javascript" src="{% static 'scenarios/js/scenario.js' %}"></script>
 {% for script in additional_scripts %}
     <script type="text/javascript" src="{{ script }}"></script>
 {% endfor %}

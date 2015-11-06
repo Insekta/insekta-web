@@ -10,3 +10,31 @@
     background:transparent;
     border:0;
 }
+
+.alert-hint {
+    background:#f5f5f5;
+    border-color:#ccc;
+}
+
+.hint-form {
+    margin-bottom:10px;
+    margin-top:10px;
+}
+
+.hint-content {
+    display:none;
+    background-image:url(../scenarios/images/hint.png);
+    background-repeat:no-repeat;
+    background-position:5px center;
+    padding-left:50px;
+    min-height:40px;
+}
+
+.hint-text {
+    background-image:url(../scenarios/images/hint-small.png);
+    background-repeat:no-repeat;
+    background-position: left center;
+    padding-left:18px;
+    min-height:15px;
+    margin-left:-2px;
+}
