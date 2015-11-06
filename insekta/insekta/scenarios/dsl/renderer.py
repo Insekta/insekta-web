@@ -1,6 +1,7 @@
 import hmac
 import io
 import functools
+import os
 
 from jinja2 import Environment, FileSystemLoader, escape
 from django.utils.translation import ugettext_lazy as _
@@ -151,12 +152,24 @@ class Renderer:
             scenario_key = self.scenario.key
         return '{}scenarios/{}/static/{}'.format(settings.MEDIA_URL, scenario_key, path)
 
-    def _call_code(self, language, linenos=True, caller=None):
-        lexer = get_lexer_by_name(language, stripall=True)
-        formatter = HtmlFormatter(linenos=linenos)
-        if not caller:
-            caller = lambda: 'ERROR: No source code given'
-        return highlight(caller(), lexer, formatter)
+    def _call_code(self, language='text', linenos=True, linestart=1, lineend=None,
+                   filename=None, caller=None):
+        source_code = ''
+        if caller:
+            source_code = caller()
+        elif filename is not None:
+            scenario_dir = os.path.join(settings.SCENARIO_DIR, self.scenario.key)
+            with open(os.path.join(scenario_dir, filename)) as f:
+                lines = f.readlines()
+            if lineend is None:
+                lineend = len(lines)
+            source_code = ''.join(lines[linestart - 1:lineend])
+
+        lexer = get_lexer_by_name(language,
+                                  stripall=True if caller else False,
+                                  stripnl=False if filename else True)
+        formatter = HtmlFormatter(linenos=linenos, linenostart=linestart)
+        return highlight(source_code, lexer, formatter)
 
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
