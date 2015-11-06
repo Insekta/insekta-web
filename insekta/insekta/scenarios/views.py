@@ -14,7 +14,8 @@ COMPONENT_STYLESHEETS = {
 }
 COMPONENT_SCRIPTS = {
     'raphaeljs': ['raphael/raphael.min.js'],
-    'katex': ['katex/katex.min.js']
+    'katex': ['katex/katex.min.js',
+              'katex/katex-scenario.min.js']
 }
 
 
