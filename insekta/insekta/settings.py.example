@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'insekta.ethics',
     'insekta.scenarios',
     'insekta.pki',
+    'insekta.vpn',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,12 +84,8 @@ WSGI_APPLICATION = 'insekta.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'insekta',
-        'USER': 'insekta',
-        'PASSWORD': 'insekta',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -112,6 +109,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+
 AUTH_USER_MODEL = 'account.User'
 
 LOGIN_REDIRECT_URL = '/'
@@ -125,3 +128,5 @@ CA_PRIVATE_KEYFILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
 CA_CERTIFICATE_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.crt')
 
 CA_CN = 'Insekta (TEST)'
+
+VPN_SERVER = {'host': 'localhost', 'port': 1194}
