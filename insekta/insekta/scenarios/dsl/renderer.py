@@ -108,8 +108,8 @@ class Renderer:
                 extra += ' checked'
         else:
             add_check = (self._is_submitted_task() and
-                         (choice_type == 'checkbox' and self.submitted_values[name]) or
-                         (choice_type == 'radio' and self.submitted_values['answer'] == name))
+                         ((choice_type == 'checkbox' and self.submitted_values[name]) or
+                          (choice_type == 'radio' and self.submitted_values['answer'] == name)))
             if add_check:
                 extra += ' checked'
         if choice_type == 'radio':
