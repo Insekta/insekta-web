@@ -1,9 +1,18 @@
 {%  extends "base.html" %}
 {% load staticfiles %}
+{% load i18n %}
 
 {%  block title %}{{ scenario.title }}{% endblock %}
 
 {%  block content %}
+{% if scenario.show_ethics_reminder %}
+<p class="alert alert-info blackhat">
+{% url 'ethics:view' as ethics_url %}
+{% blocktrans %}
+This scenario explains attack techniques from a black hat's perspective. We would like to remind you of the <a href="{{ ethics_url }}">hacker ethics</a>.
+{% endblocktrans %}
+</p>
+{% endif %}
 <h2>{{ scenario.title }}</h2>
 {{ rendered_scenario }}
 {%  endblock content %}

@@ -6,6 +6,14 @@
     min-height:50px;
 }
 
+.blackhat {
+    background-image:url('../scenarios/images/blackhat.png');
+    background-repeat:no-repeat;
+    background-position:5px center;
+    padding-left:60px;
+    min-height:25px;
+}
+
 .linenodiv pre {
     background:transparent;
     border:0;
