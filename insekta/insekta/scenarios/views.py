@@ -42,10 +42,13 @@ def index(request):
 
 @login_required
 def view(request, scenario_key):
-    scenario_filter = {'key': scenario_key, 'enabled': True}
-    if request.user.is_superuser:
-        del scenario_filter['enabled']
-    scenario = get_object_or_404(Scenario, **scenario_filter)
+    if settings.DEBUG:
+        scenario = Scenario.update_or_create_from_key(scenario_key)
+    else:
+        scenario_filter = {'key': scenario_key, 'enabled': True}
+        if request.user.is_superuser:
+            del scenario_filter['enabled']
+        scenario = get_object_or_404(Scenario, **scenario_filter)
 
     csrf_token = get_token(request)
     renderer = Renderer(scenario, request.user, csrf_token)
