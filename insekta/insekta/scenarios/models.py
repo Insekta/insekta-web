@@ -24,6 +24,11 @@ class Scenario(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def show_ethics_reminder(self):
+        self._load_extra()
+        return self._extra.get('show_ethics_reminder', False)
+
     def get_required_components(self):
         self._load_extra()
         return self._extra.get('required_components', [])
