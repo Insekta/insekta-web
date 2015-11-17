@@ -25,11 +25,19 @@ urlpatterns = [
     url(r'^$', base_views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^account/', include('insekta.account.urls', namespace='account')),
-    url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     url(r'^scenarios/', include('insekta.scenarios.urls', namespace='scenarios')),
-    url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
-    url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),
 ]
+
+if 'insekta.ethics' in settings.INSTALLED_APPS:
+    urlpatterns += [
+        url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
+    ]
+
+if 'insekta.vpn' in settings.INSTALLED_APPS:
+    urlpatterns += [
+        url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
+        url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),
+    ]
 
 if settings.DEBUG:
     urlpatterns += [
