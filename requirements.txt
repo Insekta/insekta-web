@@ -5,7 +5,6 @@ cffi
 cryptography
 django-widget-tweaks
 idna
-psycopg2
 pyasn1
 pycparser
 requests
