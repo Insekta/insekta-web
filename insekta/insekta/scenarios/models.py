@@ -18,7 +18,7 @@ class Scenario(models.Model):
     key = models.CharField(max_length=120, unique=True)
     title = models.CharField(max_length=255)
     is_challenge = models.BooleanField(default=False)
-    num_tasks = models.IntegerField()
+    num_tasks = models.IntegerField(default=0)
     enabled = models.BooleanField(default=False)
 
     def __str__(self):
