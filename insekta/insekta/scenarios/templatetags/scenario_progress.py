@@ -1,6 +1,6 @@
 from django import template
 from django.conf import settings
-
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -13,7 +13,7 @@ def scenario_progress(num_submitted, num_available):
                   'title="Solved">').format(settings.STATIC_URL)
 
     num_missing = num_available - num_submitted
-    return solved_dot * num_submitted + unsolved_dot * num_missing
+    return mark_safe(solved_dot * num_submitted + unsolved_dot * num_missing)
 
 
 scenario_progress.is_safe = True
