@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from insekta.pki.models import Certificate
+
+
+admin.site.register(Certificate)
+
