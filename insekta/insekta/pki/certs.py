@@ -16,13 +16,15 @@ class CSRSigner:
     valid_hash_algorithms = (hashes.SHA224, hashes.SHA256, hashes.SHA384,
                              hashes.SHA512)
 
-    def __init__(self, private_keyfile, ca_cn):
-        self.ca_cn = ca_cn
+    def __init__(self, ca_key_file, ca_cert_file):
         self.backend = default_backend()
-        with open(private_keyfile, 'rb') as f:
+        with open(ca_key_file, 'rb') as f:
             pem_data = f.read()
-        self.private_key = serialization.load_pem_private_key(
+        self.ca_key = serialization.load_pem_private_key(
             pem_data, password=None, backend=self.backend)
+        with open(ca_cert_file) as f:
+            pem_data = f.read()
+        self.ca_cert = pem_to_cert(pem_data)
 
     def sign_csr(self, csr_pem, username):
         if isinstance(csr_pem, str):
@@ -43,22 +45,20 @@ class CSRSigner:
         builder = builder.subject_name(x509.Name([
             x509.NameAttribute(NameOID.COMMON_NAME, username),
         ]))
-        builder = builder.issuer_name(x509.Name([
-            x509.NameAttribute(NameOID.COMMON_NAME, self.ca_cn),
-        ]))
+        builder = builder.issuer_name(self.ca_cert.subject)
         one_day = datetime.timedelta(1, 0, 0)
         one_year = datetime.timedelta(365, 0, 0)
         now = datetime.datetime.utcnow()
         start_date = now - one_day
         expire_date = now + one_year
-        builder = builder.not_valid_before(datetime.datetime.utcnow() - one_day)
+        builder = builder.not_valid_before(start_date)
         builder = builder.not_valid_after(expire_date)
         builder = builder.serial_number(int(uuid.uuid4()))
         builder = builder.public_key(public_key)
         builder = builder.add_extension(
             x509.BasicConstraints(ca=False, path_length=None), critical=True)
         certificate = builder.sign(
-            private_key=self.private_key,
+            private_key=self.ca_key,
             algorithm=hashes.SHA256(),
             backend=self.backend)
         return certificate

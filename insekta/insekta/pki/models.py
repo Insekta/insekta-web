@@ -50,7 +50,7 @@ class Certificate(models.Model):
         :raises: SignError
         :return: Certificate
         """
-        signer = CSRSigner(settings.CA_PRIVATE_KEYFILE, settings.CA_CN)
+        signer = CSRSigner(settings.CA_PRIVATE_KEY_FILE, settings.CA_CERTIFICATE_FILE)
         x509_cert = signer.sign_csr(csr_pem, user.username)
         cert = cls(user=user)
         cert.set_x509_certificate(x509_cert)

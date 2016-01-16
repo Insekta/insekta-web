@@ -123,10 +123,8 @@ LOGIN_URL = '/account/login'
 
 SCENARIO_DIR = os.path.join(BASE_DIR, 'testenv', 'scenarios')
 
-CA_PRIVATE_KEYFILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
+CA_PRIVATE_KEY_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
 
 CA_CERTIFICATE_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.crt')
-
-CA_CN = 'Insekta (TEST)'
 
 VPN_SERVER = {'host': 'localhost', 'port': 1194}
