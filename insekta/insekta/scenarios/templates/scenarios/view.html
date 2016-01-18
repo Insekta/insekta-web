@@ -37,7 +37,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% if vms_running %}
             {% blocktrans with expire_time=vms_expire_time|time:"TIME_FORMAT" %}Virtual machines are running. If you close this page they will be destroyed automatically at <span id="expire_time">{{ expire_time }}</span>, but you can manually destroy them if you like.{% endblocktrans %}
             {% else %}
-            {% blocktrans %}This scenario makes use of virtual machines. In order to solve some exercises you have to start them.{% endblocktrans %}
+            {% blocktrans %}This scenario makes use of virtual machines. In order to solve some exercises you might have to start them.{% endblocktrans %}
             {% endif %}
 
             {% if vpn_running %}
