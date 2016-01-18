@@ -1,10 +1,13 @@
-import os
+import json
 
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
 from django.conf import settings
+from django.views.decorators.http import require_POST
 
+from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.models import Scenario, ScenarioGroup, Task
 
@@ -42,21 +45,9 @@ def index(request):
 
 @login_required
 def view(request, scenario_key):
-    if settings.DEBUG:
-        scenario = Scenario.update_or_create_from_key(scenario_key)
-    else:
-        scenario_filter = {'key': scenario_key, 'enabled': True}
-        if request.user.is_superuser:
-            del scenario_filter['enabled']
-        scenario = get_object_or_404(Scenario, **scenario_filter)
+    scenario = _get_scenario(scenario_key, request.user)
 
-    csrf_token = get_token(request)
-    renderer = Renderer(scenario, request.user, csrf_token)
-    if request.method == 'POST':
-        tpl_task = renderer.submit(request.POST)
-        if tpl_task:
-            scenario.solve(request.user, tpl_task.identifier)
-
+    # Load additional stylesheets and scripts
     additional_stylesheets = []
     additional_scripts = []
     component_path = settings.STATIC_URL + 'components/'
@@ -71,9 +62,78 @@ def view(request, scenario_key):
     for script in scenario.get_javascript_files():
         additional_scripts.append(scenario_path + script)
 
+    # Load vm resources
+    virtual_machines = {}
+    expire_time = None
+    vpn_ip = None
+    vms_running = False
+    vm_resource = scenario.get_vm_resource()
+    if vm_resource:
+        resource_status = remote_api.get_vm_resource_status(vm_resource, request.user)
+        if resource_status['status'] == 'running':
+            vms_running = True
+            resource = resource_status['resource']
+            virtual_machines = resource['virtual_machines']
+            expire_time = resource['expire_time']
+        vpn_ip = resource_status['vpn_ip']
+
+    print("+++++>", virtual_machines)
+    # Initialize renderer and submit request to it
+    csrf_token = get_token(request)
+    renderer = Renderer(scenario, request.user, csrf_token, virtual_machines, vpn_ip)
+    if request.method == 'POST':
+        tpl_task = renderer.submit(request.POST)
+        if tpl_task:
+            scenario.solve(request.user, tpl_task.identifier)
+
     return render(request, 'scenarios/view.html', {
         'scenario': scenario,
         'rendered_scenario': renderer.render(),
         'additional_stylesheets': additional_stylesheets,
-        'additional_scripts': additional_scripts
+        'additional_scripts': additional_scripts,
+        'has_vms': vm_resource is not None,
+        'vms_running': vms_running,
+        'vms': virtual_machines,
+        'vms_expire_time': expire_time,
+        'vpn_running': vpn_ip is not None,
+        'vpn_ip': vpn_ip
     })
+
+
+@require_POST
+@login_required
+def enable_vms(request, scenario_key):
+    vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
+    if vm_resource:
+        remote_api.start_vm_resource(vm_resource, request.user)
+    return redirect('scenarios:view', scenario_key)
+
+
+@require_POST
+@login_required
+def disable_vms(request, scenario_key):
+    vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
+    if vm_resource:
+        remote_api.stop_vm_resource(vm_resource, request.user)
+    return redirect('scenarios:view', scenario_key)
+
+
+@require_POST
+@login_required
+def ping_vms(request, scenario_key):
+    vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
+    result = remote_api.ping_vm_resource(vm_resource, request.user)
+    return render(request, 'scenarios/expire_time.html', {
+        'expire_time': result['expire_time']
+    })
+
+
+def _get_scenario(scenario_key, user):
+    if settings.DEBUG:
+        scenario = Scenario.update_or_create_from_key(scenario_key)
+    else:
+        scenario_filter = {'key': scenario_key, 'enabled': True}
+        if user.is_superuser:
+            del scenario_filter['enabled']
+        scenario = get_object_or_404(Scenario, **scenario_filter)
+    return scenario

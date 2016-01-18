@@ -14,6 +14,49 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 </p>
 {% endif %}
 <h2>{{ scenario.title }}</h2>
+
+{% if has_vms %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        {% if vms_running %}
+        <form method="post" action="{% url 'scenarios:disable_vms' scenario.key %}">
+        {% csrf_token %}
+        <button class="btn btn-danger" style="float:right;margin-left:2em;">
+            {% trans 'Destroy virtual machines' %}
+        </button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'scenarios:enable_vms' scenario.key %}">
+        {% csrf_token %}
+        <button class="btn btn-success" style="float:right;margin-left:2em;">
+            {% trans 'Start virtual machines' %}
+        </button>
+        </form>
+        {% endif %}
+        <p>
+            {% if vms_running %}
+            {% blocktrans with expire_time=vms_expire_time|time:"TIME_FORMAT" %}Virtual machines are running. If you close this page they will be destroyed automatically at <span id="expire_time">{{ expire_time }}</span>, but you can manually destroy them if you like.{% endblocktrans %}
+            {% else %}
+            {% blocktrans %}This scenario makes use of virtual machines. In order to solve some exercises you have to start them.{% endblocktrans %}
+            {% endif %}
+
+            {% if vpn_running %}
+            {% blocktrans %}Your connection to the VPN is running. Your IP inside the VPN is {{ vpn_ip }}.{% endblocktrans %}
+
+            {% if vms_running %}
+            {% blocktrans %}You should be able to reach the virtual machines.{% endblocktrans %}
+            {% else %}
+            {% blocktrans %}You should be able to reach the virtual machines once their are enabled.{% endblocktrans %}
+            {% endif %}
+
+            {% else %}
+            {% blocktrans %}Additionally you have to connect to the VPN to reach the virtual machines.{% endblocktrans %}
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endif %}
+
 {{ rendered_scenario }}
 {%  endblock content %}
 
@@ -26,6 +69,11 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 
 {% block additional_scripts %}
 {{ block.super }}
+    <script type="text/javascript">
+    // <![CDATA[
+    var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
+    // ]]>
+    </script>
     <script type="text/javascript" src="{% static 'scenarios/js/scenario.js' %}"></script>
 {% for script in additional_scripts %}
     <script type="text/javascript" src="{{ script }}"></script>

@@ -29,6 +29,10 @@ class Scenario(models.Model):
         self._load_extra()
         return self._extra.get('show_ethics_reminder', False)
 
+    def get_vm_resource(self):
+        self._load_extra()
+        return self._extra.get('vm_resource')
+
     def get_required_components(self):
         self._load_extra()
         return self._extra.get('required_components', [])

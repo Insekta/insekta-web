@@ -25,10 +25,12 @@ def collect_to_str(fn):
 
 
 class Renderer:
-    def __init__(self, scenario, user, csrf_token):
+    def __init__(self, scenario, user, csrf_token, virtual_machines, vpn_ip):
         self.scenario = scenario
         self.user = user
         self.csrf_token = csrf_token
+        self.virtual_machines = virtual_machines
+        self.vpn_ip = vpn_ip
         self.template_tasks = scenario.get_template_tasks()
 
         self.env = Environment(loader=FileSystemLoader(scenario.get_scenario_dir()))
@@ -181,6 +183,12 @@ class Renderer:
         yield '</div>\n'
         yield '</form>'
 
+    def _call_vm_ip(self, vm_name, default=None):
+        try:
+            return self.virtual_machines[vm_name]['ip']
+        except KeyError:
+            return default if default is not None else '$IP'
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -200,6 +208,7 @@ class Renderer:
             'media': self._call_media,
             'code': self._call_code,
             'hint': self._call_hint,
+            'vm_ip': self._call_vm_ip
         }
 
     def render(self, context=None):
@@ -213,7 +222,9 @@ class Renderer:
         context.update({
             'submitted_values': self.submitted_values,
             'submitted_task': self.submitted_task,
-            'submitted_valid': self.submitted_valid
+            'submitted_valid': self.submitted_valid,
+            'vms': self.virtual_machines,
+            'vpn_ip': self.vpn_ip
         })
         return mark_safe(self.env.get_template('scenario.html').render(**context))
 

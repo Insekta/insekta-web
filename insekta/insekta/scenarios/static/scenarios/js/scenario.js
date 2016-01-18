@@ -6,5 +6,13 @@ $(function() {
             ev.stopPropagation();
             return false;
         });
-    })
+    });
+
+    if (PING_URL !== null) {
+        setInterval(function() {
+            $.post(PING_URL, function(expire_time) {
+                $('#expire_time').text(expire_time)
+            })
+        }, 60*1000);
+    }
 });
