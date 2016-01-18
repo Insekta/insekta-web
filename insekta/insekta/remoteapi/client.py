@@ -1,5 +1,6 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
+import pytz
 import requests
 from django.conf import settings
 from django.utils.timezone import now
@@ -22,16 +23,24 @@ class RemoteApiClient:
         self.api_url = base_url + self.api_version + '/'
 
     def start_vm_resource(self, resource_name, user):
-        return self._make_vm_request('vm/start', resource_name, user)
+        ret = self._make_vm_request('vm/start', resource_name, user)
+        ret['expire_time'] = datetime.fromtimestamp(ret['expire_time'], pytz.UTC)
+        return ret
 
     def stop_vm_resource(self, resource_name, user):
         return self._make_vm_request('vm/stop', resource_name, user)
 
     def ping_vm_resource(self, resource_name, user):
-        return self._make_vm_request('vm/ping', resource_name, user)
+        ret = self._make_vm_request('vm/ping', resource_name, user)
+        ret['expire_time'] = datetime.fromtimestamp(ret['expire_time'], pytz.UTC)
+        return ret
 
     def get_vm_resource_status(self, resource_name, user):
-        return self._make_vm_request('vm/status', resource_name, user, method='get')
+        ret = self._make_vm_request('vm/status', resource_name, user, method='get')
+        if ret['resource'] and ret['resource']['expire_time']:
+            resource = ret['resource']
+            resource['expire_time'] = datetime.fromtimestamp(resource['expire_time'], pytz.UTC)
+        return ret
 
     def _make_vm_request(self, api_path, resource_name, user, method='post'):
         return self._make_request(api_path, {
