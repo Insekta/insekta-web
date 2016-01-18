@@ -128,3 +128,9 @@ CA_PRIVATE_KEY_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
 CA_CERTIFICATE_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.crt')
 
 VPN_SERVER = {'host': 'localhost', 'port': 1194}
+
+USE_REMOTE_API_DUMMY = True
+
+REMOTE_API_URL = 'http://localhost:8001/api/'
+
+REMOTE_API_AUTH = ('api', 'mypassword')
