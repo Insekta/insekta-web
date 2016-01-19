@@ -1,5 +1,6 @@
 import json
 
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -46,6 +47,12 @@ def index(request):
 @login_required
 def view(request, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
+
+    if scenario.show_ethics_reminder and not request.user.accepted_ethics:
+        ethics_url = (reverse('ethics:view') + "?next=" +
+                      reverse('scenarios:view', args=(scenario_key, )))
+        return redirect(ethics_url)
+
 
     # Load additional stylesheets and scripts
     additional_stylesheets = []
