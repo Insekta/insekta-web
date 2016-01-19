@@ -1,0 +1,468 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-19 17:52+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: insekta/account/templates/account/index.html:4
+#: insekta/base/templates/base.html:30
+msgid "Account"
+msgstr ""
+
+#: insekta/account/templates/account/index.html:7
+#, python-format
+msgid "Hello, %(username)s!"
+msgstr ""
+
+#: insekta/account/templates/account/index.html:11
+#: insekta/pki/templates/pki/index.html:4
+#: insekta/pki/templates/pki/index.html:7
+msgid "Your certificates"
+msgstr ""
+
+#: insekta/account/templates/account/index.html:12
+msgid "VPN configuration"
+msgstr ""
+
+#: insekta/account/templates/account/login.html:16
+#: insekta/base/templates/base/index.html:18
+msgid "Username"
+msgstr ""
+
+#: insekta/account/templates/account/login.html:21
+#: insekta/base/templates/base/index.html:21
+msgid "Password"
+msgstr ""
+
+#: insekta/account/templates/account/login.html:25
+#: insekta/base/templates/base/index.html:23
+msgid "Sign in"
+msgstr ""
+
+#: insekta/base/templates/base.html:29
+#: insekta/scenarios/templates/scenarios/index.html:5
+#: insekta/scenarios/templates/scenarios/index.html:8
+msgid "Scenarios"
+msgstr ""
+
+#: insekta/base/templates/base.html:34
+msgid "Logout"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:13
+msgid "Welcome to Insekta"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:14
+msgid ""
+"<p>Want to learn something about computer security? Sign in with your <a "
+"href=\"https://mafiasi.de/\">mafiasi.de</a> account.</p>"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:32
+msgid "Learn"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:33
+msgid ""
+"At Insekta you get comprehensible explanations to various topics of computer "
+"security. They come in form of scenarios which cover certain aspects of a "
+"topic."
+msgstr ""
+
+#: insekta/base/templates/base/index.html:36
+#: insekta/scenarios/dsl/renderer.py:61
+msgid "Exercise"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:37
+msgid ""
+"Every scenario contains useful exercises you can use to check your "
+"knowledge. Ranging from simple multiple choice questions to programming "
+"exercises."
+msgstr ""
+
+#: insekta/base/templates/base/index.html:40
+msgid "Get help"
+msgstr ""
+
+#: insekta/base/templates/base/index.html:41
+msgid ""
+"In case you are stuck with some scenario you can always ask for help. Other "
+"students who already solved the scenario can help you."
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:4
+msgid "More about ethics"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:7
+msgid "Ethics in computer security and computer science in general"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:9
+msgid ""
+"\n"
+"<p>We still have to collect some arguments and resources for further reading."
+"</p>\n"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:13
+msgid "Some links"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:14
+msgid ""
+"\n"
+"<ul>\n"
+"    <li>\n"
+"        <a href=\"http://cpsr.org/\">Computer professionals for social "
+"responsibility</a>\n"
+"        — Global organisation which promotes the responsible use of computer "
+"technology\n"
+"    </li>\n"
+"    <li>\n"
+"        <a href=\"http://fiff.de/\">Forum InformatikInnen für Frieden und "
+"gesellschaftliche\n"
+"        Verantwortung</a> — German association with similar topics as the "
+"CPSR.\n"
+"    </li>\n"
+"    <li>\n"
+"        <a href=\"https://ccc.de/de/hackerethik\">Hacker ethics</a> on the "
+"website of the\n"
+"        <a href=\"https://ccc.de/\">Chaos Computer Club</a>\n"
+"    </li>\n"
+"</ul>\n"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_arguments.html:32
+msgid "Take me back."
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_ethics.html:4
+#: insekta/ethics/templates/ethics/view_ethics.html:7
+msgid "Ethics in computer security"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_ethics.html:8
+msgid ""
+"\n"
+"<p>\n"
+"    We want to defend against attackers, this means we have to know how "
+"they\n"
+"    think and try to archive their goal. Therefore, to obtain a deep "
+"understanding\n"
+"    about security issues, Insekta will not only show the perspective of "
+"the\n"
+"    defender, but also the perspective of the attacker.\n"
+"</p>\n"
+"\n"
+"<p>For this reason we want you to understand the following points:</p>\n"
+"<ol>\n"
+"    <li>\n"
+"        We are not criminals. Attacking others without their consent is not\n"
+"        something you should do. Not even for fun.\n"
+"    </li>\n"
+"    <li>\n"
+"        We do not support secret services who do mass surveillance\n"
+"        and attack others. Their behavior harms society, independently if "
+"it\n"
+"        might be legal under some legislation. Do not join their evil "
+"forces.\n"
+"    </li>\n"
+"    <li>\n"
+"        We want to make the world a better and more secure place.\n"
+"        Understanding security issues and attacks is nothing evil, but a "
+"step\n"
+"        toward this goal.\n"
+"    </li>\n"
+"</ol>\n"
+"\n"
+"<p>And whenever you use a computer, keep the following things in mind:</p>\n"
+"<ol>\n"
+"    <li>Respect to privacy of others.</li>\n"
+"    <li>Think before you type.</li>\n"
+"    <li>With great power comes great responsibility.</li>\n"
+"</ol>\n"
+msgstr ""
+
+#: insekta/ethics/templates/ethics/view_ethics.html:52
+msgid "I understand what you want to say and I agree."
+msgstr ""
+
+#: insekta/pki/templates/pki/create_certificate.html:5
+#: insekta/pki/templates/pki/create_certificate.html:8
+#: insekta/pki/templates/pki/create_certificate.html:55
+msgid "Create certificate"
+msgstr ""
+
+#: insekta/pki/templates/pki/create_certificate.html:10
+#, python-format
+msgid ""
+"\n"
+"<p>\n"
+"    To create a Certificate Signing Request (CSR) you have to create a "
+"private\n"
+"    key first. You can use the following command to create an RSA private "
+"key\n"
+"    with a key size of 2048 bit:\n"
+"</p>\n"
+"<p>\n"
+"    <kbd>openssl genrsa -out client.key 2048</kbd>\n"
+"</p>\n"
+"<p>\n"
+"    You should now have a file called \"client.key\". <strong>Keep this file "
+"safe and\n"
+"    don't share it with anyone!</strong> Otherwise your account is "
+"compromised.\n"
+"    If this happens, you should <a href=\"%(revoke_link)s\">revoke your\n"
+"    certificate</a> immediately and create a new private key.\n"
+"</p>\n"
+"<p>\n"
+"    Next step is to create a the CSR itself. A CSR is used to ask a "
+"Certificate\n"
+"    Authority (CA) to issue a certificate for you. The CSR basically "
+"contains\n"
+"    the public key counterpart of your private key and some information "
+"about\n"
+"    you. It is signed with your private key. Since a CSR contains no "
+"sensitive\n"
+"    information, it is safe to share. In this case you will share it with "
+"us\n"
+"    (the CA) to get a certificate from us.\n"
+"</p>\n"
+"<p>\n"
+"    You can use the following command to create a CSR. It will ask for some\n"
+"    information. You can type anything (or just hit <kbd>enter</kbd>), we "
+"will\n"
+"    ignore it anyway:\n"
+"</p>\n"
+"<p>\n"
+"    <kbd>openssl req -new -key client.key -out client.csr</kbd>\n"
+"</p>\n"
+"<p>Congratulation! You should now have a file named \"client.csr\" "
+"containing\n"
+"    the CSR. Paste the content of that file into the following text box to\n"
+"    obtain your certificate.\n"
+"</p>\n"
+msgstr ""
+
+#: insekta/pki/templates/pki/create_certificate.html:51
+msgid "CSR (pem encoded)"
+msgstr ""
+
+#: insekta/pki/templates/pki/create_certificate.html:56
+msgid "Cancel"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:12
+#, python-format
+msgid ""
+"You have a valid certificate. You should now go and <a href=\"%(vpn_link)s"
+"\">configure VPN</a>"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:20
+msgid "Fingerprint (SHA256)"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:21
+msgid "Expire date"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:22
+msgid "Status"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:23
+msgid "Action"
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:54
+msgid ""
+"You don't have any certificates yet. If you want to connect to the VPN you "
+"have create one."
+msgstr ""
+
+#: insekta/pki/templates/pki/index.html:59
+msgid "Create new certificate"
+msgstr ""
+
+#: insekta/pki/templates/pki/revoke_certificate.html:4
+#: insekta/pki/templates/pki/revoke_certificate.html:7
+msgid "Revoke certificate"
+msgstr ""
+
+#: insekta/pki/templates/pki/revoke_certificate.html:9
+#, python-format
+msgid ""
+"\n"
+"Do you really want to revoke the certificate with the fingerprint <strong>"
+"%(fingerprint)s</strong>?\n"
+msgstr ""
+
+#: insekta/pki/templates/pki/revoke_certificate.html:19
+msgid "Yes, revoke it"
+msgstr ""
+
+#: insekta/pki/templates/pki/revoke_certificate.html:20
+msgid "No, please not"
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:59
+msgid "Task: {}"
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:68
+msgid "Congratulation. Your answer is correct."
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:71
+msgid "Sorry, your answer is incorrect."
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:82
+msgid "Solve exercise"
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:93
+msgid ""
+"<strong>Here be dragons.</strong> You have to solve an exercise to uncover "
+"more content."
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:132
+msgid "Your answer"
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:179
+msgid "Show hint"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/index.html:17
+msgid "Scenario"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/index.html:18
+msgid "Solved exercises"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:19
+#, python-format
+msgid ""
+"\n"
+"This scenario explains attack techniques from a black hat's perspective. We "
+"would like to remind you of the <a href=\"%(ethics_url)s\">hacker ethics</"
+"a>.\n"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:36
+msgid "Destroy virtual machines"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:43
+msgid "Start virtual machines"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:49
+#, python-format
+msgid ""
+"Virtual machines are running. If you close this page they will be destroyed "
+"automatically at <span id=\"expire_time\">%(expire_time)s</span>, but you "
+"can manually destroy them if you like."
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:51
+msgid ""
+"This scenario makes use of virtual machines. In order to solve some "
+"exercises you might have to start them."
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:55
+#, python-format
+msgid ""
+"Your connection to the VPN is running. Your IP inside the VPN is %(vpn_ip)s."
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:58
+msgid "You should be able to reach the virtual machines."
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:60
+msgid ""
+"You should be able to reach the virtual machines once their are enabled."
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/view.html:65
+#, python-format
+msgid ""
+"Additionally you have to connect to the <a href=\"%(vpn_url)s\">VPN</a> to "
+"reach the virtual machines."
+msgstr ""
+
+#: insekta/vpn/templates/vpn/README.txt:1
+msgid ""
+"Insekta VPN\n"
+"===========\n"
+"\n"
+"Setting up VPN\n"
+"--------------\n"
+"\n"
+"Copy your RSA private key (client.key) into this directory. If you have\n"
+"multiple certificates, you have to edit the client.conf and adjust the \"cert"
+"\"\n"
+"option. We have put all valid certificates in this bundle. They are named\n"
+"\"client_XX.conf\", where XX is a number, and are ordered by their expire "
+"date.\n"
+"\n"
+"We use OpenVPN, which can usually be installed by systems package manager.\n"
+"For Debian you can use \"sudo apt install openvpn\" to install it. For "
+"other\n"
+"distributions consult your distribution's documentation.\n"
+"\n"
+"\n"
+"Running VPN\n"
+"-----------\n"
+"\n"
+"To start the VPN daemon and connect to VPN simply run:\n"
+"\n"
+"    sudo openvpn client.conf\n"
+"\n"
+"After a while you should see the following message:\n"
+"\n"
+"    \"FIXME: Lookup! (something like: Initialization sequence completed)\".\n"
+"\n"
+"Your VPN connection is now up and running. You should now be able the reach\n"
+"the services inside the VPN.\n"
+"\n"
+"To stop the VPN connection just press CTRL+C."
+msgstr ""
+
+#: insekta/vpn/templates/vpn/index.html:4
+#: insekta/vpn/templates/vpn/index.html:7
+msgid "VPN"
+msgstr ""
+
+#: insekta/vpn/templates/vpn/index.html:12
+msgid "Download VPN bundle"
+msgstr ""
+
+#: insekta/vpn/templates/vpn/index.html:18
+#, python-format
+msgid ""
+"You have no valid certificates. Please <a href=\"%(cert_url)s\">get one</a> "
+"first."
+msgstr ""

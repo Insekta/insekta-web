@@ -120,6 +120,8 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/account/login'
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'), )
+
 SCENARIO_DIR = os.path.join(BASE_DIR, 'testenv', 'scenarios')
 
 CA_PRIVATE_KEY_FILE = os.path.join(BASE_DIR, 'testenv', 'vpn', 'ca.key')
