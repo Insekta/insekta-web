@@ -18,6 +18,8 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 {% if has_vms %}
 <div class="panel panel-default">
     <div class="panel-body">
+        <div id="vm-panel">
+
         {% if vms_running %}
         <form method="post" action="{% url 'scenarios:disable_vms' scenario.key %}">
         {% csrf_token %}
@@ -53,6 +55,11 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% blocktrans %}Additionally you have to connect to the VPN to reach the virtual machines.{% endblocktrans %}
             {% endif %}
         </p>
+
+        </div>
+        <div id="vm-panel-gears">
+            <img src="{% static 'images/gears.gif' %}" alt="Working ...">
+        </div>
     </div>
 </div>
 {% endif %}

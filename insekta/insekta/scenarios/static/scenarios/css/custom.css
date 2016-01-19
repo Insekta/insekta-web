@@ -46,3 +46,8 @@
     min-height:15px;
     margin-left:-2px;
 }
+
+#vm-panel-gears {
+    display:none;
+    text-align:center;
+}
