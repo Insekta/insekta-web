@@ -18,9 +18,12 @@ class RemoteApiError(Exception):
 class RemoteApiClient:
     api_version = '1.0'
 
-    def __init__(self, base_url, auth):
+    def __init__(self, base_url, auth, session=None):
         self.auth = auth
         self.api_url = base_url + self.api_version + '/'
+        if session is None:
+            session = requests.Session()
+        self.session = session
 
     def start_vm_resource(self, resource_name, user):
         ret = self._make_vm_request('vm/start', resource_name, user)
@@ -50,9 +53,9 @@ class RemoteApiClient:
 
     def _make_request(self, api_path, data, method):
         if method == 'post':
-            resp = requests.post(self.api_url + api_path, data=data, auth=self.auth)
+            resp = self.session.post(self.api_url + api_path, data=data, auth=self.auth)
         elif method == 'get':
-            resp = requests.get(self.api_url + api_path, params=data, auth=self.auth)
+            resp = self.session.get(self.api_url + api_path, params=data, auth=self.auth)
         else:
             raise ValueError('Invalid value for method: {}'.format(method))
         if resp.status_code != STATUS_OK:
@@ -119,4 +122,6 @@ class RemoteApiClientDummy:
 if settings.USE_REMOTE_API_DUMMY:
     remote_api = RemoteApiClientDummy()
 else:
-    remote_api = RemoteApiClient(settings.REMOTE_API_URL, settings.REMOTE_API_AUTH)
+    remote_api = RemoteApiClient(settings.REMOTE_API_URL,
+                                 settings.REMOTE_API_AUTH,
+                                 requests.Session())
