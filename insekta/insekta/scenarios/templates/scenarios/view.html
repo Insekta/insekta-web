@@ -52,7 +52,8 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% endif %}
 
             {% else %}
-            {% blocktrans %}Additionally you have to connect to the VPN to reach the virtual machines.{% endblocktrans %}
+            {% url 'vpn:index' as vpn_url %}
+            {% blocktrans %}Additionally you have to connect to the <a href="{{ vpn_url }}">VPN</a> to reach the virtual machines.{% endblocktrans %}
             {% endif %}
         </p>
 
