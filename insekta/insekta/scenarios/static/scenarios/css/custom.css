@@ -76,3 +76,24 @@
     top: 0;
     border-top:0 !important;
 }
+
+#scenario-notes-container.popover {
+    max-width:100%;
+}
+
+#scenario-notes-container textarea {
+    border:0;
+}
+
+#scenario-notes-container {
+    display:none;
+}
+
+.scenario-notes-saved {
+    color: #888888;;
+    display:none;
+}
+
+#scenario-notes-link {
+    cursor:pointer;
+}

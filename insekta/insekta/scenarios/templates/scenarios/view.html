@@ -9,7 +9,18 @@
     <div class="alert-toolbar scenario-bar-absolute" id="scenario-bar">
         <ul class="nav nav-pills">
             <li><a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
+            <li><a id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a></li>
         </ul>
+    </div>
+</div>
+
+<div id="scenario-notes-container" class="popover">
+    <h3 class="popover-title">{% trans 'Your notes' %}</h3>
+    <div class="popover-content">
+        <p>
+            <textarea style="width:30em;" rows="10">{{ notes }}</textarea>
+        </p>
+        <p class="scenario-notes-saved">{% trans 'Saved.' %}</p>
     </div>
 </div>
 
@@ -89,6 +100,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
     <script type="text/javascript">
     // <![CDATA[
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
+    var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     // ]]>
     </script>
     <script type="text/javascript" src="{% static 'scenarios/js/scenario.js' %}"></script>

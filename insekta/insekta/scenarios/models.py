@@ -156,3 +156,15 @@ class ScenarioGroup(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Notes(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    scenario = models.ForeignKey(Scenario)
+    content = models.TextField(blank=True)
+
+    class Meta:
+        unique_together = ('user', 'scenario')
+
+    def __str__(self):
+        return 'Notes for user {} at scenario {}'.format(self.user, self.scenario)

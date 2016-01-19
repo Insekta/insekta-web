@@ -55,4 +55,27 @@ $(function() {
     }
     fixScenarioBarWidth();
     $(window).on('resize', fixScenarioBarWidth);
+
+
+    /*
+     * Scenario notes
+     */
+    var notesState = {'shown': false};
+    $('#scenario-notes-link').on('click', function() {
+        $('#scenario-notes-container').toggle().center();
+    });
+
+    var notesTextarea = $('#scenario-notes-container').find('textarea');
+
+    var saveNotes = debounce(function() {
+        var notes = notesTextarea.val();
+        $.post(NOTES_SAVE_URL, {'notes': notes}, function() {
+            $('#scenario-notes-container').find('.scenario-notes-saved').show();
+        });
+    }, 500);
+
+    notesTextarea.on('keyup', debounce(function() {
+        $('#scenario-notes-container').find('.scenario-notes-saved').hide();
+        saveNotes();
+    }));
 });

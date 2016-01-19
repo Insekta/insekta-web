@@ -1,5 +1,3 @@
-import json
-
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -10,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
-from insekta.scenarios.models import Scenario, ScenarioGroup, Task
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes
 
 
 COMPONENT_STYLESHEETS = {
@@ -92,6 +90,11 @@ def view(request, scenario_key):
         if tpl_task:
             scenario.solve(request.user, tpl_task.identifier)
 
+    try:
+        notes = Notes.objects.get(user=request.user, scenario=scenario).content
+    except Notes.DoesNotExist:
+        notes = ''
+
     return render(request, 'scenarios/view.html', {
         'scenario': scenario,
         'rendered_scenario': renderer.render(),
@@ -102,7 +105,8 @@ def view(request, scenario_key):
         'vms': virtual_machines,
         'vms_expire_time': expire_time,
         'vpn_running': vpn_ip is not None,
-        'vpn_ip': vpn_ip
+        'vpn_ip': vpn_ip,
+        'notes': notes
     })
 
 
@@ -133,6 +137,15 @@ def ping_vms(request, scenario_key):
         'expire_time': result['expire_time']
     })
 
+
+@require_POST
+@login_required
+def save_notes(request, scenario_key):
+    scenario = _get_scenario(scenario_key, request.user)
+    notes, created = Notes.objects.get_or_create(user=request.user, scenario=scenario)
+    notes.content = request.POST.get('notes', '')
+    notes.save()
+    return HttpResponse('{"result": "ok"}', content_type='application/json')
 
 def _get_scenario(scenario_key, user):
     if settings.DEBUG:
