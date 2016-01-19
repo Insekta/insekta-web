@@ -77,7 +77,6 @@ def view(request, scenario_key):
             expire_time = resource['expire_time']
         vpn_ip = resource_status['vpn_ip']
 
-    print("+++++>", virtual_machines)
     # Initialize renderer and submit request to it
     csrf_token = get_token(request)
     renderer = Renderer(scenario, request.user, csrf_token, virtual_machines, vpn_ip)
