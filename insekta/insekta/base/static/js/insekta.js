@@ -52,3 +52,26 @@ function debounce(func, wait, immediate) {
 		if (callNow) func.apply(context, args);
 	};
 }
+
+var htmlReplacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;'
+};
+
+function escapeHtml(s) {
+    return s.replace(/[&<>"]/g, function (m) {
+        return entityMap[m];
+    });
+}
+
+jQuery.fn.center = function () {
+    var jWindow = $(window);
+    var topValue = Math.max(0, (jWindow.height() - this.outerHeight()) / 2 + jWindow.scrollTop());
+    var leftValue = Math.max(0, (jWindow.width() - this.outerHeight()) / 2 + jWindow.scrollLeft());
+    this.css('position', 'absolute')
+        .css('top', topValue + 'px')
+        .css('left', leftValue + 'px');
+    return this;
+};
