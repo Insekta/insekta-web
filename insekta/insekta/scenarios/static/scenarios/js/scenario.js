@@ -1,4 +1,7 @@
 $(function() {
+    /*
+     * Show hints if their buttons are clicked
+     */
     $('.hint-form').each(function() {
         $(this).submit(function(ev) {
             $(this).find('.hint-button').hide();
@@ -8,6 +11,10 @@ $(function() {
         });
     });
 
+
+    /*
+     * Ping to avoid virtual machines being destroyed
+     */
     if (PING_URL !== null) {
         setInterval(function() {
             $.post(PING_URL, function(expire_time) {
@@ -16,12 +23,19 @@ $(function() {
         }, 60*1000);
     }
 
+
+    /*
+     * Progress gears on starting/destroying virtual machines
+     */
     $('#vm-panel').find('form').submit(function() {
         $('#vm-panel').hide();
         $('#vm-panel-gears').show();
         return true;
     });
 
+    /*
+     * Scenario Bar
+     */
     var scenarioBar = $('#scenario-bar');
     var scenarioBarContainer = $('#scenario-bar-container');
     scenarioBarContainer.css('height', scenarioBar.outerHeight(true));
