@@ -69,7 +69,7 @@ function escapeHtml(s) {
 jQuery.fn.center = function () {
     var jWindow = $(window);
     var topValue = Math.max(0, (jWindow.height() - this.outerHeight()) / 2 + jWindow.scrollTop());
-    var leftValue = Math.max(0, (jWindow.width() - this.outerHeight()) / 2 + jWindow.scrollLeft());
+    var leftValue = Math.max(0, (jWindow.width() - this.outerWidth()) / 2 + jWindow.scrollLeft());
     this.css('position', 'absolute')
         .css('top', topValue + 'px')
         .css('left', leftValue + 'px');
