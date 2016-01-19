@@ -17,7 +17,6 @@ $(function() {
     }
 
     $('#vm-panel').find('form').submit(function() {
-        console.log('Hallo!');
         $('#vm-panel').hide();
         $('#vm-panel-gears').show();
         return true;
