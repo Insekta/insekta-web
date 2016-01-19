@@ -5,6 +5,14 @@
 {%  block title %}{{ scenario.title }}{% endblock %}
 
 {%  block content %}
+<div id="scenario-bar-container">
+    <div class="alert-toolbar scenario-bar-absolute" id="scenario-bar">
+        <ul class="nav nav-pills">
+            <li><a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
+        </ul>
+    </div>
+</div>
+
 {% if scenario.show_ethics_reminder %}
 <p class="alert alert-info blackhat">
 {% url 'ethics:view' as ethics_url %}
@@ -13,6 +21,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 {% endblocktrans %}
 </p>
 {% endif %}
+
 <h2>{{ scenario.title }}</h2>
 
 {% if has_vms %}
