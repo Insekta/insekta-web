@@ -85,7 +85,8 @@ class RemoteApiClientDummy:
 
     def ping_vm_resource(self, resource_name, user):
         return {
-            'result': 'ok'
+            'result': 'ok',
+            'expire_time': self._get_expire_time()
         }
 
     def get_vm_resource_status(self, resource_name, user):
