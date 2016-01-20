@@ -41,6 +41,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 <h2>{{ scenario.title }}</h2>
 
 {% if has_vms %}
+{% url 'vpn:index' as vpn_url %}
 <div class="panel panel-default">
     <div class="panel-body">
         <div id="vm-panel">
@@ -75,10 +76,6 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% else %}
             {% blocktrans %}You should be able to reach the virtual machines once their are enabled.{% endblocktrans %}
             {% endif %}
-
-            {% else %}
-            {% url 'vpn:index' as vpn_url %}
-            {% blocktrans %}Additionally you have to connect to the <a href="{{ vpn_url }}">VPN</a> to reach the virtual machines.{% endblocktrans %}
             {% endif %}
         </p>
 
@@ -88,6 +85,10 @@ This scenario explains attack techniques from a black hat's perspective. We woul
         </div>
     </div>
 </div>
+
+{% if vms_running and not vpn_running %}
+<p class="alert alert-warning">{% blocktrans %}You are not connected to the <a href="{{ vpn_url }}">VPN</a>, which is required to reach the virtual machines.{% endblocktrans %}</p>
+{% endif %}
 {% endif %}
 
 {{ rendered_scenario }}
