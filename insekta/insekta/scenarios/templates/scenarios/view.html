@@ -15,7 +15,12 @@
 </div>
 
 <div id="scenario-notes-container" class="popover">
-    <h3 class="popover-title">{% trans 'Your notes' %}</h3>
+    <div class="popover-title">
+        <button class="close" aria-label="Close">
+            <span aria-hidden="true">x</span>
+        </button>
+        <h3>{% trans 'Your notes' %}</h3>
+    </div>
     <div class="popover-content">
         <p>
             <textarea style="width:30em;" rows="10">{{ notes }}</textarea>

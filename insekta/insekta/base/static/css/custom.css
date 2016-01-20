@@ -12,3 +12,9 @@
 	background:url(../images/insekta-32.png) no-repeat left center;
     padding-left:40px;
 }
+
+.popover-title h3 {
+    font-size:14px;
+    padding:8px 14px;
+    margin:0;
+}

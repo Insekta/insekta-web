@@ -60,22 +60,27 @@ $(function() {
     /*
      * Scenario notes
      */
-    var notesState = {'shown': false};
+    var scenarioNotesContainer = $('#scenario-notes-container');
+    var notesTextarea = scenarioNotesContainer.find('textarea');
+
     $('#scenario-notes-link').on('click', function() {
-        $('#scenario-notes-container').toggle().center();
+        scenarioNotesContainer.toggle().center();
     });
-
-    var notesTextarea = $('#scenario-notes-container').find('textarea');
-
     var saveNotes = debounce(function() {
         var notes = notesTextarea.val();
         $.post(NOTES_SAVE_URL, {'notes': notes}, function() {
-            $('#scenario-notes-container').find('.scenario-notes-saved').show();
+            scenarioNotesContainer.find('.scenario-notes-saved').show();
         });
     }, 500);
-
+    scenarioNotesContainer.find('.close').on('click', function() {
+        scenarioNotesContainer.hide();
+    });
     notesTextarea.on('keyup', debounce(function() {
-        $('#scenario-notes-container').find('.scenario-notes-saved').hide();
+        scenarioNotesContainer.find('.scenario-notes-saved').hide();
         saveNotes();
+    }));
+    $(window).on('scroll resize', debounce(function() {
+        console.log('scolling');
+        scenarioNotesContainer.center();
     }));
 });
