@@ -80,7 +80,6 @@ $(function() {
         saveNotes();
     }));
     $(window).on('scroll resize', debounce(function() {
-        console.log('scolling');
         scenarioNotesContainer.center();
     }));
 });
