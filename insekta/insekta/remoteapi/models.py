@@ -4,6 +4,7 @@ from django.db import models
 class VMResourceDummy(models.Model):
     resource_name = models.CharField(max_length=80, unique=True)
     is_started = models.BooleanField(default=False)
+    vpn_enabled = models.BooleanField(default=False)
     vm_names = models.TextField()
 
     def __str__(self):

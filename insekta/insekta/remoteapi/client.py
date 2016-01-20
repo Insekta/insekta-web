@@ -102,7 +102,7 @@ class RemoteApiClientDummy:
         else:
             status = 'notrunning'
             resource = None
-            vpn_ip = None
+        vpn_ip = self._get_vpn_ip(vm_res)
 
         return {
             'status': status,
@@ -112,6 +112,9 @@ class RemoteApiClientDummy:
 
     def _get_expire_time(self):
         return now() + timedelta(minutes=10)
+
+    def _get_vpn_ip(self, vm_res):
+        return '10.36.42.1' if vm_res.vpn_enabled else None
 
     def _get_vm_resource(self, resource_name):
         try:
