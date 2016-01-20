@@ -87,7 +87,8 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 </div>
 
 {% if vms_running and not vpn_running %}
-<p class="alert alert-warning">{% blocktrans %}You are not connected to the <a href="{{ vpn_url }}">VPN</a>, which is required to reach the virtual machines.{% endblocktrans %}</p>
+{% url 'scenarios:view' scenario.key as this_page_url %}
+<p class="alert alert-warning">{% blocktrans %}You are not connected to the <a href="{{ vpn_url }}">VPN</a>, which is required to reach the virtual machines. If you are connected, refresh <a href="{{ this_page_url }}">this page</a>.{% endblocktrans %}</p>
 {% endif %}
 {% endif %}
 
