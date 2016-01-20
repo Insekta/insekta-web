@@ -4,12 +4,7 @@
 {% block title %}{% trans 'Account' %}{% endblock %}
 
 {% block content %}
-<h2>{% blocktrans with username=user.username %}Hello, {{ username }}!{% endblocktrans %}</h2>
+{% include 'account/nav.html' with tab='account' %}
 
-{% if show_vpn %}
-<p>
-    <a class="btn btn-default" href="{% url 'pki:index' %}">{% trans 'Your certificates' %}</a>
-    <a class="btn btn-default" href="{% url 'vpn:index' %}">{% trans 'VPN configuration' %}</a>
-</p>
-{% endif %}
+<h2>{% blocktrans with username=user.username %}Hello, {{ username }}!{% endblocktrans %}</h2>
 {% endblock content %}

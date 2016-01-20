@@ -4,6 +4,7 @@
 {% block title %}{% trans 'VPN' %}{% endblock %}
 
 {% block content %}
+{% include 'account/nav.html' with tab='vpn' %}
 <h2>{% trans 'VPN' %}</h2>
 
 {% if has_valid_certificate %}

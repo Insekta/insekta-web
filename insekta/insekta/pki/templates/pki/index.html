@@ -4,6 +4,7 @@
 {% block title %}{% trans 'Your certificates' %}{% endblock %}
 
 {% block content %}
+{% include 'account/nav.html' with tab='pki' %}
 <h2>{% trans 'Your certificates' %}</h2>
 
 {% url 'vpn:index' as vpn_link %}

@@ -1,0 +1,6 @@
+{% load i18n %}
+<ul class="nav nav-tabs">
+    <li{% if tab == 'account' %} class="active"{% endif %}><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li{% if tab == 'pki' %} class="active"{% endif %}><a href="{% url 'pki:index' %}">{% trans 'Certificates' %}</a></li>
+    <li{% if tab == 'vpn' %} class="active"{% endif %}><a href="{% url 'vpn:index' %}">{% trans 'VPN' %}</a></li>
+</ul>

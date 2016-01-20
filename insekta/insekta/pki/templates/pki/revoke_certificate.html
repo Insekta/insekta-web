@@ -4,6 +4,7 @@
 {% block title %}{% trans 'Revoke certificate' %}{% endblock %}
 
 {% block content %}
+{% include 'account/nav.html' with tab='pki' %}
 <h2>{% trans 'Revoke certificate' %}</h2>
 <p>
 {% blocktrans with fingerprint=certificate.fingerprint %}
