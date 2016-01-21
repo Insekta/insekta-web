@@ -97,3 +97,16 @@
 #scenario-notes-link {
     cursor:pointer;
 }
+
+#scenario-comments-link {
+    cursor:pointer;
+}
+
+#scenario-comments-on, #scenario-comments-off {
+    display:none;
+}
+
+.comment a {
+    text-decoration:none;
+    cursor:pointer;
+}

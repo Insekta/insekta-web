@@ -12,6 +12,12 @@
             <li><a id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a></li>
             <li><a href="{% url 'scenariohelp:new_question' scenario.key %}">{% trans 'Ask question' %}</a></li>
             <li><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
+            <li>
+                <a id="scenario-comments-link">{% trans 'Comments:' %}
+                    <strong id="scenario-comments-off">{% trans 'off' %}</strong>
+                    <strong id="scenario-comments-on">{% trans 'on' %}</strong>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
@@ -110,6 +116,8 @@ This scenario explains attack techniques from a black hat's perspective. We woul
     // <![CDATA[
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
+    var USER_COMMENTS_ENABLED = false;
+    var NUM_USER_COMMENTS = {};
     // ]]>
     </script>
     <script type="text/javascript" src="{% static 'scenarios/js/scenario.js' %}"></script>

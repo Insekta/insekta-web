@@ -82,4 +82,50 @@ $(function() {
     $(window).on('scroll resize', debounce(function() {
         scenarioNotesContainer.center();
     }));
+
+
+    /*
+     * Comments to paragraphs
+     */
+    var commentsState = {'enabled': false};
+
+    function showComments() {
+        $('*[data-comment-id]').each(function() {
+            var hash = $(this).data('comment-hash');
+            var numComments = NUM_USER_COMMENTS[hash];
+            if (typeof(numComments) == 'undefined') {
+                numComments = 0;
+            }
+            var commentIcon = $('<a><span class="glyphicon glyphicon-comment"></span></a>');
+            commentIcon.prepend(numComments + ' ');
+            var commentSpan = $('<span class="comment"> </span>').prepend(commentIcon);
+            $(this).prepend(commentSpan);
+        });
+    }
+
+    function hideComments() {
+        $('.comment').remove();
+    }
+
+    function setCommentState(enabled) {
+        if (enabled) {
+            commentsState.enabled = true;
+            $('#scenario-comments-off').hide();
+            $('#scenario-comments-on').show();
+            showComments();
+        } else {
+            commentsState.enabled = false;
+            $('#scenario-comments-off').show();
+            $('#scenario-comments-on').hide();
+            hideComments();
+        }
+    }
+
+    function toggleComments() {
+        setCommentState(!commentsState.enabled);
+    }
+
+    setCommentState(USER_COMMENTS_ENABLED);
+
+    $('#scenario-comments-link').click(toggleComments);
 });
