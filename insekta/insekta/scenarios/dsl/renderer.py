@@ -2,13 +2,16 @@ import functools
 import hmac
 import io
 import os
+
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from jinja2 import Environment, FileSystemLoader, escape
+from jinja2 import Environment, escape
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
+
+from insekta.scenarios.dsl.templateloader import ScenarioTemplateLoader
 
 
 __all__ = ['Renderer']
@@ -33,7 +36,7 @@ class Renderer:
         self.vpn_ip = vpn_ip
         self.template_tasks = scenario.get_template_tasks()
 
-        self.env = Environment(loader=FileSystemLoader(scenario.get_scenario_dir()))
+        self.env = Environment(loader=_template_loader)
         for fn_name, fn in self._get_template_functions().items():
             self.env.globals[fn_name] = fn
 
@@ -226,7 +229,7 @@ class Renderer:
             'vms': self.virtual_machines,
             'vpn_ip': self.vpn_ip
         })
-        return mark_safe(self.env.get_template('scenario.html').render(**context))
+        return mark_safe(self.env.get_template(self.scenario.key).render(**context))
 
     def submit(self, form_values):
         """Submits a form for the given scenario and validates it.
@@ -250,3 +253,6 @@ class Renderer:
                     self._solved_task_identifiers.add(tpl_task.identifier)
                     return tpl_task
         return False
+
+
+_template_loader = ScenarioTemplateLoader(settings.SCENARIO_DIR)
