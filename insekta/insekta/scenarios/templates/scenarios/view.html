@@ -69,12 +69,12 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% endif %}
 
             {% if vpn_running %}
-            {% blocktrans %}Your connection to the VPN is running. Your IP inside the VPN is {{ vpn_ip }}.{% endblocktrans %}
+            {% blocktrans %}You are connected the VPN and your IP inside the VPN is {{ vpn_ip }}.{% endblocktrans %}
 
             {% if vms_running %}
-            {% blocktrans %}You should be able to reach the virtual machines.{% endblocktrans %}
+            {% blocktrans %}The virtual machines should be reachable.{% endblocktrans %}
             {% else %}
-            {% blocktrans %}You should be able to reach the virtual machines once their are enabled.{% endblocktrans %}
+            {% blocktrans %}The virtual machines should be reachable once they are started.{% endblocktrans %}
             {% endif %}
             {% endif %}
         </p>
