@@ -5,6 +5,9 @@ from insekta.scenarios import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^dontdespair$', views.index, kwargs={
+        'is_challenge': True
+    }, name='challenges'),
     url(r'^view/(.+)$', views.view, name='view'),
     url(r'^vms/enable/(.+)$', views.enable_vms, name='enable_vms'),
     url(r'^vms/disable/(.+)$', views.disable_vms, name='disable_vms'),

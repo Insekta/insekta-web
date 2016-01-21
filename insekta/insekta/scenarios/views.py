@@ -22,9 +22,9 @@ COMPONENT_SCRIPTS = {
 
 
 @login_required
-def index(request):
+def index(request, is_challenge=False):
     scenario_groups = ScenarioGroup.objects.filter(
-        scenarios__enabled=True, scenarios__is_challenge=False).prefetch_related()
+        scenarios__enabled=True, scenarios__is_challenge=is_challenge).prefetch_related()
 
     scenario_lookup = {}
     for scenario_group in scenario_groups:
@@ -38,6 +38,7 @@ def index(request):
         scenario_lookup[solved_task.scenario.pk].tasks_solved += 1
 
     return render(request, 'scenarios/index.html', {
+        'is_challenge': is_challenge,
         'scenario_groups': scenario_groups
     })
 

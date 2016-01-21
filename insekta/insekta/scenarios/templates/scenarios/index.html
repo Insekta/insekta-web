@@ -5,7 +5,13 @@
 {% block title %}{% trans 'Scenarios' %}{% endblock %}
 
 {% block content %}
+{% if is_challenge %}
+<h2>{% trans 'Challenges' %}</h2>
+
+<p class="alert alert-warning">{% blocktrans %}Challenges provide no explanations and are therefore not suitable to learn new topics. Anyway, feel free to try them.{% endblocktrans %}</p>
+{% else %}
 <h2>{%  trans 'Scenarios' %}</h2>
+{% endif %}
 
 {% for scenario_group in scenario_groups %}
 {% if scenario_group.scenario_list %}
