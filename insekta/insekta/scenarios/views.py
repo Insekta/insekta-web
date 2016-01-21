@@ -23,7 +23,7 @@ COMPONENT_SCRIPTS = {
 
 @login_required
 def index(request, is_challenge=False):
-    scenario_groups = ScenarioGroup.objects.filter(
+    scenario_groups = ScenarioGroup.objects.distinct().filter(
         scenarios__enabled=True, scenarios__is_challenge=is_challenge).prefetch_related()
 
     scenario_lookup = {}
