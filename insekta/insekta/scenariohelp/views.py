@@ -135,7 +135,6 @@ def set_support(request):
     scenario_key = request.POST.get('scenario', '')
     scenario = get_object_or_404(Scenario, key=scenario_key, enabled=True)
     enabled = request.POST.get('enabled') == '1'
-    print("---->", enabled)
 
     if enabled:
         SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
