@@ -18,7 +18,7 @@ css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
 
 js: ${base_static}js/bootstrap.min.js ${base_static}js/jquery.min.js ${base_static}js/insekta.min.js ${base_static}js/automath.min.js
 
-components: ${components_static}katex ${components_static}katex/katex-scenario.min.js ${components_static}raphaeljs ${components_static}flot
+components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
 
 ${base_static}js/jquery.min.js:
 	wget -O $@ '${jquery_download}'
@@ -37,9 +37,6 @@ ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_stat
 
 %.mo: %.po
 	msgfmt -o $@ $<
-
-${components_static}katex/katex-scenario.min.js: ${scenarios_static}/js/katex-scenario.js ${components_static}katex
-	yui-compressor -o $@ --type css --charset utf-8 $<
 
 ${components_static}katex:
 	mkdir -p $@
