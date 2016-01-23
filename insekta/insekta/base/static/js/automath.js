@@ -5,7 +5,13 @@ $(function() {
             {left: "\\(", right: "\\)", display: false}
         ]
     };
-    $('.auto-math').each(function() {
-        renderMathInElement(this, mathOpts);
-    })
+
+    function runAutoMath() {
+        $('.auto-math').each(function () {
+            renderMathInElement(this, mathOpts);
+        });
+    }
+    window.runAutoMath = runAutoMath;
+
+    runAutoMath()
 });
