@@ -1,0 +1,19 @@
+{% load i18n %}
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans 'Author' %}</th>
+    <th>{% trans 'Comment' %}</th>
+</tr>
+</thead>
+<tbody>
+{% for comment in comments %}
+<tr>
+    <td>{{ comment.author }}</td>
+    <td class="auto-math">
+        {{ comment.text|safe }}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>

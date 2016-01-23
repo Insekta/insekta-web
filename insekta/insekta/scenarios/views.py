@@ -10,16 +10,14 @@ from django.views.decorators.http import require_POST
 
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
-from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment
 
 
 COMPONENT_STYLESHEETS = {
-    'katex': ['katex/katex.min.css']
 }
 COMPONENT_SCRIPTS = {
     'raphaeljs': ['raphael/raphael.min.js'],
-    'katex': ['katex/katex.min.js',
-              'katex/katex-scenario.min.js']
+    'katex': ['katex/katex-scenario.min.js']
 }
 
 
@@ -161,6 +159,17 @@ def save_notes(request, scenario_key):
 def save_comments_state(request):
     request.session['comments_enabled'] = request.POST.get('enabled') == '1'
     return HttpResponse('{"result": "ok"}', content_type='application/json')
+
+
+@login_required
+def get_comments(request, scenario_key):
+    scenario = _get_scenario(scenario_key, request.user)
+    comment_id_str = request.GET.get('comment_id', '')
+    comment_id = get_object_or_404(CommentId, scenario=scenario, comment_id=comment_id_str)
+    comments = Comment.objects.filter(comment_id=comment_id).order_by('-time_created')
+    return render(request, 'scenarios/get_comments.html', {
+        'comments': comments
+    })
 
 
 def _get_scenario(scenario_key, user):

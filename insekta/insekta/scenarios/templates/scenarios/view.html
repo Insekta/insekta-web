@@ -37,6 +37,18 @@
     </div>
 </div>
 
+<div class="modal fade" id="scenario-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{% trans 'User comments' %}</h4>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 {% if scenario.show_ethics_reminder %}
 <p class="alert alert-info blackhat">
 {% url 'ethics:view' as ethics_url %}
@@ -105,6 +117,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 
 {% block additional_styles %}
 {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
 {% for stylesheet in additional_stylesheets %}
     <link href="{{ stylesheet }}" rel="stylesheet">
 {% endfor %}
@@ -112,11 +125,15 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 
 {% block additional_scripts %}
 {{ block.super }}
+    <script type="text/javascript" src="{% static 'components/katex/katex.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'components/katex/contrib/auto-render.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/automath.min.js' %}"></script>
     <script type="text/javascript">
     // <![CDATA[
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     var SAVE_COMMENTS_STATE_URL = "{% url 'scenarios:save_comments_state' %}";
+    var GET_COMMENTS_URL = "{% url 'scenarios:get_comments' scenario.key %}";
     var USER_COMMENTS_ENABLED = {{ comments_enabled|safe }};
     var NUM_USER_COMMENTS = {{ num_user_comments|safe }};
     // ]]>

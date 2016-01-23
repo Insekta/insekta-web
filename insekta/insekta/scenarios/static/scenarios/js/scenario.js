@@ -89,21 +89,29 @@ $(function() {
      */
     var commentsState = {'enabled': false};
 
-    function showComments() {
+    function showCommentIcons() {
         $('*[data-comment-id]').each(function() {
-            var hash = $(this).data('comment-id');
-            var numComments = NUM_USER_COMMENTS[hash];
+            var commentId = $(this).data('comment-id');
+            var numComments = NUM_USER_COMMENTS[commentId];
             if (typeof(numComments) == 'undefined') {
                 numComments = 0;
             }
             var commentIcon = $('<a><span class="glyphicon glyphicon-comment"></span></a>');
             commentIcon.prepend(numComments + ' ');
+            commentIcon.on('click', (function(commentId) {
+                return function(ev) {
+                    $.get(GET_COMMENTS_URL, {'comment_id': commentId}, function(html) {
+                        showComments(commentId, html);
+                    });
+                }
+            })(commentId));
+
             var commentSpan = $('<span class="comment"> </span>').prepend(commentIcon);
             $(this).prepend(commentSpan);
         });
     }
 
-    function hideComments() {
+    function hideCommentIcons() {
         $('.comment').remove();
     }
 
@@ -112,22 +120,35 @@ $(function() {
             commentsState.enabled = true;
             $('#scenario-comments-off').hide();
             $('#scenario-comments-on').show();
-            showComments();
+            showCommentIcons();
             $.post(SAVE_COMMENTS_STATE_URL, {'enabled': '1'});
         } else {
             commentsState.enabled = false;
             $('#scenario-comments-off').show();
             $('#scenario-comments-on').hide();
-            hideComments();
+            hideCommentIcons();
             $.post(SAVE_COMMENTS_STATE_URL, {'enabled': '0'});
         }
     }
 
-    function toggleComments() {
+    function toggleCommentIcons() {
         setCommentState(!commentsState.enabled);
+    }
+
+    function showComments(commentId, html) {
+        var scenarioModal = $('#scenario-modal');
+        var modalBody = scenarioModal.find('.modal-body');
+        modalBody.empty();
+        var paragraph = $('[data-comment-id="' + commentId + '"]').clone();
+        paragraph.find('.comment').remove();
+        var blockquote = $('<blockquote></blockquote>').append(paragraph);
+        var commentDiv = $('<div></div>').html(html);
+        modalBody.append(blockquote).append(commentDiv);
+        runAutoMath();
+        scenarioModal.modal();
     }
 
     setCommentState(USER_COMMENTS_ENABLED);
 
-    $('#scenario-comments-link').click(toggleComments);
+    $('#scenario-comments-link').click(toggleCommentIcons);
 });

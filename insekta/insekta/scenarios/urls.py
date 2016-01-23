@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^vms/ping/(.+)$', views.ping_vms, name='ping_vms'),
     url(r'^save_notes/(.+)$', views.save_notes, name='save_notes'),
     url(r'^save_comments_state$', views.save_comments_state, name='save_comments_state'),
+    url(r'^get_comments/(.+)$$', views.get_comments, name='get_comments'),
 ]
