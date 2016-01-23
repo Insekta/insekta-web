@@ -120,7 +120,7 @@ def configure_help(request):
     for supported in SupportedScenario.objects.filter(user=request.user):
         supported_scenario_pks.add(supported.scenario.pk)
 
-    scenarios = list(Scenario.objects.order_by('title'))
+    scenarios = list(Scenario.objects.filter(enabled=True).order_by('title'))
     for scenario in scenarios:
         scenario.is_supported = scenario.pk in supported_scenario_pks
 
