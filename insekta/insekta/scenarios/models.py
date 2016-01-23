@@ -96,6 +96,14 @@ class Scenario(models.Model):
         # FIXME
         return '/scenarios/view/{}'.format(self.key)
 
+    def get_comment_counts(self):
+        comment_ids = CommentId.objects.filter(scenario=self).annotate(
+            num_comments=models.Count('comments'))
+        comment_counts = {}
+        for comment_id in comment_ids:
+            comment_counts[comment_id.comment_id] = comment_id.num_comments
+        return comment_counts
+
     def _load_extra(self):
         if hasattr(self, '_extra'):
             return

@@ -117,7 +117,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     var USER_COMMENTS_ENABLED = false;
-    var NUM_USER_COMMENTS = {};
+    var NUM_USER_COMMENTS = {{ num_user_comments|safe }};
     // ]]>
     </script>
     <script type="text/javascript" src="{% static 'scenarios/js/scenario.js' %}"></script>

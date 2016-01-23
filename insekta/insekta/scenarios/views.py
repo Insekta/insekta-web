@@ -1,3 +1,5 @@
+import json
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -96,6 +98,8 @@ def view(request, scenario_key):
     except Notes.DoesNotExist:
         notes = ''
 
+    num_user_comments = json.dumps(scenario.get_comment_counts())
+
     return render(request, 'scenarios/view.html', {
         'scenario': scenario,
         'rendered_scenario': renderer.render(),
@@ -107,7 +111,8 @@ def view(request, scenario_key):
         'vms_expire_time': expire_time,
         'vpn_running': vpn_ip is not None,
         'vpn_ip': vpn_ip,
-        'notes': notes
+        'notes': notes,
+        'num_user_comments': num_user_comments
     })
 
 

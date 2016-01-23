@@ -91,7 +91,7 @@ $(function() {
 
     function showComments() {
         $('*[data-comment-id]').each(function() {
-            var hash = $(this).data('comment-hash');
+            var hash = $(this).data('comment-id');
             var numComments = NUM_USER_COMMENTS[hash];
             if (typeof(numComments) == 'undefined') {
                 numComments = 0;
