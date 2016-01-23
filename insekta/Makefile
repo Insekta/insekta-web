@@ -16,7 +16,7 @@ all: css js components
 
 css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
 
-js: ${base_static}js/bootstrap.min.js ${base_static}js/jquery.min.js ${base_static}js/insekta.min.js ${base_static}js/automath.min.js
+js: ${base_static}js/bootstrap.min.js ${base_static}js/jquery.min.js ${base_static}js/insekta.min.js ${base_static}js/katex-all.min.js
 
 components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
 
@@ -29,6 +29,9 @@ ${scenarios_static}css/pygments.css:
 ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
 
+${base_static}js/katex-all.min.js: ${components_static}katex/katex.min.js ${components_static}katex/contrib/auto-render.min.js ${base_static}js/automath.js
+	cat $^ | yui-compressor -o $@ --type js --charset utf-8
+
 %.min.css: %.css
 	yui-compressor -o $@ --type css --charset utf-8 $<
 
@@ -37,6 +40,10 @@ ${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_stat
 
 %.mo: %.po
 	msgfmt -o $@ $<
+
+${components_static}katex/katex.min.js: ${components_static}katex
+
+${components_static}katex/contrib/auto-render.min.js: ${components_static}katex
 
 ${components_static}katex:
 	mkdir -p $@

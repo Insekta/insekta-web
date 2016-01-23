@@ -125,9 +125,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 
 {% block additional_scripts %}
 {{ block.super }}
-    <script type="text/javascript" src="{% static 'components/katex/katex.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'components/katex/contrib/auto-render.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/automath.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/katex-all.min.js' %}"></script>
     <script type="text/javascript">
     // <![CDATA[
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
