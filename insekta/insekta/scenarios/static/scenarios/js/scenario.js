@@ -178,7 +178,8 @@ $(function() {
         scenarioModal.modal();
     }
 
-    setCommentState(USER_COMMENTS_ENABLED);
-
-    $('#scenario-comments-link').click(toggleCommentIcons);
+    if (!$.isEmptyObject(NUM_USER_COMMENTS)) {
+        setCommentState(USER_COMMENTS_ENABLED);
+        $('#scenario-comments-link').css('display', 'block').click(toggleCommentIcons);
+    }
 });
