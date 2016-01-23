@@ -113,11 +113,13 @@ $(function() {
             $('#scenario-comments-off').hide();
             $('#scenario-comments-on').show();
             showComments();
+            $.post(SAVE_COMMENTS_STATE_URL, {'enabled': '1'});
         } else {
             commentsState.enabled = false;
             $('#scenario-comments-off').show();
             $('#scenario-comments-on').hide();
             hideComments();
+            $.post(SAVE_COMMENTS_STATE_URL, {'enabled': '0'});
         }
     }
 

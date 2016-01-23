@@ -98,6 +98,7 @@ def view(request, scenario_key):
     except Notes.DoesNotExist:
         notes = ''
 
+    comments_enabled = json.dumps(request.session.get('comments_enabled', False))
     num_user_comments = json.dumps(scenario.get_comment_counts())
 
     return render(request, 'scenarios/view.html', {
@@ -112,6 +113,7 @@ def view(request, scenario_key):
         'vpn_running': vpn_ip is not None,
         'vpn_ip': vpn_ip,
         'notes': notes,
+        'comments_enabled': comments_enabled,
         'num_user_comments': num_user_comments
     })
 
@@ -152,6 +154,14 @@ def save_notes(request, scenario_key):
     notes.content = request.POST.get('notes', '')
     notes.save()
     return HttpResponse('{"result": "ok"}', content_type='application/json')
+
+
+@require_POST
+@login_required
+def save_comments_state(request):
+    request.session['comments_enabled'] = request.POST.get('enabled') == '1'
+    return HttpResponse('{"result": "ok"}', content_type='application/json')
+
 
 def _get_scenario(scenario_key, user):
     if settings.DEBUG:
