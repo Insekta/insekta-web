@@ -199,7 +199,7 @@ def save_comment(request, scenario_key):
 
 
 def _get_comments_response(request, comment_id):
-    comments = Comment.objects.filter(comment_id=comment_id).order_by('-time_created')
+    comments = Comment.objects.filter(comment_id=comment_id).order_by('time_created')
     allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST, settings.ATTR_WHITELIST)
     return render(request, 'scenarios/get_comments.html', {
         'comments': comments,
