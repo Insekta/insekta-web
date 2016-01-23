@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}{% trans 'New question' %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'New question' %}</h2>
+
+<form method="post" action="">
+{% csrf_token %}
+<div class="form-group">
+    <label>Scenario</label>
+    <p><a href="{% url 'scenarios:view' scenario.key %}">{{ scenario.title }}</a></p>
+</div>
+<div class="form-group{% if form.title.errors %} has-error{% endif %}">
+    <label for="id_title">{% trans 'Title' %}</label>
+    {% render_field form.title class+="form-control" %}
+</div>
+<div class="form-group{% if form.text.errors %} has-error{% endif %}">
+    <label for="id_text">{% trans 'Your question' %}</label>
+    {% render_field form.text class+="form-control" %}
+</div>
+
+{% if preview %}
+<div class="form-group">
+    <label>{% trans 'Preview' %}</label>
+    <div class="auto-math" style="border:1px solid #ccc;">
+    {{ preview|safe }}
+    </div>
+</div>
+{% endif %}
+
+<div class="form-group">
+    <p>
+        {% trans 'The following HTML is allowed:' %} {{ allowed_markup }}.
+        {% trans 'Additionally you can use \( inline math \) or \[ block math \].' %}
+    </p>
+    <p>
+        <button class="btn btn-primary" name="save">{% trans 'Ask question' %}</button>
+        <button class="btn btn-default" name="preview">{% trans 'Preview' %}</button>
+    </p>
+</div>
+</form>
+{% endblock %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
+{% endblock %}
+{% block additional_scripts %}
+    <script type="text/javascript" src="{% static 'components/katex/katex.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'components/katex/contrib/auto-render.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/automath.min.js' %}"></script>
+{% endblock %}

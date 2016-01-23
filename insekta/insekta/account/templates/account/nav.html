@@ -3,4 +3,6 @@
     <li{% if tab == 'account' %} class="active"{% endif %}><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
     <li{% if tab == 'pki' %} class="active"{% endif %}><a href="{% url 'pki:index' %}">{% trans 'Certificates' %}</a></li>
     <li{% if tab == 'vpn' %} class="active"{% endif %}><a href="{% url 'vpn:index' %}">{% trans 'VPN' %}</a></li>
+    <li{% if tab == 'my_questions' %} class="active"{% endif %}><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
+    <li{% if tab == 'configure_help' %} class="active"{% endif %}><a href="{% url 'scenariohelp:configure_help' %}">{% trans 'Configure help' %}</a></li>
 </ul>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}{% trans 'Configure help' %}{% endblock %}
+
+{% block content %}
+{% include 'account/nav.html' with tab='configure_help' %}
+<h2>{% trans 'Configure help' %}</h2>
+
+<p>{% trans 'Thank you for helping others! You will see help requests for the following scenarios:' %}</p>
+
+{% for scenario in scenarios %}
+<div class="checkbox" id="chosen-scenarios">
+    <label>
+        <input type="checkbox" name="{{ scenario.key }}"{% if scenario.is_supported %} checked{% endif %}>
+        {{ scenario.title }}
+    </label>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block additional_scripts %}
+<script type="text/javascript">
+// <[!CDATA[
+var SET_SUPPORT_URL = '{% url 'scenariohelp:set_support' %}';
+// ]]>
+</script>
+<script type="text/javascript" src="{% static 'scenariohelp/js/configure_help.js' %}"></script>
+{% endblock %}

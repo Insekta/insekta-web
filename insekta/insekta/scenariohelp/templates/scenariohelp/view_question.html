@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{{ question.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ question.title }}</h2>
+
+<table class="table">
+<tbody>
+<tr>
+    <th>{% trans 'Asked by' %}</th>
+    <td>{{ question.author }}</td>
+</tr>
+<tr>
+    <th>{% trans 'Asked at' %}</th>
+    <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+</tr>
+<tr>
+    <th>{% trans "Scenario" %}</th>
+    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+</tr>
+</tbody>
+</table>
+
+<table class="table">
+<thead>
+<tr>
+    <th style="width:15em;">{% trans 'Author' %}</th>
+    <th>{% trans 'Post' %}</th>
+</tr>
+</thead>
+<tbody>
+{% for post in posts %}
+<tr>
+    <td>{{ post.author }}</td>
+    <td class="auto-math">{{ post.text|safe }}</td>
+</tr>
+{% endfor %}
+{% if question.author == user or question.is_solved %}
+<tr>
+    <td colspan="2" style="text-align:center;">
+        {% if question.is_solved %}
+        <p class="alert alert-success">{% trans 'This question is solved.' %}</p>
+        {% else %}
+            {% if question.author == user %}
+            <p>{% trans 'Did you get a good answer for your question? If yes, please mark your question as solved.' %}</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                <button class="btn btn-success" name="solve">{% trans 'Mark as solved' %}</button>
+            </form>
+            {% endif %}
+        {% endif %}
+    </td>
+</tr>
+{% endif %}
+{% if not question.is_solved or answer_preview%}
+<tr>
+    <td>
+        <strong>
+            {% if question.author == user %}
+            {% trans 'Your query' context 'In response to an answer' %}
+            {% else %}
+            {% trans 'Your answer' %}
+            {% endif %}
+        </strong>
+    </td>
+    <td>
+        <div class="auto-math">
+            {{ answer_preview|safe }}
+        </div>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea title="{% trans 'Your answer' %}" name="answer" class="form-control" rows="10">{{ answer }}</textarea>
+            </div>
+            <p>
+                {% trans 'The following HTML is allowed:' %} {{ allowed_markup }}.
+                {% trans 'Additionally you can use \( inline math \) or \[ block math \].' %}
+            </p>
+            {% if question.is_solved %}
+                <p class="alert alert-warning">{% trans "This question is already solved, you can't answer anymore." %}</p>
+            {% endif %}
+            <div class="form-group">
+                <button class="btn btn-primary" name="save"{% if question.is_solved %} disabled{% endif %}>{% trans 'Answer' %}</button>
+                <button class="btn btn-default" name="preview">{% trans 'Preview' %}</button>
+            </div>
+        </form>
+
+    </td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock %}
+
+{% block additional_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
+{% endblock %}
+{% block additional_scripts %}
+<script type="text/javascript" src="{% static 'components/katex/katex.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'components/katex/contrib/auto-render.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/automath.min.js' %}"></script>
+{% endblock %}

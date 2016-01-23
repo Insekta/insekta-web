@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'My questions' %}{% endblock %}
+
+{% block content %}
+{% include 'account/nav.html' with tab='my_questions' %}
+<h2>{% trans 'My questions' %}</h2>
+
+{% if questions %}
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Asked at' %}</th>
+    <th>{% trans 'Scenario' %}</th>
+    <th>{% trans 'Is solved' %}</th>
+</tr>
+</thead>
+<tbody>
+{% for question in questions %}
+<tr>
+    <td>
+        {% if not question.seen_by_author %}
+        <span class="glyphicon glyphicon-asterisk" title="{% trans 'new answer' %}"></span>
+        {% endif %}
+        <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+    </td>
+    <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+    <td>
+        {% if question.is_solved %}
+        <span class="glyphicon glyphicon-ok" title="{% trans 'Yes' %}"></span>
+        {% else %}
+        <span class="glyphicon glyphicon-remove" title="{% trans 'No' %}"></span>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>{% trans 'You have asked no questions. Choose a scenario to ask a question.' %}</p>
+{% endif %}
+{% endblock %}

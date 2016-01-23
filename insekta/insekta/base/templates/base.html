@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load i18n %}
+{% load scenariohelp %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,6 +29,14 @@
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'scenarios:index' %}">{% trans 'Scenarios' %}</a></li>
                         <li><a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a></li>
+                        <li>
+                            <a href="{% url 'scenariohelp:index' %}">
+                                Help others
+                                {% num_new_questions user as num_new %}
+                                {% if num_new > 0 %}
+                                <span class="badge">{{ num_new }}</span>
+                                {% endif %}
+                            </a></li>
                         <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
                         {% if user.is_staff %}
                         <li><a href="{% url 'admin:index' %}">Admin</a></li>
@@ -43,6 +52,13 @@
 {% endblock nav %}
 {% block precontent %}{% endblock %}
         <div class="container">
+{% num_new_questions_answered user as num_answered %}
+{% if num_answered %}
+{% url 'scenariohelp:my_questions' as my_questions_url %}
+<p class="alert alert-success">
+{% blocktrans %}<strong>Hooray!</strong> Someone answered one of <a href="{{ my_questions_url }}">your questions</a>.{% endblocktrans %}
+</p>
+{% endif %}
 {% block content %}{% endblock %}
         </div>
 {% block postcontent %}{% endblock %}

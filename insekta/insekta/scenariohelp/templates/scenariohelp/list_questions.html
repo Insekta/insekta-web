@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Open questions" %}{% endblock %}
+
+{% block content %}
+<h2>{% trans 'Open questions' %}</h2>
+
+{% url 'scenariohelp:configure_help' as configure_help_url %}
+<p>
+{% blocktrans %}You will only see questions for scenarios you have chosen to help.
+<a href="{{ configure_help_url }}">Change my help preferences.</a>{% endblocktrans %}
+</p>
+
+{% if questions %}
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans "Title" %}</th>
+    <th>{% trans "Asked at" %}</th>
+    <th>{% trans "Asked by" %}</th>
+    <th>{% trans "Scenario" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for question in questions %}
+<tr>
+    <td>
+        {% if not question.is_seen %}
+        <span class="glyphicon glyphicon-asterisk" title="{% trans "New" %}"></span>
+        {% endif %}
+        <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+    </td>
+    <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+    <td>{{ question.author }}</td>
+    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>{% trans "There are no open questions for your help preferences." %}</p>
+{% endif %}
+{% endblock %}
