@@ -135,3 +135,7 @@ USE_REMOTE_API_DUMMY = True
 REMOTE_API_URL = 'http://localhost:8001/api/'
 
 REMOTE_API_AUTH = ('api', 'mypassword')
+
+TAG_WHITELIST = ['a', 'p', 'em', 'strong', 'code', '<pre>', 'blockquote']
+
+ATTR_WHITELIST = {'a': ['href']}
