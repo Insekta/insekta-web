@@ -87,7 +87,12 @@ class Scenario(models.Model):
                     orphaned_cid.save()
 
         for comment_id in comment_ids:
-            CommentId.objects.get_or_create(scenario=self, comment_id=comment_id)
+            comment_id_obj, created = CommentId.objects.get_or_create(
+                    scenario=self, comment_id=comment_id)
+            if not created:
+                comment_id_obj.orphaned = False
+                comment_id_obj.save()
+
 
     def solve(self, user, task_identifier):
         Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
@@ -97,7 +102,7 @@ class Scenario(models.Model):
         return '/scenarios/view/{}'.format(self.key)
 
     def get_comment_counts(self):
-        comment_ids = CommentId.objects.filter(scenario=self).annotate(
+        comment_ids = CommentId.objects.filter(scenario=self, orphaned=False).annotate(
             num_comments=models.Count('comments'))
         comment_counts = {}
         for comment_id in comment_ids:
