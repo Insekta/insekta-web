@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
+from django.contrib.messages import constants as message_constants
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -139,3 +140,11 @@ REMOTE_API_AUTH = ('api', 'mypassword')
 TAG_WHITELIST = ['a', 'p', 'em', 'strong', 'code', '<pre>', 'blockquote']
 
 ATTR_WHITELIST = {'a': ['href']}
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'alert-info',
+    message_constants.INFO: 'alert-info',
+    message_constants.SUCCESS: 'alert-success',
+    message_constants.WARNING: 'alert-warning',
+    message_constants.ERROR: 'alert-danger'
+}

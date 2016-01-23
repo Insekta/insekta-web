@@ -52,6 +52,13 @@
 {% endblock nav %}
 {% block precontent %}{% endblock %}
         <div class="container">
+
+        {% if messages %}
+        {% for message in messages %}
+        <p class="alert{% if message.tags %} {{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+
 {% num_new_questions_answered user as num_answered %}
 {% if num_answered %}
 {% url 'scenariohelp:my_questions' as my_questions_url %}
