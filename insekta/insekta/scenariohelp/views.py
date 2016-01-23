@@ -29,7 +29,7 @@ def list_questions(request):
                                                  question__in=questions)
     seen_pks = set(hq.question.pk for hq in seen_questions)
     for question in questions:
-        question.is_seen = question.pk in seen_pks
+        question.is_seen = question.pk in seen_pks or question.author == request.user
 
     return render(request, 'scenariohelp/list_questions.html', {
         'questions': questions

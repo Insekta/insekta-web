@@ -92,10 +92,11 @@ def get_num_unseen(user):
     FROM scenariohelp_question AS q
     LEFT JOIN scenariohelp_seenquestion AS sq ON q.id = sq.question_id
     WHERE NOT q.is_solved AND
+          q.author_id <> %s AND
           sq.id IS NULL AND
           q.scenario_id IN
             (SELECT scenario_id FROM scenariohelp_supportedscenario WHERE user_id = %s)
     '''
     with connection.cursor() as c:
-        c.execute(sql_query, (user.pk, ))
+        c.execute(sql_query, (user.pk, user.pk))
         return c.fetchone()[0]
