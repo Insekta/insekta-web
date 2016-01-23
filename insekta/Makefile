@@ -14,9 +14,9 @@ static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*
 
 all: css js components
 
-css: ${base_static}css/insekta.min.css ${base_static}css/bootstrap.min.css
+css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/bootstrap.min.js ${base_static}js/jquery.min.js ${base_static}js/insekta.min.js ${base_static}js/katex-all.min.js
+js: ${base_static}js/insekta.min.js ${base_static}js/katex-all.min.js
 
 components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
 
@@ -26,8 +26,11 @@ ${base_static}js/jquery.min.js:
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
-${base_static}css/insekta.min.css: ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
+${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
+
+${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js
+	cat $^ | yui-compressor -o $@ --type js --charset utf-8
 
 ${base_static}js/katex-all.min.js: ${components_static}katex/katex.min.js ${components_static}katex/contrib/auto-render.min.js ${base_static}js/automath.js
 	cat $^ | yui-compressor -o $@ --type js --charset utf-8
@@ -78,6 +81,10 @@ clean:
 	rm -rf ${base_static}css/insekta.css \
 		   ${base_static}css/insekta.min.css \
 		   ${base_static}css/bootstrap.min.css \
+		   ${scenarios_static}css/pygments.css \
+		   ${base_static}js/insekta.min.js \
+		   ${base_static}js/jquery.min.js \
+		   ${base_static}js/katex-all.min.js \
 		   ${base_static}components
 
 watchstatic:
