@@ -59,13 +59,16 @@
         {% endfor %}
         {% endif %}
 
-{% num_new_questions_answered user as num_answered %}
-{% if num_answered %}
-{% url 'scenariohelp:my_questions' as my_questions_url %}
-<p class="alert alert-success">
-{% blocktrans %}<strong>Hooray!</strong> Someone answered one of <a href="{{ my_questions_url }}">your questions</a>.{% endblocktrans %}
-</p>
-{% endif %}
+        {% if user.is_authenticated %}
+        {% num_new_questions_answered user as num_answered %}
+        {% if num_answered %}
+        {% url 'scenariohelp:my_questions' as my_questions_url %}
+        <p class="alert alert-success">
+        {% blocktrans %}<strong>Hooray!</strong> Someone answered one of <a href="{{ my_questions_url }}">your questions</a>.{% endblocktrans %}
+        </p>
+        {% endif %}
+        {% endif %}
+
 {% block content %}{% endblock %}
         </div>
 {% block postcontent %}{% endblock %}
