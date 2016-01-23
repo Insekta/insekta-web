@@ -10,6 +10,8 @@
         <ul class="nav nav-pills">
             <li><a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
             <li><a id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a></li>
+            <li><a href="{% url 'scenariohelp:new_question' scenario.key %}">{% trans 'Ask question' %}</a></li>
+            <li><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
         </ul>
     </div>
 </div>
