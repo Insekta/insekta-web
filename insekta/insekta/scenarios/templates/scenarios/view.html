@@ -133,6 +133,8 @@ This scenario explains attack techniques from a black hat's perspective. We woul
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     var SAVE_COMMENTS_STATE_URL = "{% url 'scenarios:save_comments_state' %}";
+    var PREVIEW_COMMENT_URL = "{% url 'scenarios:preview_comment' %}";
+    var SAVE_COMMENT_URL = "{% url 'scenarios:save_comment' scenario.key %}";
     var GET_COMMENTS_URL = "{% url 'scenarios:get_comments' scenario.key %}";
     var USER_COMMENTS_ENABLED = {{ comments_enabled|safe }};
     var NUM_USER_COMMENTS = {{ num_user_comments|safe }};

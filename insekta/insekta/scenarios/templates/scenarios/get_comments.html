@@ -2,7 +2,7 @@
 <table class="table">
 <thead>
 <tr>
-    <th>{% trans 'Author' %}</th>
+    <th style="width:15em;">{% trans 'Author' %}</th>
     <th>{% trans 'Comment' %}</th>
 </tr>
 </thead>
@@ -15,5 +15,27 @@
     </td>
 </tr>
 {% endfor %}
+<tr>
+    <td>
+        <label for="scenario-post-comment-text">{% trans 'Your comment' %}</label>
+    </td>
+    <td>
+        <div class="auto-math" id="scenario-post-comment-preview"></div>
+
+        <form method="post" action="" id="#scenario-post-comment">
+            <div class="form-group">
+                <textarea id="scenario-post-comment-text" class="form-control" rows="10"></textarea>
+            </div>
+        </form>
+        <p>
+            {% trans 'The following HTML is allowed:' %} {{ allowed_markup }}.
+            {% trans 'Additionally you can use \( inline math \) or \[ block math \].' %}
+        </p>
+        <p>
+            <button class="btn btn-primary" name="save">{% trans 'Comment' %}</button>
+            <button class="btn btn-default" name="preview">{% trans 'Preview' %}</button>
+        </p>
+    </td>
+</tr>
 </tbody>
 </table>

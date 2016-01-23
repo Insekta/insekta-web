@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^save_notes/(.+)$', views.save_notes, name='save_notes'),
     url(r'^save_comments_state$', views.save_comments_state, name='save_comments_state'),
     url(r'^get_comments/(.+)$$', views.get_comments, name='get_comments'),
+    url(r'^preview_comment$', views.preview_comment, name='preview_comment'),
+    url(r'^save_comment/(.+)$', views.save_comment, name='save_comment'),
 ]

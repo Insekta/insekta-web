@@ -1,5 +1,6 @@
 import json
 
+import bleach
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -8,6 +9,7 @@ from django.middleware.csrf import get_token
 from django.conf import settings
 from django.views.decorators.http import require_POST
 
+from insekta.base.utils import describe_allowed_markup
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment
@@ -166,9 +168,42 @@ def get_comments(request, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
     comment_id_str = request.GET.get('comment_id', '')
     comment_id = get_object_or_404(CommentId, scenario=scenario, comment_id=comment_id_str)
+    return _get_comments_response(request, comment_id)
+
+
+@require_POST
+@login_required
+def preview_comment(request):
+    comment = request.POST.get('comment', '')
+    comments_preview = bleach.clean(bleach.linkify(comment),
+                                    tags=settings.TAG_WHITELIST,
+                                    attributes=settings.ATTR_WHITELIST)
+    return HttpResponse(comments_preview)
+
+
+@require_POST
+def save_comment(request, scenario_key):
+    scenario = _get_scenario(scenario_key, request.user)
+    comment_id_str = request.POST.get('comment_id', '')
+    comment_id = get_object_or_404(CommentId, scenario=scenario, comment_id=comment_id_str)
+    comment = request.POST.get('comment', '')
+    if comment.strip() != '':
+        comments_html = bleach.clean(bleach.linkify(comment),
+                                     tags=settings.TAG_WHITELIST,
+                                     attributes=settings.ATTR_WHITELIST)
+        Comment.objects.create(comment_id=comment_id,
+                               author=request.user,
+                               text=comments_html)
+
+    return _get_comments_response(request, comment_id)
+
+
+def _get_comments_response(request, comment_id):
     comments = Comment.objects.filter(comment_id=comment_id).order_by('-time_created')
+    allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST, settings.ATTR_WHITELIST)
     return render(request, 'scenarios/get_comments.html', {
-        'comments': comments
+        'comments': comments,
+        'allowed_markup': allowed_markup
     })
 
 

@@ -92,6 +92,9 @@ $(function() {
     function showCommentIcons() {
         $('*[data-comment-id]').each(function() {
             var commentId = $(this).data('comment-id');
+            if (commentId == '') {
+                return;
+            }
             var numComments = NUM_USER_COMMENTS[commentId];
             if (typeof(numComments) == 'undefined') {
                 numComments = 0;
@@ -140,9 +143,36 @@ $(function() {
         var modalBody = scenarioModal.find('.modal-body');
         modalBody.empty();
         var paragraph = $('[data-comment-id="' + commentId + '"]').clone();
-        paragraph.find('.comment').remove();
+        paragraph.attr('data-comment-id', '').find('.comment').remove();
         var blockquote = $('<blockquote></blockquote>').append(paragraph);
         var commentDiv = $('<div></div>').html(html);
+        commentDiv.find('form').on('submit', function() {
+            ev.stopPropagation();
+            ev.preventDefault();
+            return false;
+        });
+        commentDiv.find('button[name="preview"]').on('click', function() {
+            var comment = commentDiv.find('textarea').val();
+            $.post(PREVIEW_COMMENT_URL, {'comment': comment}, function(preview) {
+                commentDiv.find('#scenario-post-comment-preview').html(preview);
+                runAutoMath();
+            });
+        });
+        commentDiv.find('button[name="save"]').on('click', function() {
+            var comment = commentDiv.find('textarea').val();
+            if (comment.trim() == '') {
+                return;
+            }
+            $.post(SAVE_COMMENT_URL, {
+                'comment_id': commentId,
+                'comment': comment
+            }, function(html) {
+                showComments(commentId, html);
+                NUM_USER_COMMENTS[commentId]++;
+                hideCommentIcons();
+                showCommentIcons();
+            });
+        });
         modalBody.append(blockquote).append(commentDiv);
         runAutoMath();
         scenarioModal.modal();
