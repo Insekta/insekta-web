@@ -6,6 +6,7 @@ import shutil
 
 from django.db import models
 from django.conf import settings
+from django.utils.timezone import now
 
 from insekta.scenarios.dsl.taskparser import TaskParser
 
@@ -67,6 +68,26 @@ class Scenario(models.Model):
         if purge:
             for unused_task_identifier in unused_task_identifiers:
                 existing_tasks[unused_task_identifier].delete()
+
+    def update_comment_ids(self, purge=False):
+        with open(self.get_template_filename()) as f:
+            contents = f.read()
+        comment_ids = set(re.findall(r'data-comment-id="([a-z0-9_-]{0,64})"', contents))
+
+        orphaned = CommentId.objects.filter(scenario=self).exclude(comment_id__in=comment_ids)
+        for orphaned_cid in orphaned:
+            if orphaned_cid.get_num_usages() == 0:
+                orphaned_cid.delete()
+            else:
+                if purge:
+                    orphaned_cid.comments.all().delete()
+                    orphaned_cid.delete()
+                else:
+                    orphaned_cid.orphaned = True
+                    orphaned_cid.save()
+
+        for comment_id in comment_ids:
+            CommentId.objects.get_or_create(scenario=self, comment_id=comment_id)
 
     def solve(self, user, task_identifier):
         Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
@@ -136,6 +157,7 @@ class Scenario(models.Model):
         scenario.is_challenge = is_challenge
         scenario.requires_vpn = requires_vpn
         scenario.update_tasks()
+        scenario.update_comment_ids()
         scenario.save()
         return scenario
 
@@ -168,3 +190,28 @@ class Notes(models.Model):
 
     def __str__(self):
         return 'Notes for user {} at scenario {}'.format(self.user, self.scenario)
+
+
+class CommentId(models.Model):
+    comment_id = models.CharField(max_length=64)
+    scenario = models.ForeignKey(Scenario)
+    orphaned = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('scenario', 'comment_id')
+
+    def __str__(self):
+        return '{}: {}'.format(self.scenario, self.comment_id)
+
+    def get_num_usages(self):
+        return Comment.objects.filter(comment_id=self).count()
+
+
+class Comment(models.Model):
+    comment_id = models.ForeignKey(CommentId, related_name='comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    time_created = models.DateTimeField(default=now)
+    text = models.TextField()
+
+    def __str__(self):
+        return '{}: {} at {}'.format(self.comment_id, self.author, self.time_created)
