@@ -61,6 +61,8 @@ ${components_static}mathjax:
 	rm -rf $@/unpacked
 	rm -rf $@/docs
 	rm -rf $@/tests
+	rm -rf $@/fonts/HTML-CSS/TeX/png
+	rm -rf $@/fonts/HTML-CSS/TeX/svg
 	rm ${mathjax_tmp}
 
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
