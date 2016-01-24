@@ -20,7 +20,7 @@
 <table class="table table-striped">
 <thead>
     <tr>
-        <th>{% trans 'Topic' %}</th>
+        <th>{% if is_challenge %}{% trans 'Challenge' %}{% else %}{% trans 'Topic' %}{% endif %}</th>
         <th style="width:200px">{% trans 'Solved exercises' %}</th>
     </tr>
 </thead>
