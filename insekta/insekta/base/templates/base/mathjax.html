@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js", "Safe.js"],
+    jax: ["input/TeX", "output/SVG", "output/CommonHTML"],
+    tex2jax: {
+      inlineMath: [ ["\\(","\\)"] ],
+      displayMath: [ ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<script type="text/javascript" async src="{% static 'components/mathjax/MathJax.js' %}"></script>

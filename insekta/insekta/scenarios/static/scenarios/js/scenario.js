@@ -182,20 +182,4 @@ $(function() {
         setCommentState(USER_COMMENTS_ENABLED);
         $('#scenario-comments-link').css('display', 'block').click(toggleCommentIcons);
     }
-
-    /*
-     * KaTeX support for scenarios
-     */
-    $('.math-inline').each(function() {
-        katex.render($(this).text(), this, {
-            'displayMode': false,
-            'throwOnError': false
-        });
-    });
-    $('.math-block').each(function() {
-        katex.render($(this).text(), this, {
-            'displayMode': true,
-            'throwOnError': false
-        });
-    });
 });

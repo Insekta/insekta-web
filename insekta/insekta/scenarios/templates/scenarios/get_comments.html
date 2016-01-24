@@ -10,7 +10,7 @@
 {% for comment in comments %}
 <tr>
     <td>{{ comment.author }}</td>
-    <td class="auto-math">
+    <td class="tex2jax_process">
         {{ comment.text|safe }}
     </td>
 </tr>
@@ -20,7 +20,7 @@
         <label for="scenario-post-comment-text">{% trans 'Your comment' %}</label>
     </td>
     <td>
-        <div class="auto-math" id="scenario-post-comment-preview"></div>
+        <div class="tex2jax_process" id="scenario-post-comment-preview"></div>
 
         <form method="post" action="" id="#scenario-post-comment">
             <div class="form-group">

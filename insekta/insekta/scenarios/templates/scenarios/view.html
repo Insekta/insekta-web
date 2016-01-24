@@ -112,12 +112,11 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 {% endif %}
 {% endif %}
 
-{{ rendered_scenario }}
+<div class="tex2jax_process">{{ rendered_scenario }}</div>
 {%  endblock content %}
 
 {% block additional_styles %}
 {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
 {% for stylesheet in additional_stylesheets %}
     <link href="{{ stylesheet }}" rel="stylesheet">
 {% endfor %}
@@ -125,7 +124,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
 
 {% block additional_scripts %}
 {{ block.super }}
-    <script type="text/javascript" src="{% static 'js/katex-all.min.js' %}"></script>
+    {% include 'base/mathjax.html' %}
     <script type="text/javascript">
     // <![CDATA[
     var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};

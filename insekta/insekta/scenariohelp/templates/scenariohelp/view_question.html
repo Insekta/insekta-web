@@ -35,7 +35,7 @@
 {% for post in posts %}
 <tr>
     <td>{{ post.author }}</td>
-    <td class="auto-math">{{ post.text|safe }}</td>
+    <td class="tex2jax_process">{{ post.text|safe }}</td>
 </tr>
 {% endfor %}
 {% if question.author == user or question.is_solved %}
@@ -67,7 +67,7 @@
         </strong>
     </td>
     <td>
-        <div class="auto-math">
+        <div class="tex2jax_process">
             {{ answer_preview|safe }}
         </div>
         <form method="post" action="">
@@ -95,9 +95,6 @@
 </table>
 {% endblock %}
 
-{% block additional_styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
-{% endblock %}
 {% block additional_scripts %}
-<script type="text/javascript" src="{% static 'js/katex-all.min.js' %}"></script>
+{% include 'base/mathjax.html' %}
 {% endblock %}

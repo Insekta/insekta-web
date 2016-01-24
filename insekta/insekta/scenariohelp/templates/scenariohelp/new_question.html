@@ -26,7 +26,7 @@
 {% if preview %}
 <div class="form-group">
     <label>{% trans 'Preview' %}</label>
-    <div class="auto-math" style="border:1px solid #ccc;">
+    <div class="tex2jax_process" style="border:1px solid #ccc;">
     {{ preview|safe }}
     </div>
 </div>
@@ -45,9 +45,6 @@
 </form>
 {% endblock %}
 
-{% block additional_styles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'components/katex/katex.min.css' %}">
-{% endblock %}
 {% block additional_scripts %}
-    <script type="text/javascript" src="{% static 'js/katex-all.min.js' %}"></script>
+{% include 'base/mathjax.html' %}
 {% endblock %}

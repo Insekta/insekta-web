@@ -1,17 +1,6 @@
 $(function() {
-    var mathOpts = {
-        'delimiters': [
-            {left: "\\[", right: "\\]", display: true},
-            {left: "\\(", right: "\\)", display: false}
-        ]
-    };
-
     function runAutoMath() {
-        $('.auto-math').each(function () {
-            renderMathInElement(this, mathOpts);
-        });
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     }
     window.runAutoMath = runAutoMath;
-
-    runAutoMath()
 });

@@ -5,10 +5,11 @@ scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
 jquery_download = http://code.jquery.com/jquery-2.1.4.min.js
-katex_download = https://github.com/Khan/KaTeX/releases/download/v0.5.1/katex.tar.gz
 raphaeljs_download = http://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
+mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
+mathjax_tmp := $(shell mktemp -u).zip
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min    .js' -o -name '*.min.css' \))
 
@@ -16,9 +17,9 @@ all: css js components
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js ${base_static}js/katex-all.min.js
+js: ${base_static}js/insekta.min.js
 
-components: ${components_static}katex ${components_static}raphaeljs ${components_static}flot
+components: ${components_static}mathjax ${components_static}raphaeljs ${components_static}flot
 
 ${base_static}js/jquery.min.js:
 	wget -O $@ '${jquery_download}'
@@ -29,10 +30,7 @@ ${scenarios_static}css/pygments.css:
 ${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | yui-compressor -o $@ --type css --charset utf-8
 
-${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js
-	cat $^ | yui-compressor -o $@ --type js --charset utf-8
-
-${base_static}js/katex-all.min.js: ${components_static}katex/katex.min.js ${components_static}katex/contrib/auto-render.min.js ${base_static}js/automath.js
+${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
 	cat $^ | yui-compressor -o $@ --type js --charset utf-8
 
 %.min.css: %.css
@@ -44,14 +42,6 @@ ${base_static}js/katex-all.min.js: ${components_static}katex/katex.min.js ${comp
 %.mo: %.po
 	msgfmt -o $@ $<
 
-${components_static}katex/katex.min.js: ${components_static}katex
-
-${components_static}katex/contrib/auto-render.min.js: ${components_static}katex
-
-${components_static}katex:
-	mkdir -p $@
-	wget -O - '${katex_download}' | tar -xzC $(dir $@)
-
 ${components_static}raphaeljs:
 	mkdir -p $@
 	wget -P $@ ${raphaeljs_download}
@@ -60,6 +50,15 @@ ${components_static}flot:
 	wget -O ${flot_tmp} '${flot_download}'
 	unzip ${flot_tmp} -d $(dir $@)
 	rm ${flot_tmp}
+
+${components_static}mathjax:
+	wget -O ${mathjax_tmp} '${mathjax_download}'
+	unzip ${mathjax_tmp} -d $(dir $@)
+	mv $(dir $@)/MathJax-master $@
+	rm -rf $@/unpacked
+	rm -rf $@/docs
+	rm -rf $@/tests
+	rm ${mathjax_tmp}
 
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
 
@@ -84,7 +83,6 @@ clean:
 		   ${scenarios_static}css/pygments.css \
 		   ${base_static}js/insekta.min.js \
 		   ${base_static}js/jquery.min.js \
-		   ${base_static}js/katex-all.min.js \
 		   ${base_static}components
 
 watchstatic:
