@@ -9,7 +9,7 @@
 
 {% url 'scenariohelp:configure_help' as configure_help_url %}
 <p>
-{% blocktrans %}You will only see questions for scenarios you have chosen to help.
+{% blocktrans %}You will only see questions for topics you have chosen to help.
 <a href="{{ configure_help_url }}">Change my help preferences.</a>{% endblocktrans %}
 </p>
 
@@ -20,7 +20,7 @@
     <th>{% trans "Title" %}</th>
     <th>{% trans "Asked at" %}</th>
     <th>{% trans "Asked by" %}</th>
-    <th>{% trans "Scenario" %}</th>
+    <th>{% trans "Topic" %}</th>
 </tr>
 </thead>
 <tbody>

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load scenario_progress %}
 
-{% block title %}{% trans 'Scenarios' %}{% endblock %}
+{% block title %}{% trans 'Topics' %}{% endblock %}
 
 {% block content %}
 {% if is_challenge %}
@@ -10,7 +10,7 @@
 
 <p class="alert alert-warning">{% blocktrans %}Challenges provide no explanations and are therefore not suitable to learn new topics. Anyway, feel free to try them.{% endblocktrans %}</p>
 {% else %}
-<h2>{%  trans 'Scenarios' %}</h2>
+<h2>{%  trans 'Topics' %}</h2>
 {% endif %}
 
 {% for scenario_group in scenario_groups %}
@@ -20,7 +20,7 @@
 <table class="table table-striped">
 <thead>
     <tr>
-        <th>{% trans 'Scenario' %}</th>
+        <th>{% trans 'Topic' %}</th>
         <th style="width:200px">{% trans 'Solved exercises' %}</th>
     </tr>
 </thead>

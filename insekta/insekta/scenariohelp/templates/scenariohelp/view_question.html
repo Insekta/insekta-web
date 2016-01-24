@@ -19,7 +19,7 @@
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
 </tr>
 <tr>
-    <th>{% trans "Scenario" %}</th>
+    <th>{% trans "Topic" %}</th>
     <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
 </tr>
 </tbody>

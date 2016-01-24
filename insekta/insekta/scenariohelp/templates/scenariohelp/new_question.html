@@ -11,7 +11,7 @@
 <form method="post" action="">
 {% csrf_token %}
 <div class="form-group">
-    <label>Scenario</label>
+    <label>{% trans 'Topic' %}</label>
     <p><a href="{% url 'scenarios:view' scenario.key %}">{{ scenario.title }}</a></p>
 </div>
 <div class="form-group{% if form.title.errors %} has-error{% endif %}">

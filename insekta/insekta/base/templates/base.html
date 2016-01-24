@@ -26,11 +26,11 @@
                 <div id="navbar">
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'scenarios:index' %}">{% trans 'Scenarios' %}</a></li>
+                        <li><a href="{% url 'scenarios:index' %}">{% trans 'Topics' %}</a></li>
                         <li><a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a></li>
                         <li>
                             <a href="{% url 'scenariohelp:index' %}">
-                                Help others
+                                {% trans 'Help others' %}
                                 {% num_new_questions user as num_new %}
                                 {% if num_new > 0 %}
                                 <span class="badge">{{ num_new }}</span>

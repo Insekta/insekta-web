@@ -53,7 +53,7 @@
 <p class="alert alert-info blackhat">
 {% url 'ethics:view' as ethics_url %}
 {% blocktrans %}
-This scenario explains attack techniques from a black hat's perspective. We would like to remind you of the <a href="{{ ethics_url }}">hacker ethics</a>.
+This topic contains explanations of attack techniques from a black hat's perspective. We would like to remind you of the <a href="{{ ethics_url }}">hacker ethics</a>.
 {% endblocktrans %}
 </p>
 {% endif %}
@@ -85,7 +85,7 @@ This scenario explains attack techniques from a black hat's perspective. We woul
             {% if vms_running %}
             {% blocktrans with expire_time=vms_expire_time|time:"TIME_FORMAT" %}Virtual machines are running. If you close this page they will be destroyed automatically at <span id="expire_time">{{ expire_time }}</span>, but you can manually destroy them if you like.{% endblocktrans %}
             {% else %}
-            {% blocktrans %}This scenario makes use of virtual machines. In order to solve some exercises you might have to start them.{% endblocktrans %}
+            {% blocktrans %}This topic makes use of virtual machines. In order to solve some exercises you might have to start them.{% endblocktrans %}
             {% endif %}
 
             {% if vpn_running %}
