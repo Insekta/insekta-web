@@ -6,6 +6,7 @@ import shutil
 
 from django.db import models
 from django.conf import settings
+from django.db.models import Count
 from django.utils.timezone import now
 
 from insekta.scenarios.dsl.taskparser import TaskParser
@@ -187,10 +188,69 @@ class Task(models.Model):
 
 class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
-    scenarios = models.ManyToManyField(Scenario, related_name='groups')
+    hidden = models.BooleanField(default=False)
+    scenario_objects = models.ManyToManyField(Scenario,
+                                              through='ScenarioGroupEntry',
+                                              related_name='groups')
+
+    @staticmethod
+    def annotate_list(scenario_group_list, is_challenge=None, user=None):
+        """Annotate a list of ScenarioGroup objects with scenarios attribute.
+
+        After calling this function, the ScenarioGroup objects in the list
+        will have an scenarios attribute, which is a sorted list of scenarios.
+        Additionally those scenarios will have an attribute num_tasks_solved,
+        which tells you, how many tasks were solved by the user.
+
+        :param scenario_group_list: List of ScenarioGroup objects
+        :param user: A django user
+        :return: list of ScenarioGroup objects
+        """
+        assert isinstance(scenario_group_list, list)
+
+        group_lookup = {group.pk: group for group in scenario_group_list}
+        for group in scenario_group_list:
+            group.scenarios = []
+
+        all_entries = (ScenarioGroupEntry.objects.select_related('scenario')
+                       .filter(scenario_group__in=scenario_group_list,
+                               scenario__enabled=True)
+                       .order_by('order_id'))
+        scenario_lookup = {}
+        for entry in all_entries:
+            scenario = entry.scenario
+            take_scenario = (is_challenge is None or
+                             scenario.is_challenge == is_challenge)
+            if not take_scenario:
+                continue
+            group = group_lookup[entry.scenario_group.pk]
+            group.scenarios.append(scenario)
+            scenario_lookup[scenario.pk] = scenario
+
+        if user:
+            for scenario in scenario_lookup.values():
+                scenario.num_tasks_solved = 0
+            task_counts = (Task.objects.filter(solved_by=user)
+                           .values('scenario').annotate(num_solved=Count('id')))
+            for task_count in task_counts:
+                scenario_pk = task_count['scenario']
+                if scenario_pk in scenario_lookup:
+                    scenario = scenario_lookup[scenario_pk]
+                    scenario.num_tasks_solved = task_count['num_solved']
+
+        return [group for group in group_lookup.values() if group.scenarios]
 
     def __str__(self):
         return self.title
+
+
+class ScenarioGroupEntry(models.Model):
+    scenario = models.ForeignKey(Scenario)
+    scenario_group = models.ForeignKey(ScenarioGroup)
+    order_id = models.IntegerField(default=1)
+
+    def __str__(self):
+        return '{}: {}'.format(self.scenario_group, self.scenario)
 
 
 class Notes(models.Model):

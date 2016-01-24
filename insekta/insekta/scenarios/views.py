@@ -24,19 +24,10 @@ COMPONENT_SCRIPTS = {
 
 @login_required
 def index(request, is_challenge=False):
-    scenario_groups = ScenarioGroup.objects.distinct().filter(
-        scenarios__enabled=True, scenarios__is_challenge=is_challenge).prefetch_related()
-
-    scenario_lookup = {}
-    for scenario_group in scenario_groups:
-        scenario_group.scenario_list = list(scenario_group.scenarios.all())
-        for scenario in scenario_group.scenario_list:
-            scenario.tasks_solved = 0
-            scenario_lookup[scenario.pk] = scenario
-    solved_tasks = Task.objects.filter(solved_by=request.user,
-                                       scenario__pk__in=scenario_lookup.keys())
-    for solved_task in solved_tasks:
-        scenario_lookup[solved_task.scenario.pk].tasks_solved += 1
+    scenario_groups = list(ScenarioGroup.objects.filter(hidden=False))
+    scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
+                                                  is_challenge=is_challenge,
+                                                  user=request.user)
 
     return render(request, 'scenarios/index.html', {
         'is_challenge': is_challenge,
