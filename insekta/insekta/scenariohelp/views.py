@@ -15,7 +15,7 @@ from insekta.scenariohelp.models import SupportedScenario, Question, SeenQuestio
 from insekta.scenarios.models import Scenario
 
 
-NUM_SOLVED_PER_PAGE = 1
+NUM_SOLVED_PER_PAGE = 25
 
 
 @login_required
