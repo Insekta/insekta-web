@@ -51,6 +51,11 @@
 {% endblock nav %}
 {% block precontent %}{% endblock %}
         <div class="container">
+        <noscript>
+            <p class="alert alert-danger">
+            {% trans "Please enable JavaScript. Don't worry, we won't set your CPU on fire with snowflakes on this page." %}
+            </p>
+        </noscript>
 
         {% if messages %}
         {% for message in messages %}
