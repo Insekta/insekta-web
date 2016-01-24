@@ -88,7 +88,7 @@ def view(request, scenario_key):
     except Notes.DoesNotExist:
         notes = ''
 
-    comments_enabled = json.dumps(request.session.get('comments_enabled', False))
+    comments_enabled = json.dumps(request.session.get('comments_enabled', True))
     num_user_comments = json.dumps(scenario.get_comment_counts())
 
     return render(request, 'scenarios/view.html', {
