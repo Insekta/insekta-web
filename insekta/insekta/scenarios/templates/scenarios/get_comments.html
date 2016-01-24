@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load formatuser %}
 <table class="table">
 <thead>
 <tr>
@@ -9,7 +10,9 @@
 <tbody>
 {% for comment in comments %}
 <tr>
-    <td>{{ comment.author }}</td>
+    <td>
+        <p>{% format_user comment.author %}</p>
+        <p><small>{{ comment.time_created|date:"SHORT_DATETIME_FORMAT" }}</small></p>
     <td class="tex2jax_process">
         {{ comment.text|safe }}
     </td>

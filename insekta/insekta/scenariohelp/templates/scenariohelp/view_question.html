@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load formatuser %}
 
 {% block title %}{{ question.title }}{% endblock %}
 
@@ -11,7 +12,7 @@
 <tbody>
 <tr>
     <th>{% trans 'Asked by' %}</th>
-    <td>{{ question.author }}</td>
+    <td>{% format_user question.author %}</td>
 </tr>
 <tr>
     <th>{% trans 'Asked at' %}</th>
@@ -34,7 +35,10 @@
 <tbody>
 {% for post in posts %}
 <tr>
-    <td>{{ post.author }}</td>
+    <td>
+        <p>{% format_user post.author %}</p>
+        <p><small>{{ post.time_created|date:"SHORT_DATETIME_FORMAT" }}</small></p>
+    </td>
     <td class="tex2jax_process">{{ post.text|safe }}</td>
 </tr>
 {% endfor %}

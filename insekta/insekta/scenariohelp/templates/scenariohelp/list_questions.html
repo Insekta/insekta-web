@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load formatuser %}
 
 {% block title %}{% trans "Open questions" %}{% endblock %}
 
@@ -32,7 +33,7 @@
         <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
-    <td>{{ question.author }}</td>
+    <td>{% format_user question.author %}</td>
     <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
 </tr>
 {% endfor %}
