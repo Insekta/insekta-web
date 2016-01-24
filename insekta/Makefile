@@ -11,6 +11,9 @@ mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
 mathjax_tmp := $(shell mktemp -u).zip
 
+YUI_COMPRESSOR := $(shell scripts/yuicompressor.py --find)
+
+
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min    .js' -o -name '*.min.css' \))
 
 all: css js components
@@ -28,16 +31,16 @@ ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
 ${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
-	cat $^ | yui-compressor -o $@ --type css --charset utf-8
+	cat $^ | $(YUI_COMPRESSOR) -o $@ --type css --charset utf-8
 
 ${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
-	cat $^ | yui-compressor -o $@ --type js --charset utf-8
+	cat $^ | $(YUI_COMPRESSOR) -o $@ --type js --charset utf-8
 
 %.min.css: %.css
-	yui-compressor -o $@ --type css --charset utf-8 $<
+	$(YUI_COMPRESSOR) -o $@ --type css --charset utf-8 $<
 
 %.min.js: %.js
-	yui-compressor -o $@ --type js --charset utf-8 $<
+	$(YUI_COMPRESSOR) -o $@ --type js --charset utf-8 $<
 
 %.mo: %.po
 	msgfmt -o $@ $<
