@@ -189,6 +189,7 @@ class Task(models.Model):
 class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
     hidden = models.BooleanField(default=False)
+    order_id = models.IntegerField(default=1)
     scenario_objects = models.ManyToManyField(Scenario,
                                               through='ScenarioGroupEntry',
                                               related_name='groups')
@@ -238,7 +239,7 @@ class ScenarioGroup(models.Model):
                     scenario = scenario_lookup[scenario_pk]
                     scenario.num_tasks_solved = task_count['num_solved']
 
-        return [group for group in group_lookup.values() if group.scenarios]
+        return [group for group in scenario_group_list if group.scenarios]
 
     def __str__(self):
         return self.title
