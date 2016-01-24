@@ -100,7 +100,11 @@ $(function() {
                 numComments = 0;
             }
             var commentIcon = $('<a><span class="glyphicon glyphicon-comment"></span></a>');
-            commentIcon.prepend(numComments + ' ');
+            if (numComments > 0) {
+                commentIcon.prepend(numComments + ' ').css('color', '#907');
+            } else {
+                commentIcon.css('color', '#ccc');
+            }
             commentIcon.on('click', (function(commentId) {
                 return function(ev) {
                     $.get(GET_COMMENTS_URL, {'comment_id': commentId}, function(html) {
