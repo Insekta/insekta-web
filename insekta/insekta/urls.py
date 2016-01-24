@@ -25,8 +25,8 @@ urlpatterns = [
     url(r'^$', base_views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^account/', include('insekta.account.urls', namespace='account')),
-    url(r'^scenarios/', include('insekta.scenarios.urls', namespace='scenarios')),
-    url(r'^scenariohelp/', include('insekta.scenariohelp.urls', namespace='scenariohelp')),
+    url(r'^topics/', include('insekta.scenarios.urls', namespace='scenarios')),
+    url(r'^help/', include('insekta.scenariohelp.urls', namespace='scenariohelp')),
 ]
 
 if 'insekta.ethics' in settings.INSTALLED_APPS:
