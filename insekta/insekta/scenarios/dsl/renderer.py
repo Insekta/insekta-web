@@ -59,7 +59,7 @@ class Renderer:
         yield '<div class="panel panel-{}" id="task_{}">\n'.format(panel_type, task_mac)
         yield '<div class="panel-heading">\n'
         if title:
-            panel_title = _('Task: {}').format(title)
+            panel_title = _('Exercise: {}').format(title)
         else:
             panel_title = _('Exercise')
         yield '<h3 class="panel-title">{}</h3>\n'.format(escape(panel_title))
