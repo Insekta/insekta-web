@@ -20,7 +20,7 @@ all: css js components
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js
+js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js
 
 components: ${components_static}mathjax ${components_static}raphaeljs ${components_static}flot
 
