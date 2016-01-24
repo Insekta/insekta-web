@@ -3,6 +3,7 @@ import bleach
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, InvalidPage
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
@@ -12,6 +13,9 @@ from insekta.base.utils import describe_allowed_markup
 from insekta.scenariohelp.forms import NewQuestionForm
 from insekta.scenariohelp.models import SupportedScenario, Question, SeenQuestion, Post
 from insekta.scenarios.models import Scenario
+
+
+NUM_SOLVED_PER_PAGE = 1
 
 
 @login_required
@@ -24,12 +28,7 @@ def list_questions(request):
                  .filter(is_solved=False, scenario__pk__in=scenario_pks)
                  .order_by('-time_created'))
     questions = list(questions)
-
-    seen_questions = SeenQuestion.objects.filter(user=request.user,
-                                                 question__in=questions)
-    seen_pks = set(hq.question.pk for hq in seen_questions)
-    for question in questions:
-        question.is_seen = question.pk in seen_pks or question.author == request.user
+    _annotate_is_seen(questions, request.user)
 
     return render(request, 'scenariohelp/list_questions.html', {
         'questions': questions
@@ -42,6 +41,39 @@ def my_questions(request):
                  .order_by('-time_created'))
     return render(request, 'scenariohelp/my_questions.html', {
         'questions': questions
+    })
+
+
+@login_required
+def scenario_questions(request, scenario_key):
+    scenario = get_object_or_404(Scenario, key=scenario_key)
+    unsolved_questions = list(Question.objects.select_related()
+                              .filter(is_solved=False, scenario=scenario)
+                              .order_by('-time_created'))
+    my_unsolved = []
+    others_unsolved = []
+    for question in unsolved_questions:
+        if question.author == request.user:
+            my_unsolved.append(question)
+        else:
+            others_unsolved.append(question)
+
+    _annotate_is_seen(others_unsolved, request.user)
+
+    solved_questions = (Question.objects.select_related()
+                        .filter(is_solved=True, scenario=scenario)
+                        .order_by('-time_created'))
+    paginator = Paginator(solved_questions, per_page=NUM_SOLVED_PER_PAGE)
+    try:
+        solved_page = paginator.page(request.GET.get('page'))
+    except InvalidPage:
+        solved_page = paginator.page(1)
+
+    return render(request, 'scenariohelp/scenario_questions.html', {
+        'scenario': scenario,
+        'my_unsolved': my_unsolved,
+        'others_unsolved': others_unsolved,
+        'solved_page': solved_page
     })
 
 
@@ -65,7 +97,7 @@ def new_question(request, scenario_key):
                     scenario=scenario)
                 question.post_answer(request.user, preview, question.time_created)
                 messages.success(request, _('Question was saved.'))
-                return redirect('scenariohelp:my_questions')
+                return redirect('scenariohelp:scenario_questions', scenario.key)
 
     else:
         form = NewQuestionForm()
@@ -141,3 +173,13 @@ def set_support(request):
     else:
         SupportedScenario.objects.filter(user=request.user, scenario=scenario).delete()
     return HttpResponse('{"result": "ok"}', content_type='application/json')
+
+
+def _annotate_is_seen(question_list, user):
+    seen_questions = SeenQuestion.objects.filter(user=user,
+                                                 question__in=question_list)
+    seen_pks = set(hq.question.pk for hq in seen_questions)
+    for question in question_list:
+        question.is_seen = question.pk in seen_pks or question.author == user
+
+    return question_list

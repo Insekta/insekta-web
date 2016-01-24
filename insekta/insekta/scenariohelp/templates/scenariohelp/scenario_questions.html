@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load formatuser %}
+
+{% block title %}{% blocktrans with scenario_title=scenario.title%}Questions for "{{ scenario_title }}"{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<h2>{% blocktrans with scenario_title=scenario.title%}Questions for "{{ scenario_title }}"{% endblocktrans %}</h2>
+
+<p>
+    <a href="{% url 'scenarios:view' scenario.key %}" class="btn btn-default">
+        {% trans 'Back to scenario' %}
+    </a>
+    <a href="{% url 'scenariohelp:my_questions' %}" class="btn btn-default">
+        {% trans 'View all my questions' %}
+    </a>
+</p>
+
+{% if my_unsolved %}
+<h3>{% trans 'My open questions' %}</h3>
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans 'Title' %}</th>
+    <th>{% trans 'Asked at' %}</th>
+</tr>
+</thead>
+<tbody>
+{% for question in my_unsolved %}
+    <tr>
+        <td>
+            {% if not question.seen_by_author %}
+                <span class="glyphicon glyphicon-asterisk" title="{% trans 'new answer' %}"></span>
+            {% endif %}
+            <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+        </td>
+        <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+{% if others_unsolved %}
+<h3>{% trans 'Other open questions' %}</h3>
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans "Title" %}</th>
+    <th>{% trans "Asked at" %}</th>
+    <th>{% trans "Asked by" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for question in others_unsolved %}
+    <tr>
+        <td>
+            {% if not question.is_seen %}
+                <span class="glyphicon glyphicon-asterisk" title="{% trans "New" %}"></span>
+            {% endif %}
+            <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+        </td>
+        <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+        <td>{% format_user question.author %}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+{% if solved_page %}
+<h3 id="solved-questions">{% trans 'Solved questions' %}</h3>
+<table class="table">
+<thead>
+<tr>
+    <th>{% trans "Title" %}</th>
+    <th>{% trans "Asked at" %}</th>
+    <th>{% trans "Asked by" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for question in solved_page %}
+    <tr>
+        <td>
+            <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+        </td>
+        <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+        <td>{% format_user question.author %}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% include 'base/pagination.html' with page=solved_page page_anchor='solved-questions' %}
+{% endif %}
+{% endblock %}
