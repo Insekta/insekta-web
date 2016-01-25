@@ -190,6 +190,8 @@ class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
     hidden = models.BooleanField(default=False)
     order_id = models.IntegerField(default=1)
+    description = models.TextField(blank=True, null=True)
+    internal_comment = models.TextField(blank=True, null=True)
     scenario_objects = models.ManyToManyField(Scenario,
                                               through='ScenarioGroupEntry',
                                               related_name='groups')

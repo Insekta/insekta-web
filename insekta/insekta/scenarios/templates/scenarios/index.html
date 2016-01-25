@@ -16,6 +16,7 @@
 {% for scenario_group in scenario_groups %}
 {% if scenario_group.scenarios %}
 <h3>{{ scenario_group.title }}</h3>
+{% if scenario_group.description %}{{ scenario_group.description|safe }}{% endif %}
 
 <table class="table table-striped">
 <thead>
