@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 23:54+0100\n"
+"POT-Creation-Date: 2016-01-25 23:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,8 +131,9 @@ msgstr ""
 
 #: insekta/base/templates/base/index.html:37
 msgid ""
-"Every topic contains useful exercises you can use to check your knowledge. "
-"Ranging from simple multiple choice questions to programming exercises."
+"Nearly every topic contains useful exercises you can use to check your "
+"knowledge. Ranging from simple multiple choice questions to programming "
+"exercises."
 msgstr ""
 
 #: insekta/base/templates/base/index.html:40
