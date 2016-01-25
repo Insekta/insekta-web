@@ -231,9 +231,9 @@ class ScenarioGroup(models.Model):
             group.scenarios.append(scenario)
             scenario_lookup[scenario.pk] = scenario
 
+        for scenario in scenario_lookup.values():
+            scenario.num_tasks_solved = 0
         if user:
-            for scenario in scenario_lookup.values():
-                scenario.num_tasks_solved = 0
             task_counts = (Task.objects.filter(solved_by=user)
                            .values('scenario').annotate(num_solved=Count('id')))
             for task_count in task_counts:
