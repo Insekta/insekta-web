@@ -1,6 +1,7 @@
 **/__pycache__
 *.min.css
 *.min.js
+*.mo
 insekta/insekta/settings.py
 insekta/testenv
 insekta/insekta/base/static/components
