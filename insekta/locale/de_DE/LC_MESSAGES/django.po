@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 13:26+0100\n"
-"PO-Revision-Date: 2016-01-25 14:12+0100\n"
+"POT-Creation-Date: 2016-01-25 14:24+0100\n"
+"PO-Revision-Date: 2016-01-25 14:24+0100\n"
+"Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.6.10\n"
 
 #: insekta/account/templates/account/index.html:4
@@ -475,24 +475,24 @@ msgstr ""
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:20
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:14
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:18
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:24
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:49
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:76
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:28
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:53
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:80
 msgid "Title"
 msgstr "Titel"
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:21
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:15
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:25
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:50
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:77
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:29
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:54
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:81
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:18
 msgid "Asked at"
 msgstr "Gefragt am"
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:22
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:51
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:78
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:55
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:82
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:14
 msgid "Asked by"
 msgstr "Gefragt von"
@@ -506,7 +506,7 @@ msgid "Topic"
 msgstr "Thema"
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:31
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:59
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:63
 msgid "New"
 msgstr "Neu"
 
@@ -519,7 +519,7 @@ msgid "Is solved"
 msgstr "Geklärt"
 
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:25
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:33
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:37
 msgid "new answer"
 msgstr "neue Antwort"
 
@@ -585,14 +585,18 @@ msgid "View all my questions"
 msgstr "Zeige alle meine Fragen"
 
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:20
+msgid "There are no questions to this topic yet."
+msgstr "Es gibt noch keine Fragen zu diesem Thema."
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:24
 msgid "My open questions"
 msgstr "Meine offenen Fragen"
 
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:45
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:49
 msgid "Other open questions"
 msgstr "Andere offene Fragen"
 
-#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:72
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:76
 msgid "Solved questions"
 msgstr "Geklärte Fragen"
 

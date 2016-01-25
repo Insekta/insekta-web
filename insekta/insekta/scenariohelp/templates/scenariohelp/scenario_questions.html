@@ -16,6 +16,10 @@
     </a>
 </p>
 
+{% if not my_unsolved and not others_unsolved and not solved_page %}
+<p>{% trans 'There are no questions to this topic yet.' %}</p>
+{% endif %}
+
 {% if my_unsolved %}
 <h3>{% trans 'My open questions' %}</h3>
 <table class="table">
