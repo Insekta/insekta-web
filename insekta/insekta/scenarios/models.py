@@ -1,4 +1,3 @@
-import errno
 import json
 import os
 import re
@@ -8,6 +7,7 @@ from django.db import models
 from django.conf import settings
 from django.db.models import Count
 from django.utils.timezone import now
+from django.core.urlresolvers import reverse
 
 from insekta.scenarios.dsl.taskparser import TaskParser
 
@@ -99,8 +99,7 @@ class Scenario(models.Model):
         Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
 
     def get_absolute_url(self):
-        # FIXME
-        return '/scenarios/view/{}'.format(self.key)
+        return reverse('scenarios:view', args=(self.key, ))
 
     def get_comment_counts(self):
         comment_ids = CommentId.objects.filter(scenario=self, orphaned=False).annotate(
