@@ -3,115 +3,169 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-19 17:52+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2016-01-25 13:26+0100\n"
+"PO-Revision-Date: 2016-01-25 14:12+0100\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: insekta/account/templates/account/index.html:4
-#: insekta/base/templates/base.html:30
+#: insekta/account/templates/account/nav.html:3
+#: insekta/base/templates/base.html:40
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
-#: insekta/account/templates/account/index.html:7
+#: insekta/account/templates/account/index.html:9
 #, python-format
 msgid "Hello, %(username)s!"
-msgstr ""
-
-#: insekta/account/templates/account/index.html:11
-#: insekta/pki/templates/pki/index.html:4
-#: insekta/pki/templates/pki/index.html:7
-msgid "Your certificates"
-msgstr ""
-
-#: insekta/account/templates/account/index.html:12
-msgid "VPN configuration"
-msgstr ""
+msgstr "Hallo, %(username)s!"
 
 #: insekta/account/templates/account/login.html:16
 #: insekta/base/templates/base/index.html:18
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 #: insekta/account/templates/account/login.html:21
 #: insekta/base/templates/base/index.html:21
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: insekta/account/templates/account/login.html:25
 #: insekta/base/templates/base/index.html:23
 msgid "Sign in"
-msgstr ""
+msgstr "Einloggen"
+
+#: insekta/account/templates/account/nav.html:4
+msgid "Certificates"
+msgstr "Zertifikate"
+
+#: insekta/account/templates/account/nav.html:5
+#: insekta/vpn/templates/vpn/index.html:4
+#: insekta/vpn/templates/vpn/index.html:8
+msgid "VPN"
+msgstr "VPN"
+
+#: insekta/account/templates/account/nav.html:6
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:4
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:8
+msgid "My questions"
+msgstr "Meine Fragen"
+
+#: insekta/account/templates/account/nav.html:7
+#: insekta/scenariohelp/templates/scenariohelp/configure_help.html:5
+#: insekta/scenariohelp/templates/scenariohelp/configure_help.html:9
+msgid "Configure help"
+msgstr "Hilfe konfigurieren"
 
 #: insekta/base/templates/base.html:29
-#: insekta/scenarios/templates/scenarios/index.html:5
+#: insekta/scenarios/templates/scenarios/index.html:4
+#: insekta/scenarios/templates/scenarios/index.html:12
+msgid "Topics"
+msgstr "Themen"
+
+#: insekta/base/templates/base.html:30
 #: insekta/scenarios/templates/scenarios/index.html:8
-msgid "Scenarios"
-msgstr ""
+msgid "Challenges"
+msgstr "Herausforderungen"
+
+#: insekta/base/templates/base.html:31
+#: insekta/scenarios/templates/scenarios/list_courses.html:4
+#: insekta/scenarios/templates/scenarios/list_courses.html:7
+msgid "Courses"
+msgstr "Kurse"
 
 #: insekta/base/templates/base.html:34
+msgid "Help others"
+msgstr "Anderen helfen"
+
+#: insekta/base/templates/base.html:44
 msgid "Logout"
+msgstr "Logout"
+
+#: insekta/base/templates/base.html:57
+msgid ""
+"Please enable JavaScript. Don't worry, we won't set your CPU on fire with "
+"snowflakes on this page."
 msgstr ""
+"Bitte aktiviere JavaScript. Keine Sorge, wir werden deine CPU nicht mit "
+"Schneeflocken auf dieser Seite zum brennen bringen."
+
+#: insekta/base/templates/base.html:72
+#, python-format
+msgid ""
+"<strong>Hooray!</strong> Someone answered one of <a href="
+"\"%(my_questions_url)s\">your questions</a>."
+msgstr ""
+"<strong>Hurra!</strong> Jemand hat eine <a href=\"%(my_questions_url)s"
+"\">deiner Fragen</a> beantwortet."
 
 #: insekta/base/templates/base/index.html:13
 msgid "Welcome to Insekta"
-msgstr ""
+msgstr "Willkommen bei Insekta"
 
 #: insekta/base/templates/base/index.html:14
 msgid ""
-"<p>Want to learn something about computer security? Sign in with your <a "
-"href=\"https://mafiasi.de/\">mafiasi.de</a> account.</p>"
+"<p>Want to learn something about computer science? Sign in with your <a href="
+"\"https://mafiasi.de/\">mafiasi.de</a> account.</p>"
 msgstr ""
+"<p>Du möchtest etwas über Informatik lernen? Log dich mit deinem <a href="
+"\"https://mafiasi.de/\">mafiasi.de</a>-Account ein.</p>"
 
 #: insekta/base/templates/base/index.html:32
 msgid "Learn"
-msgstr ""
+msgstr "Lernen"
 
 #: insekta/base/templates/base/index.html:33
 msgid ""
 "At Insekta you get comprehensible explanations to various topics of computer "
-"security. They come in form of scenarios which cover certain aspects of a "
-"topic."
+"science. Topics might include visualisations and interactive elements to "
+"make understanding easier."
 msgstr ""
+"Bei Insekta findest du verständliche Erklärungen zu verschiedenen Themen der "
+"Informatik. Die Themen enthalten manchmal sogar Visualisierungen und "
+"interaktive Elemente, um das Verständnis zu verbessern."
 
 #: insekta/base/templates/base/index.html:36
-#: insekta/scenarios/dsl/renderer.py:61
+#: insekta/scenarios/dsl/renderer.py:64
 msgid "Exercise"
-msgstr ""
+msgstr "Übung"
 
 #: insekta/base/templates/base/index.html:37
 msgid ""
-"Every scenario contains useful exercises you can use to check your "
-"knowledge. Ranging from simple multiple choice questions to programming "
-"exercises."
+"Every topic contains useful exercises you can use to check your knowledge. "
+"Ranging from simple multiple choice questions to programming exercises."
 msgstr ""
+"Jedes Thema enthält nützliche Übungen, um dein Wissen zu prüfen. Sie reichen "
+"von einfachen Multiple-Choice-Fragen bis hin zu Programmieraufgaben."
 
 #: insekta/base/templates/base/index.html:40
 msgid "Get help"
-msgstr ""
+msgstr "Hilfe bekommen"
 
 #: insekta/base/templates/base/index.html:41
 msgid ""
-"In case you are stuck with some scenario you can always ask for help. Other "
-"students who already solved the scenario can help you."
+"In case you are stuck with some topic you can always ask for help. Other "
+"students who already solved exercises from this topic can help you."
 msgstr ""
+"Falls du bei einem Thema nicht weiterkommst, kannst du jederzeit um Hilfe "
+"bitten. Andere Studierende, die die Übungen des Themas bereits gelöst haben, "
+"können dir helfen."
 
 #: insekta/ethics/templates/ethics/view_arguments.html:4
 msgid "More about ethics"
-msgstr ""
+msgstr "Mehr über Ethik"
 
 #: insekta/ethics/templates/ethics/view_arguments.html:7
 msgid "Ethics in computer security and computer science in general"
-msgstr ""
+msgstr "Ethik in der IT-Security und Informatik im Allgemeinen"
 
 #: insekta/ethics/templates/ethics/view_arguments.html:9
 msgid ""
@@ -119,10 +173,13 @@ msgid ""
 "<p>We still have to collect some arguments and resources for further reading."
 "</p>\n"
 msgstr ""
+"\n"
+"<p>Wir sammeln noch ein paar Argumente und weiterführende Literatur zum "
+"Vertiefen.</p>\n"
 
 #: insekta/ethics/templates/ethics/view_arguments.html:13
 msgid "Some links"
-msgstr ""
+msgstr "Einige Links"
 
 #: insekta/ethics/templates/ethics/view_arguments.html:14
 msgid ""
@@ -147,15 +204,35 @@ msgid ""
 "    </li>\n"
 "</ul>\n"
 msgstr ""
+"\n"
+"<ul>\n"
+"    <li>\n"
+"        <a href=\"http://cpsr.org/\">Computer professionals for social "
+"responsibility</a>\n"
+"        — Globale Organisation, die für den verantwortungsvollen Umgang mit "
+"IT wirbt\n"
+"    </li>\n"
+"    <li>\n"
+"        <a href=\"http://fiff.de/\">Forum InformatikInnen für Frieden und "
+"gesellschaftliche\n"
+"        Verantwortung</a> — Deutscher Verein mit ähnlichen Themen wie die "
+"CPSR.\n"
+"    </li>\n"
+"    <li>\n"
+"        <a href=\"https://ccc.de/de/hackerethik\">Hackerethik</a> auf der "
+"Website des\n"
+"        <a href=\"https://ccc.de/\">Chaos Computer Club</a>\n"
+"    </li>\n"
+"</ul>\n"
 
 #: insekta/ethics/templates/ethics/view_arguments.html:32
 msgid "Take me back."
-msgstr ""
+msgstr "Bring mich zurück"
 
 #: insekta/ethics/templates/ethics/view_ethics.html:4
 #: insekta/ethics/templates/ethics/view_ethics.html:7
 msgid "Ethics in computer security"
-msgstr ""
+msgstr "Ethik in der IT-Sicherheit"
 
 #: insekta/ethics/templates/ethics/view_ethics.html:8
 msgid ""
@@ -201,15 +278,15 @@ msgstr ""
 
 #: insekta/ethics/templates/ethics/view_ethics.html:52
 msgid "I understand what you want to say and I agree."
-msgstr ""
+msgstr "Ich verstehe, was ihr sagen wollt und stimme dem zu."
 
 #: insekta/pki/templates/pki/create_certificate.html:5
-#: insekta/pki/templates/pki/create_certificate.html:8
-#: insekta/pki/templates/pki/create_certificate.html:55
+#: insekta/pki/templates/pki/create_certificate.html:9
+#: insekta/pki/templates/pki/create_certificate.html:56
 msgid "Create certificate"
-msgstr ""
+msgstr "Zertifikat erstellen"
 
-#: insekta/pki/templates/pki/create_certificate.html:10
+#: insekta/pki/templates/pki/create_certificate.html:11
 #, python-format
 msgid ""
 "\n"
@@ -259,159 +336,477 @@ msgid ""
 "    obtain your certificate.\n"
 "</p>\n"
 msgstr ""
+"\n"
+"<p>\n"
+"    Um einen Certificate Signing Request (CSR) zu erstellen, musst du "
+"zunächst einen privaten Schlüssel anlegen. Du kannst den folgenden Befehl "
+"nutzen, der einen privaten RSA-Schlüssel mit einer Schlüsselgröße von 2048 "
+"Bit erstellt:\n"
+"</p>\n"
+"<p>\n"
+"    <kbd>openssl genrsa -out client.key 2048</kbd>\n"
+"</p>\n"
+"<p>\n"
+"    Du solltest nun eine Datei mit dem Namen \"client.key\" haben. "
+"<strong>Verwahre diese Datei sicher und teile sie mit niemanden!</strong> "
+"Sonst ist dein Account kompromittiert. Sollte dies passieren, solltest du "
+"sofort dein  <a href=\"%(revoke_link)s\"> dein Zertifikate zurückziehen</a> "
+"und einen neuen privaten Schlüssel erstellen.</p>\n"
+"<p>\n"
+"    Im nächsten Schritt wird das CSR selbst erstellt. Ein CSR wird dazu "
+"benutzt, um eine Certificate Authority (CA) um Ausstellung eines Zertifikats "
+"zu bitten. Das CSR beinhaltet in Prinzip das öffentliche Gegenstück zu "
+"deinem privaten Schlüssel und ein paar Informationen über dich. Es ist mit "
+"deinem privaten Schlüssel signiert. Da ein CSR keine geheimen Informationen "
+"enthält, kann es sicher mit anderen geteilt werden. In diesem Fall wirst du "
+"es mit uns teilen (der CA) um von uns ein Zertifikat zu erhalten.</p>\n"
+"<p>\n"
+"    Du kannst den folgenden Befehl nutzen, um ein CSR zu erstellen. Es wird "
+"dich nach einigen Informationen fragen. Du kannst irgendetwas eingeben (oder "
+"einfach immer <kbd>Enter</kbd> drücken), wir werden die Angaben sowieso "
+"ignorieren:</p>\n"
+"<p>\n"
+"    <kbd>openssl req -new -key client.key -out client.csr</kbd>\n"
+"</p>\n"
+"<p>Glückwunsch! Du solltest nun eine Datei mit dem Namen \"client.csr\" mit "
+"dem CSR haben. Kopiere den Inhalt diese Datei in das folgende Eingabefeld, "
+"um dein Zertifikat zu erhalten:</p>\n"
 
-#: insekta/pki/templates/pki/create_certificate.html:51
+#: insekta/pki/templates/pki/create_certificate.html:52
 msgid "CSR (pem encoded)"
-msgstr ""
+msgstr "CSR (PEM-kodiert)"
 
-#: insekta/pki/templates/pki/create_certificate.html:56
+#: insekta/pki/templates/pki/create_certificate.html:57
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
-#: insekta/pki/templates/pki/index.html:12
+#: insekta/pki/templates/pki/index.html:4
+#: insekta/pki/templates/pki/index.html:8
+msgid "Your certificates"
+msgstr "Deine Zertifikate"
+
+#: insekta/pki/templates/pki/index.html:13
 #, python-format
 msgid ""
 "You have a valid certificate. You should now go and <a href=\"%(vpn_link)s"
 "\">configure VPN</a>"
 msgstr ""
-
-#: insekta/pki/templates/pki/index.html:20
-msgid "Fingerprint (SHA256)"
-msgstr ""
+"Du besitzt ein gültiges Zertifikat und solltest nun dein <a href="
+"\"%(vpn_link)s\">VPN konfigurieren</a>"
 
 #: insekta/pki/templates/pki/index.html:21
-msgid "Expire date"
-msgstr ""
+msgid "Fingerprint (SHA256)"
+msgstr "Fingerprint (SHA256)"
 
 #: insekta/pki/templates/pki/index.html:22
-msgid "Status"
-msgstr ""
+msgid "Expire date"
+msgstr "Ablaufdatum"
 
 #: insekta/pki/templates/pki/index.html:23
-msgid "Action"
-msgstr ""
+msgid "Status"
+msgstr "Status"
 
-#: insekta/pki/templates/pki/index.html:54
+#: insekta/pki/templates/pki/index.html:24
+msgid "Action"
+msgstr "Aktion"
+
+#: insekta/pki/templates/pki/index.html:55
 msgid ""
 "You don't have any certificates yet. If you want to connect to the VPN you "
 "have create one."
 msgstr ""
+"Du hast noch keine Zertifikate. Wenn du dich zum VPN verbinden möchtest, "
+"musst du eines erstellen."
 
-#: insekta/pki/templates/pki/index.html:59
+#: insekta/pki/templates/pki/index.html:60
 msgid "Create new certificate"
-msgstr ""
+msgstr "Neues Zertifikat erstellen"
 
 #: insekta/pki/templates/pki/revoke_certificate.html:4
-#: insekta/pki/templates/pki/revoke_certificate.html:7
+#: insekta/pki/templates/pki/revoke_certificate.html:8
 msgid "Revoke certificate"
-msgstr ""
+msgstr "Zertifikate zurückziehen"
 
-#: insekta/pki/templates/pki/revoke_certificate.html:9
+#: insekta/pki/templates/pki/revoke_certificate.html:10
 #, python-format
 msgid ""
 "\n"
 "Do you really want to revoke the certificate with the fingerprint <strong>"
 "%(fingerprint)s</strong>?\n"
 msgstr ""
-
-#: insekta/pki/templates/pki/revoke_certificate.html:19
-msgid "Yes, revoke it"
-msgstr ""
+"\n"
+"Möchtest du wirklich das Zertifikat mit dem Fingerprint <strong>"
+"%(fingerprint)s</strong> zurückziehen?\n"
 
 #: insekta/pki/templates/pki/revoke_certificate.html:20
+msgid "Yes, revoke it"
+msgstr "Ja, zurückziehen"
+
+#: insekta/pki/templates/pki/revoke_certificate.html:21
 msgid "No, please not"
-msgstr ""
+msgstr "Nein, bitte nicht"
 
-#: insekta/scenarios/dsl/renderer.py:59
-msgid "Task: {}"
+#: insekta/scenariohelp/templates/scenariohelp/configure_help.html:11
+msgid ""
+"Thank you for helping others! You will see help requests for the following "
+"topics:"
 msgstr ""
+"Danke, dass du anderen hilfst! Du siehst Hilfe-Anfragen zu den folgenden "
+"Themen:"
 
-#: insekta/scenarios/dsl/renderer.py:68
-msgid "Congratulation. Your answer is correct."
+#: insekta/scenariohelp/templates/scenariohelp/configure_help.html:18
+msgid "challenge"
+msgstr "Herausforderung"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:5
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:8
+msgid "Open questions"
+msgstr "Offene Fragen"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:12
+#, python-format
+msgid ""
+"You will only see questions for topics you have chosen to help.\n"
+"<a href=\"%(configure_help_url)s\">Change my help preferences.</a>"
 msgstr ""
+"Du siehst hier nur Fragen zu Themen, bei denen zu dich bereit erklärt hast "
+"zu helfen. <a href=\"%(configure_help_url)s\">Meine Hilfe-Themen ändern.</a>"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:20
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:14
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:18
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:24
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:49
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:76
+msgid "Title"
+msgstr "Titel"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:21
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:15
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:25
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:50
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:77
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:18
+msgid "Asked at"
+msgstr "Gefragt am"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:22
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:51
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:78
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:14
+msgid "Asked by"
+msgstr "Gefragt von"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:23
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:16
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:14
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:22
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:12
+msgid "Topic"
+msgstr "Thema"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:31
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:59
+msgid "New"
+msgstr "Neu"
+
+#: insekta/scenariohelp/templates/scenariohelp/list_questions.html:43
+msgid "There are no open questions for your help preferences."
+msgstr "Es gibt keine offenen Fragen für die Themen, bei denen du hilfst."
+
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:17
+msgid "Is solved"
+msgstr "Geklärt"
+
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:25
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:33
+msgid "new answer"
+msgstr "neue Antwort"
+
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:33
+msgid "Yes"
+msgstr "Ja"
+
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:35
+msgid "No"
+msgstr "Nein"
+
+#: insekta/scenariohelp/templates/scenariohelp/my_questions.html:43
+msgid "You have asked no questions. Choose a topic to ask a question."
+msgstr ""
+"Du hast noch keine Fragen gestellt. Wähle ein Thema um eine Frage zu stellen."
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:6
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:9
+msgid "New question"
+msgstr "Neue Frage"
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:22
+msgid "Your question"
+msgstr "Deine Frage"
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:28
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:42
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:91
+#: insekta/scenarios/templates/scenarios/get_comments.html:39
+msgid "Preview"
+msgstr "Vorschau"
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:37
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:83
+#: insekta/scenarios/templates/scenarios/get_comments.html:34
+msgid "The following HTML is allowed:"
+msgstr "Das folgende HTML ist erlaubt:"
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:38
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:84
+#: insekta/scenarios/templates/scenarios/get_comments.html:35
+msgid "Additionally you can use \\( inline math \\) or \\[ block math \\]."
+msgstr ""
+"Zusätzlich kannst du \\( Inline-Mathe \\) oder \\[ Block-Mathe \\] verwenden."
+
+#: insekta/scenariohelp/templates/scenariohelp/new_question.html:41
+#: insekta/scenarios/templates/scenarios/view.html:13
+msgid "Ask question"
+msgstr "Frage stellen"
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:5
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:8
+#, python-format
+msgid "Questions for \"%(scenario_title)s\""
+msgstr "Fragen zu \"%(scenario_title)s\""
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:12
+msgid "Back to topic"
+msgstr "Zurück zum Thema"
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:15
+msgid "View all my questions"
+msgstr "Zeige alle meine Fragen"
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:20
+msgid "My open questions"
+msgstr "Meine offenen Fragen"
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:45
+msgid "Other open questions"
+msgstr "Andere offene Fragen"
+
+#: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:72
+msgid "Solved questions"
+msgstr "Geklärte Fragen"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:31
+#: insekta/scenarios/templates/scenarios/get_comments.html:6
+msgid "Author"
+msgstr "Autor"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:32
+msgid "Post"
+msgstr "Post"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:49
+msgid "This question is solved."
+msgstr "Diese Frage ist geklärt."
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:52
+msgid ""
+"Did you get a good answer for your question? If yes, please mark your "
+"question as solved."
+msgstr ""
+"Hast du eine gute Antwort auf deine Frage bekommen? Wenn ja, markiere deine "
+"Frage bitte als geklärt."
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:55
+msgid "Mark as solved"
+msgstr "Als geklärt markieren"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:67
+msgctxt "In response to an answer"
+msgid "Your query"
+msgstr "Deine Rückfrage"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:69
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:80
+#: insekta/scenarios/dsl/renderer.py:135
+msgid "Your answer"
+msgstr "Deine Antwort"
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:87
+msgid "This question is already solved, you can't answer anymore."
+msgstr ""
+"Diese Frage ist bereits geklärt, du kannst nicht mehr darauf antworten."
+
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:90
+msgid "Answer"
+msgstr "Antwort"
+
+#: insekta/scenariohelp/views.py:99
+msgid "Question was saved."
+msgstr "Die Frage wurde gespeichert."
+
+#: insekta/scenarios/dsl/renderer.py:62
+msgid "Exercise: {}"
+msgstr "Aufgabe: {}"
 
 #: insekta/scenarios/dsl/renderer.py:71
+msgid "Congratulation. Your answer is correct."
+msgstr "Glückwunsch. Deine Antwort ist richtig."
+
+#: insekta/scenarios/dsl/renderer.py:74
 msgid "Sorry, your answer is incorrect."
-msgstr ""
+msgstr "Entschuldige, deine Antwort ist falsch."
 
-#: insekta/scenarios/dsl/renderer.py:82
+#: insekta/scenarios/dsl/renderer.py:85
 msgid "Solve exercise"
-msgstr ""
+msgstr "Aufgabe lösen"
 
-#: insekta/scenarios/dsl/renderer.py:93
+#: insekta/scenarios/dsl/renderer.py:96
 msgid ""
 "<strong>Here be dragons.</strong> You have to solve an exercise to uncover "
 "more content."
 msgstr ""
+"<strong>Hier sind Drachen.</strong> Du musst eine Aufgabe lösen, um mehr "
+"Inhalt anzuzeigen."
 
-#: insekta/scenarios/dsl/renderer.py:132
-msgid "Your answer"
-msgstr ""
-
-#: insekta/scenarios/dsl/renderer.py:179
+#: insekta/scenarios/dsl/renderer.py:182
 msgid "Show hint"
-msgstr ""
+msgstr "Zeige Hinweis"
 
-#: insekta/scenarios/templates/scenarios/index.html:17
-msgid "Scenario"
-msgstr ""
+#: insekta/scenarios/templates/scenarios/get_comments.html:7
+#: insekta/scenarios/templates/scenarios/get_comments.html:38
+msgid "Comment"
+msgstr "Kommentar"
 
-#: insekta/scenarios/templates/scenarios/index.html:18
+#: insekta/scenarios/templates/scenarios/get_comments.html:23
+msgid "Your comment"
+msgstr "Dein Kommentar"
+
+#: insekta/scenarios/templates/scenarios/index.html:10
+msgid ""
+"Challenges provide no explanations and are therefore not suitable to learn "
+"new topics. Anyway, feel free to try them."
+msgstr ""
+"Herausforderungen enthalten keine Erklärungen und sind daher nicht zum "
+"Lernen neuer Themen geeignet. Wie auch immer, probiere sie ruhig aus."
+
+#: insekta/scenarios/templates/scenarios/list_courses.html:16
+msgid "There are currently no courses."
+msgstr "Es gibt zurzeit keine Kurse."
+
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:12
+msgid "Challenge"
+msgstr "Herausforderung"
+
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:13
 msgid "Solved exercises"
-msgstr ""
+msgstr "Gelöste Aufgaben"
 
-#: insekta/scenarios/templates/scenarios/view.html:19
+#: insekta/scenarios/templates/scenarios/view.html:12
+#: insekta/scenarios/templates/scenarios/view.html:30
+msgid "Your notes"
+msgstr "Deine Notizen"
+
+#: insekta/scenarios/templates/scenarios/view.html:12
+msgid "Notes"
+msgstr "Notizen"
+
+#: insekta/scenarios/templates/scenarios/view.html:14
+msgid "Questions"
+msgstr "Fragen"
+
+#: insekta/scenarios/templates/scenarios/view.html:16
+msgid "Comments:"
+msgstr "Kommentare:"
+
+#: insekta/scenarios/templates/scenarios/view.html:17
+msgid "off"
+msgstr "aus"
+
+#: insekta/scenarios/templates/scenarios/view.html:18
+msgid "on"
+msgstr "an"
+
+#: insekta/scenarios/templates/scenarios/view.html:36
+msgid "Saved."
+msgstr "Gespeichert."
+
+#: insekta/scenarios/templates/scenarios/view.html:45
+msgid "User comments"
+msgstr "Benutzerkommentare"
+
+#: insekta/scenarios/templates/scenarios/view.html:55
 #, python-format
 msgid ""
 "\n"
-"This scenario explains attack techniques from a black hat's perspective. We "
-"would like to remind you of the <a href=\"%(ethics_url)s\">hacker ethics</"
-"a>.\n"
+"This topic contains explanations of attack techniques from a black hat's "
+"perspective. We would like to remind you of the <a href=\"%(ethics_url)s"
+"\">hacker ethics</a>.\n"
 msgstr ""
+"\n"
+"Dieses Thema beinhaltet Erklärungen von Angriffstechniken aus der Sicht "
+"eines \"black hat\". Wir möchten dich daher an die <a href=\"%(ethics_url)s"
+"\">Hackerethik</a> erinnern.\n"
 
-#: insekta/scenarios/templates/scenarios/view.html:36
+#: insekta/scenarios/templates/scenarios/view.html:73
 msgid "Destroy virtual machines"
-msgstr ""
+msgstr "Virtuelle Machinen zerstören"
 
-#: insekta/scenarios/templates/scenarios/view.html:43
+#: insekta/scenarios/templates/scenarios/view.html:80
 msgid "Start virtual machines"
-msgstr ""
+msgstr "Virtuelle Maschinen starten"
 
-#: insekta/scenarios/templates/scenarios/view.html:49
+#: insekta/scenarios/templates/scenarios/view.html:86
 #, python-format
 msgid ""
 "Virtual machines are running. If you close this page they will be destroyed "
 "automatically at <span id=\"expire_time\">%(expire_time)s</span>, but you "
 "can manually destroy them if you like."
 msgstr ""
+"Die virtuellen Maschinen laufen. Wenn du diese Seite schließt, werden die "
+"automatisch um <span id=\"expire_time\">%(expire_time)s</span> zerstört. Du "
+"kannst sie aber, wenn du magst, auch manuell zerstören."
 
-#: insekta/scenarios/templates/scenarios/view.html:51
+#: insekta/scenarios/templates/scenarios/view.html:88
 msgid ""
-"This scenario makes use of virtual machines. In order to solve some "
-"exercises you might have to start them."
+"This topic makes use of virtual machines. In order to solve some exercises "
+"you might have to start them."
 msgstr ""
+"Dieses Thema nutzt virtuelle Maschinen. Um einige Aufgaben zu lösen, musst "
+"du diese möglicherweise starten."
 
-#: insekta/scenarios/templates/scenarios/view.html:55
+#: insekta/scenarios/templates/scenarios/view.html:92
+#, python-format
+msgid "You are connected the VPN and your IP inside the VPN is %(vpn_ip)s."
+msgstr ""
+"Du bist zum VPN verbunden, deine IP innerhalb des VPNs lautet: %(vpn_ip)s."
+
+#: insekta/scenarios/templates/scenarios/view.html:95
+msgid "The virtual machines should be reachable."
+msgstr "Die virtuellen Maschinen sollten erreichbar sein."
+
+#: insekta/scenarios/templates/scenarios/view.html:97
+msgid "The virtual machines should be reachable once they are started."
+msgstr ""
+"Die virtuellen Maschinen sollten erreichbar sein, sobald sie gestartet "
+"wurden."
+
+#: insekta/scenarios/templates/scenarios/view.html:111
 #, python-format
 msgid ""
-"Your connection to the VPN is running. Your IP inside the VPN is %(vpn_ip)s."
+"You are not connected to the <a href=\"%(vpn_url)s\">VPN</a>, which is "
+"required to reach the virtual machines. If you are connected, refresh <a "
+"href=\"%(this_page_url)s\">this page</a>."
 msgstr ""
+"Du bist nicht mit dem <a href=\"%(vpn_url)s\">VPN</a> verbunden. Dies ist "
+"aber Voraussetzung, um die virtuellen Maschinen zu erreichen. Wenn du "
+"verbunden bist, lade <a href=\"%(this_page_url)s\">diese Seite</a> neu."
 
-#: insekta/scenarios/templates/scenarios/view.html:58
-msgid "You should be able to reach the virtual machines."
-msgstr ""
-
-#: insekta/scenarios/templates/scenarios/view.html:60
-msgid ""
-"You should be able to reach the virtual machines once their are enabled."
-msgstr ""
-
-#: insekta/scenarios/templates/scenarios/view.html:65
+#: insekta/scenarios/templates/scenarios/view_course.html:4
+#: insekta/scenarios/templates/scenarios/view_course.html:7
 #, python-format
-msgid ""
-"Additionally you have to connect to the <a href=\"%(vpn_url)s\">VPN</a> to "
-"reach the virtual machines."
-msgstr ""
+msgid "Course: %(title)s"
+msgstr "Kurs: %(title)s"
 
 #: insekta/vpn/templates/vpn/README.txt:1
 msgid ""
@@ -451,18 +846,15 @@ msgid ""
 "To stop the VPN connection just press CTRL+C."
 msgstr ""
 
-#: insekta/vpn/templates/vpn/index.html:4
-#: insekta/vpn/templates/vpn/index.html:7
-msgid "VPN"
-msgstr ""
-
-#: insekta/vpn/templates/vpn/index.html:12
+#: insekta/vpn/templates/vpn/index.html:13
 msgid "Download VPN bundle"
-msgstr ""
+msgstr "VPN-Bündel herunterladen"
 
-#: insekta/vpn/templates/vpn/index.html:18
+#: insekta/vpn/templates/vpn/index.html:19
 #, python-format
 msgid ""
 "You have no valid certificates. Please <a href=\"%(cert_url)s\">get one</a> "
 "first."
 msgstr ""
+"Du hast keine gültigen Zertifikate. Bitte <a href=\"%(cert_url)s\">erstelle "
+"zuerst eins</a>."
