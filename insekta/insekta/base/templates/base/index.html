@@ -11,7 +11,7 @@
     <div class="container">
         <img src="{% static 'images/insekta-glowing.png' %}" alt="" class="pull-left" style="margin-right:10px;">
         <h1>{% trans 'Welcome to Insekta' %}</h1>
-        {% blocktrans %}<p>Want to learn something about computer security? Sign in with your <a href="https://mafiasi.de/">mafiasi.de</a> account.</p>{% endblocktrans %}
+        {% blocktrans %}<p>Want to learn something about computer science? Sign in with your <a href="https://mafiasi.de/">mafiasi.de</a> account.</p>{% endblocktrans %}
         <form class="navbar-form" action="{% url 'account:login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -30,7 +30,7 @@
 <div class="row">
     <div class="col-md-4">
         <h2>{% trans 'Learn' %}</h2>
-        <p>{% blocktrans %}At Insekta you get comprehensible explanations to various topics of computer security. Topics might include visualisations and interactive elements to make understanding easier.{% endblocktrans %}</p>
+        <p>{% blocktrans %}At Insekta you get comprehensible explanations to various topics of computer science. Topics might include visualisations and interactive elements to make understanding easier.{% endblocktrans %}</p>
     </div>
     <div class="col-md-4">
         <h2>{% trans 'Exercise' %}</h2>
