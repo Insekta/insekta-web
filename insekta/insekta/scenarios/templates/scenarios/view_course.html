@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with title=course.title %}Course: {{ title }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<h2>{% blocktrans with title=course.title %}Course: {{ title }}{% endblocktrans %}</h2>
+
+{{ course.description|safe }}
+
+{% include 'scenarios/scenario_groups_list.html' with scenario_groups=scenario_groups is_challenge=False %}
+
+{% endblock %}

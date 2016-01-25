@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 from insekta.base.utils import describe_allowed_markup
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
-from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course
 
 
 COMPONENT_STYLESHEETS = {
@@ -188,6 +188,24 @@ def save_comment(request, scenario_key):
                                text=comments_html)
 
     return _get_comments_response(request, comment_id)
+
+
+@login_required
+def list_courses(request):
+    return render(request, 'scenarios/list_courses.html', {
+        'courses': Course.objects.order_by('title')
+    })
+
+
+@login_required
+def view_course(request, course_pk):
+    course = get_object_or_404(Course, pk=course_pk, enabled=True)
+    scenario_groups = list(course.scenario_groups.filter(hidden=False).order_by('order_id'))
+    scenario_groups = ScenarioGroup.annotate_list(scenario_groups, user=request.user)
+    return render(request, 'scenarios/view_course.html', {
+        'course': course,
+        'scenario_groups': scenario_groups
+    })
 
 
 def _get_comments_response(request, comment_id):

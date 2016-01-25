@@ -292,3 +292,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{}: {} at {}'.format(self.comment_id, self.author, self.time_created)
+
+
+class Course(models.Model):
+    title = models.CharField(max_length=120)
+    description = models.TextField(blank=True, null=True)
+    enabled = models.BooleanField(default=False)
+    scenario_groups = models.ManyToManyField(ScenarioGroup)
+
+    def __str__(self):
+        return self.title

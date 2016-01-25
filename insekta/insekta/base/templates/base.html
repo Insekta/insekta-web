@@ -28,6 +28,7 @@
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'scenarios:index' %}">{% trans 'Topics' %}</a></li>
                         <li><a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a></li>
+                        <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
                         <li>
                             <a href="{% url 'scenariohelp:index' %}">
                                 {% trans 'Help others' %}

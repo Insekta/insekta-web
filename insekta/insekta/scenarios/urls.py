@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^get_comments/(.+)$$', views.get_comments, name='get_comments'),
     url(r'^preview_comment$', views.preview_comment, name='preview_comment'),
     url(r'^save_comment/(.+)$', views.save_comment, name='save_comment'),
+    url(r'^courses/$', views.list_courses, name='list_courses'),
+    url(r'^courses/(\d+)$', views.view_course, name='view_course'),
 ]
