@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load scenario_progress %}
+
+{% for scenario_group in scenario_groups %}
+{% if scenario_group.scenarios %}
+<h3>{{ scenario_group.title }}</h3>
+{% if scenario_group.description %}{{ scenario_group.description|safe }}{% endif %}
+
+<table class="table table-striped">
+<thead>
+<tr>
+    <th>{% if is_challenge %}{% trans 'Challenge' %}{% else %}{% trans 'Topic' %}{% endif %}</th>
+    <th style="width:200px">{% trans 'Solved exercises' %}</th>
+</tr>
+</thead>
+<tbody>
+{% for scenario in scenario_group.scenarios %}
+    <tr>
+        <td><a href="{% url 'scenarios:view' scenario.key %}">{{ scenario.title }}</a></td>
+        <td>
+            {% scenario_progress scenario.num_tasks_solved scenario.num_tasks %}
+            &nbsp;<small>({{ scenario.num_tasks_solved }}/{{ scenario.num_tasks }})</small>
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% endfor %}
