@@ -24,7 +24,8 @@ COMPONENT_SCRIPTS = {
 
 @login_required
 def index(request, is_challenge=False):
-    scenario_groups = list(ScenarioGroup.objects.filter(hidden=False).order_by('order_id'))
+    scenario_groups = list(ScenarioGroup.objects.filter(frontpage=True, hidden=False)
+                           .order_by('order_id'))
     scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
                                                   is_challenge=is_challenge,
                                                   user=request.user)
