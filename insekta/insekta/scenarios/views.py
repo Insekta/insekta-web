@@ -173,6 +173,7 @@ def preview_comment(request):
 
 
 @require_POST
+@login_required
 def save_comment(request, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
     comment_id_str = request.POST.get('comment_id', '')
