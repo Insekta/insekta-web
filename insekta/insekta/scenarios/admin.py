@@ -21,9 +21,12 @@ class ScenarioGroupAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('identifier', 'scenario')
+    list_display = ('identifier', 'scenario', 'num_solved')
     list_filter = ('scenario__title', )
     filter_horizontal = ('solved_by', )
+
+    def num_solved(self, obj):
+        return obj.solved_by.count()
 
 
 class CommentInline(admin.TabularInline):
