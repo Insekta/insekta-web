@@ -15,6 +15,7 @@
     <label>
         <input type="checkbox" name="{{ scenario.key }}"{% if scenario.is_supported %} checked{% endif %}>
         {{ scenario.title }}
+        {% if scenario.is_challenge %}<span class="lessimportant"> ({% trans 'challenge' %})</span>{% endif %}
     </label>
 </div>
 {% endfor %}
