@@ -1,4 +1,4 @@
-.PHONY: all css js components clean watchstatic
+.PHONY: all css js locales components clean watchstatic
 
 base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
@@ -16,11 +16,13 @@ YUI_COMPRESSOR := $(shell scripts/yuicompressor.py --find)
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min    .js' -o -name '*.min.css' \))
 
-all: css js components
+all: css js components locales
 
 css: ${base_static}css/insekta.min.css
 
 js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js
+
+locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
 components: ${components_static}mathjax ${components_static}raphaeljs ${components_static}flot
 
