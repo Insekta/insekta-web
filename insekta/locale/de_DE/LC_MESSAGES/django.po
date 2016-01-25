@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-25 14:24+0100\n"
-"PO-Revision-Date: 2016-01-25 14:24+0100\n"
+"PO-Revision-Date: 2016-01-25 15:37+0100\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -136,7 +136,7 @@ msgstr ""
 #: insekta/base/templates/base/index.html:36
 #: insekta/scenarios/dsl/renderer.py:64
 msgid "Exercise"
-msgstr "Übung"
+msgstr "Aufgabe"
 
 #: insekta/base/templates/base/index.html:37
 msgid ""
