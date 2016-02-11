@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 23:58+0100\n"
-"PO-Revision-Date: 2016-01-25 23:57+0100\n"
+"POT-Creation-Date: 2016-02-11 14:50+0100\n"
+"PO-Revision-Date: 2016-02-11 14:50+0100\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -683,13 +683,17 @@ msgid "Show hint"
 msgstr "Zeige Hinweis"
 
 #: insekta/scenarios/templates/scenarios/get_comments.html:7
-#: insekta/scenarios/templates/scenarios/get_comments.html:38
 msgid "Comment"
 msgstr "Kommentar"
 
 #: insekta/scenarios/templates/scenarios/get_comments.html:23
 msgid "Your comment"
 msgstr "Dein Kommentar"
+
+#: insekta/scenarios/templates/scenarios/get_comments.html:38
+msgctxt "to comment (verb)"
+msgid "Comment"
+msgstr "Kommentieren"
 
 #: insekta/scenarios/templates/scenarios/index.html:10
 msgid ""

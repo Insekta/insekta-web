@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 23:58+0100\n"
+"POT-Creation-Date: 2016-02-11 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -593,12 +593,16 @@ msgid "Show hint"
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/get_comments.html:7
-#: insekta/scenarios/templates/scenarios/get_comments.html:38
 msgid "Comment"
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/get_comments.html:23
 msgid "Your comment"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/get_comments.html:38
+msgctxt "to comment (verb)"
+msgid "Comment"
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/index.html:10
