@@ -32,7 +32,7 @@ ${base_static}js/jquery.min.js:
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
-${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
+${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/bootstrap-theme.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | $(YUI_COMPRESSOR) -o $@ --type css --charset utf-8
 
 ${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
