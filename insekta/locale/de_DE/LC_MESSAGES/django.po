@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-11 14:50+0100\n"
-"PO-Revision-Date: 2016-02-11 14:50+0100\n"
+"POT-Creation-Date: 2016-02-11 17:29+0100\n"
+"PO-Revision-Date: 2016-02-11 17:30+0100\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -643,8 +643,9 @@ msgstr ""
 "Diese Frage ist bereits geklärt, du kannst nicht mehr darauf antworten."
 
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:90
+msgctxt "to answer (verb)"
 msgid "Answer"
-msgstr "Antwort"
+msgstr "Antworten"
 
 #: insekta/scenariohelp/views.py:99
 msgid "Question was saved."
