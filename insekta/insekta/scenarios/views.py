@@ -19,6 +19,8 @@ COMPONENT_STYLESHEETS = {
 }
 COMPONENT_SCRIPTS = {
     'raphaeljs': ['raphael/raphael.min.js'],
+    'flot': ['flot/jquery.flot.min.js'],
+    'flot-categories': ['flot/jquery.flot.categories.min.js']
 }
 
 
