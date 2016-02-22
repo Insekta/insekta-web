@@ -16,7 +16,9 @@ class ScenarioGroupEntryInline(admin.TabularInline):
 
 
 class ScenarioGroupAdmin(admin.ModelAdmin):
-    list_display = ('title', 'hidden', 'order_id', 'internal_comment')
+    list_display = ('title', 'course', 'hidden', 'order_id', 'internal_comment')
+    list_filter = ['course__short_name']
+    orderering = ('course__title', 'title')
     inlines = (ScenarioGroupEntryInline, )
 
 
@@ -62,7 +64,6 @@ class CommentAdmin(admin.ModelAdmin):
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'enabled')
-    filter_horizontal = ('scenario_groups', )
 
 
 admin.site.register(Scenario, ScenarioAdmin)

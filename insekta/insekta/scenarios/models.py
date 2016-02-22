@@ -185,8 +185,19 @@ class Task(models.Model):
         return '{} ({})'.format(self.identifier, self.scenario)
 
 
+class Course(models.Model):
+    title = models.CharField(max_length=120)
+    short_name = models.CharField(max_length=15)
+    description = models.TextField(blank=True, null=True)
+    enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+
 class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
+    course = models.ForeignKey(Course, related_name='scenario_groups')
     hidden = models.BooleanField(default=False)
     order_id = models.IntegerField(default=1)
     description = models.TextField(blank=True, null=True)
@@ -290,14 +301,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{}: {} at {}'.format(self.comment_id, self.author, self.time_created)
-
-
-class Course(models.Model):
-    title = models.CharField(max_length=120)
-    short_name = models.CharField(max_length=15)
-    description = models.TextField(blank=True, null=True)
-    enabled = models.BooleanField(default=False)
-    scenario_groups = models.ManyToManyField(ScenarioGroup)
-
-    def __str__(self):
-        return self.title
