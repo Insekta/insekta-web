@@ -62,8 +62,20 @@ class CommentAdmin(admin.ModelAdmin):
         return obj.text[:160] + ('...' if len(obj.text) > 160 else '')
 
 
+class ScenarioGroupInline(admin.TabularInline):
+    model = ScenarioGroup
+    ordering = ('order_id', )
+    fields = ('title', 'hidden', 'order_id')
+    readonly_fields = ('title', )
+    extra = 0
+
+    def has_add_permission(self, request):
+        return False
+
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('title', 'enabled')
+    inlines = [ScenarioGroupInline]
 
 
 admin.site.register(Scenario, ScenarioAdmin)
