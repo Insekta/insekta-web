@@ -139,6 +139,7 @@ def view_question(request, question_pk):
                 question.post_answer(request.user, answer_preview)
                 return redirect('scenariohelp:view', question.pk)
 
+    is_own = question.author == request.user
     allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST,
                                              settings.ATTR_WHITELIST)
     return render(request, 'scenariohelp/view_question.html', {
@@ -147,7 +148,8 @@ def view_question(request, question_pk):
         'answer': answer,
         'answer_preview': answer_preview,
         'allowed_markup': allowed_markup,
-        'active_nav': None
+        'is_own': is_own,
+        'active_nav': 'account' if is_own else 'help'
     })
 
 

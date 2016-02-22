@@ -6,6 +6,10 @@
 {% block title %}{{ question.title }}{% endblock %}
 
 {% block content %}
+{% if is_own %}
+{% include 'account/nav.html' with tab='my_questions' %}
+{% endif %}
+
 <h2>{{ question.title }}</h2>
 
 <table class="table">
