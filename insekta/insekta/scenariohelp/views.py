@@ -31,7 +31,8 @@ def list_questions(request):
     _annotate_is_seen(questions, request.user)
 
     return render(request, 'scenariohelp/list_questions.html', {
-        'questions': questions
+        'questions': questions,
+        'active_nav': 'help'
     })
 
 
@@ -40,7 +41,8 @@ def my_questions(request):
     questions = (Question.objects.select_related().filter(author=request.user)
                  .order_by('-time_created'))
     return render(request, 'scenariohelp/my_questions.html', {
-        'questions': questions
+        'questions': questions,
+        'active_nav': 'account'
     })
 
 
@@ -73,7 +75,8 @@ def scenario_questions(request, scenario_key):
         'scenario': scenario,
         'my_unsolved': my_unsolved,
         'others_unsolved': others_unsolved,
-        'solved_page': solved_page
+        'solved_page': solved_page,
+        'active_nav': None
     })
 
 
@@ -108,7 +111,8 @@ def new_question(request, scenario_key):
         'scenario': scenario,
         'form': form,
         'preview': preview,
-        'allowed_markup': allowed_markup
+        'allowed_markup': allowed_markup,
+        'active_nav': None
     })
 
 
@@ -142,7 +146,8 @@ def view_question(request, question_pk):
         'posts': posts,
         'answer': answer,
         'answer_preview': answer_preview,
-        'allowed_markup': allowed_markup
+        'allowed_markup': allowed_markup,
+        'active_nav': None
     })
 
 
@@ -157,7 +162,8 @@ def configure_help(request):
         scenario.is_supported = scenario.pk in supported_scenario_pks
 
     return render(request, 'scenariohelp/configure_help.html', {
-        'scenarios': scenarios
+        'scenarios': scenarios,
+        'active_nav': 'account'
     })
 
 

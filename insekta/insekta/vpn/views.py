@@ -22,7 +22,8 @@ def index(request):
     code = _generate_download_code(request.user.pk)
     return render(request, 'vpn/index.html', {
         'has_valid_certificate': has_valid_certificate,
-        'code': code
+        'code': code,
+        'active_nav': 'account'
     })
 
 # This does not have login_required because the authentication can also be

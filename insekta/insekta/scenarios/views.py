@@ -192,7 +192,8 @@ def save_comment(request, scenario_key):
 @login_required
 def list_courses(request):
     return render(request, 'scenarios/list_courses.html', {
-        'courses': Course.objects.order_by('title')
+        'courses': Course.objects.order_by('title'),
+        'active_nav': 'courses'
     })
 
 
@@ -206,7 +207,8 @@ def view_course(request, course_pk, is_challenge=False):
     return render(request, 'scenarios/view_course.html', {
         'course': course,
         'scenario_groups': scenario_groups,
-        'is_challenge': is_challenge
+        'is_challenge': is_challenge,
+        'active_nav': 'challenges' if is_challenge else 'topics'
     })
 
 

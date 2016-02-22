@@ -27,31 +27,40 @@
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
                         {% if request.session.course %}
-                        <li><a href="{% url 'scenarios:index' %}">{% trans 'Topics' %}</a></li>
-                        <li><a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a></li>
+                        <li{% if active_nav == 'topics' %} class="active"{% endif %}>
+                            <a href="{% url 'scenarios:index' %}">{% trans 'Topics' %}</a>
+                        </li>
+                        <li{% if active_nav == 'challenges' %} class="active"{% endif %}>
+                            <a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a>
+                        </li>
                         {% endif %}
-                        <li>
+                        <li{% if active_nav == 'courses' %} class="active"{% endif %}>
                             <a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}
                             {% if request.session.course %}
                                 <span class="badge">{{ request.session.course.short_name }}</span>
                             {% endif %}
                             </a>
                         </li>
-                        <li>
+                        <li{% if active_nav == 'help' %} class="active"{% endif %}>
                             <a href="{% url 'scenariohelp:index' %}">
                                 {% trans 'Help others' %}
                                 {% num_new_questions user as num_new %}
                                 {% if num_new > 0 %}
                                 <span class="badge">{{ num_new }}</span>
                                 {% endif %}
-                            </a></li>
-                        <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+                            </a>
+                        </li>
+                        <li{% if active_nav == 'account' %} class="active"{% endif %}>
+                            <a href="{% url 'account:index' %}">{% trans 'Account' %}</a>
+                        </li>
                         {% if user.is_staff %}
                         <li><a href="{% url 'admin:index' %}">Admin</a></li>
                         {% endif %}
                         <li><a href="{% url 'account:logout' %}">{% trans 'Logout' %}</a></li>
                         {% else %}
-                        <li{% if active_nav == 'login' %} class="active"{% endif %}><a href="{% url 'account:login' %}">Login</a></li>
+                        <li{% if active_nav == 'login' %} class="active"{% endif %}>
+                            <a href="{% url 'account:login' %}">Login</a>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>

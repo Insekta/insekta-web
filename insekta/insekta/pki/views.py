@@ -17,7 +17,8 @@ def index(request):
     certificates.sort(key=lambda cert: (cert.is_valid, cert.expires))
     return render(request, 'pki/index.html', {
         'certificates': certificates,
-        'has_valid_certificate': has_valid_certificate
+        'has_valid_certificate': has_valid_certificate,
+        'active_nav': 'account'
     })
 
 @login_required()
@@ -38,7 +39,8 @@ def create_certificate(request):
 
     return render(request, 'pki/create_certificate.html', {
         'form': form,
-        'error': error
+        'error': error,
+        'active_nav': 'account'
     })
 
 @require_POST
@@ -51,5 +53,6 @@ def revoke_certificate(request):
         cert.revoke()
         return redirect('pki:index')
     return render(request, 'pki/revoke_certificate.html', {
-        'certificate': cert
+        'certificate': cert,
+        'active_nav': 'account'
     })
