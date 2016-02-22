@@ -87,7 +87,7 @@
                 <p class="alert alert-warning">{% trans "This question is already solved, you can't answer anymore." %}</p>
             {% endif %}
             <div class="form-group">
-                <button class="btn btn-primary" name="save"{% if question.is_solved %} disabled{% endif %}>{% trans 'Answer' %}</button>
+                <button class="btn btn-primary" name="save"{% if question.is_solved %} disabled{% endif %}>{% trans 'Answer' context 'to answer (verb)' %}</button>
                 <button class="btn btn-default" name="preview">{% trans 'Preview' %}</button>
             </div>
         </form>
