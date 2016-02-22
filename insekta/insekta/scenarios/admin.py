@@ -16,7 +16,7 @@ class ScenarioGroupEntryInline(admin.TabularInline):
 
 
 class ScenarioGroupAdmin(admin.ModelAdmin):
-    list_display = ('title', 'frontpage', 'hidden', 'order_id', 'internal_comment')
+    list_display = ('title', 'hidden', 'order_id', 'internal_comment')
     inlines = (ScenarioGroupEntryInline, )
 
 
