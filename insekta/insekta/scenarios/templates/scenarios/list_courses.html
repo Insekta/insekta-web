@@ -11,7 +11,7 @@
 {% for course in courses %}
     <form method="post" action="{% url 'scenarios:choose_course' course.pk %}">
    {% csrf_token %}
-   <button class="list-group-item">{{ course.title }}</button>
+   <button class="list-group-item{% if request.session.course.pk == course.pk %} active{% endif %}">{{ course.title }}</button>
     </form>
 {% endfor %}
 </div>
