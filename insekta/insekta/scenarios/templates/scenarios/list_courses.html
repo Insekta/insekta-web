@@ -9,7 +9,10 @@
 {% if courses %}
 <div class="list-group">
 {% for course in courses %}
-   <a class="list-group-item" href="{% url 'scenarios:view_course' course.pk %}">{{ course.title }}</a>
+    <form method="post" action="{% url 'scenarios:choose_course' course.pk %}">
+   {% csrf_token %}
+   <button class="list-group-item">{{ course.title }}</button>
+    </form>
 {% endfor %}
 </div>
 {% else %}

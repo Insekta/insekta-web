@@ -26,16 +26,13 @@ COMPONENT_SCRIPTS = {
 
 @login_required
 def index(request, is_challenge=False):
-    scenario_groups = list(ScenarioGroup.objects.filter(frontpage=True, hidden=False)
-                           .order_by('order_id'))
-    scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
-                                                  is_challenge=is_challenge,
-                                                  user=request.user)
-
-    return render(request, 'scenarios/index.html', {
-        'is_challenge': is_challenge,
-        'scenario_groups': scenario_groups
-    })
+    if 'course' in request.session:
+        name = 'scenarios:view_course'
+        if is_challenge:
+            name += '_challenges'
+        return redirect(name, request.session['course']['pk'])
+    else:
+        return redirect('scenarios:list_courses')
 
 
 @login_required
@@ -200,14 +197,27 @@ def list_courses(request):
 
 
 @login_required
-def view_course(request, course_pk):
+def view_course(request, course_pk, is_challenge=False):
     course = get_object_or_404(Course, pk=course_pk, enabled=True)
     scenario_groups = list(course.scenario_groups.filter(hidden=False).order_by('order_id'))
-    scenario_groups = ScenarioGroup.annotate_list(scenario_groups, user=request.user)
+    scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
+                                                  is_challenge=is_challenge,
+                                                  user=request.user)
     return render(request, 'scenarios/view_course.html', {
         'course': course,
-        'scenario_groups': scenario_groups
+        'scenario_groups': scenario_groups,
+        'is_challenge': is_challenge
     })
+
+
+@login_required
+def choose_course(request, course_pk):
+    course = get_object_or_404(Course, pk=course_pk, enabled=True)
+    request.session['course'] = {
+        'pk': course.pk,
+        'short_name': course.short_name
+    }
+    return redirect('scenarios:index')
 
 
 def _get_comments_response(request, comment_id):

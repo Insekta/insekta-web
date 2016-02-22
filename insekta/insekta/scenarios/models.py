@@ -295,6 +295,7 @@ class Comment(models.Model):
 
 class Course(models.Model):
     title = models.CharField(max_length=120)
+    short_name = models.CharField(max_length=15)
     description = models.TextField(blank=True, null=True)
     enabled = models.BooleanField(default=False)
     scenario_groups = models.ManyToManyField(ScenarioGroup)

@@ -8,6 +8,10 @@
 
 {{ course.description|safe }}
 
-{% include 'scenarios/scenario_groups_list.html' with scenario_groups=scenario_groups is_challenge=False %}
+{% if is_challenge %}
+<p class="alert alert-warning">{% blocktrans %}Challenges provide no explanations and are therefore not suitable to learn new topics. Anyway, feel free to try them.{% endblocktrans %}</p>
+{% endif %}
+
+{% include 'scenarios/scenario_groups_list.html' with scenario_groups=scenario_groups is_challenge=is_challenge %}
 
 {% endblock %}

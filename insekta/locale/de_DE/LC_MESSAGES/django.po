@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-11 17:29+0100\n"
-"PO-Revision-Date: 2016-02-11 17:30+0100\n"
+"POT-Creation-Date: 2016-02-22 20:37+0100\n"
+"PO-Revision-Date: 2016-02-22 20:37+0100\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: insekta/account/templates/account/index.html:4
 #: insekta/account/templates/account/nav.html:3
-#: insekta/base/templates/base.html:40
+#: insekta/base/templates/base.html:48
 msgid "Account"
 msgstr "Account"
 
@@ -65,32 +65,29 @@ msgstr "Meine Fragen"
 msgid "Configure help"
 msgstr "Hilfe konfigurieren"
 
-#: insekta/base/templates/base.html:29
-#: insekta/scenarios/templates/scenarios/index.html:4
-#: insekta/scenarios/templates/scenarios/index.html:12
+#: insekta/base/templates/base.html:30
 msgid "Topics"
 msgstr "Themen"
 
-#: insekta/base/templates/base.html:30
-#: insekta/scenarios/templates/scenarios/index.html:8
+#: insekta/base/templates/base.html:31
 msgid "Challenges"
 msgstr "Herausforderungen"
 
-#: insekta/base/templates/base.html:31
+#: insekta/base/templates/base.html:34
 #: insekta/scenarios/templates/scenarios/list_courses.html:4
 #: insekta/scenarios/templates/scenarios/list_courses.html:7
 msgid "Courses"
 msgstr "Kurse"
 
-#: insekta/base/templates/base.html:34
+#: insekta/base/templates/base.html:42
 msgid "Help others"
 msgstr "Anderen helfen"
 
-#: insekta/base/templates/base.html:44
+#: insekta/base/templates/base.html:52
 msgid "Logout"
 msgstr "Logout"
 
-#: insekta/base/templates/base.html:57
+#: insekta/base/templates/base.html:65
 msgid ""
 "Please enable JavaScript. Don't worry, we won't set your CPU on fire with "
 "snowflakes on this page."
@@ -98,7 +95,7 @@ msgstr ""
 "Bitte aktiviere JavaScript. Keine Sorge, wir werden deine CPU nicht mit "
 "Schneeflocken auf dieser Seite zum brennen bringen."
 
-#: insekta/base/templates/base.html:72
+#: insekta/base/templates/base.html:80
 #, python-format
 msgid ""
 "<strong>Hooray!</strong> Someone answered one of <a href="
@@ -502,7 +499,7 @@ msgstr "Gefragt von"
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:16
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:14
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:22
-#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:12
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:20
 msgid "Topic"
 msgstr "Thema"
 
@@ -696,23 +693,23 @@ msgctxt "to comment (verb)"
 msgid "Comment"
 msgstr "Kommentieren"
 
-#: insekta/scenarios/templates/scenarios/index.html:10
-msgid ""
-"Challenges provide no explanations and are therefore not suitable to learn "
-"new topics. Anyway, feel free to try them."
-msgstr ""
-"Herausforderungen enthalten keine Erklärungen und sind daher nicht zum "
-"Lernen neuer Themen geeignet. Wie auch immer, probiere sie ruhig aus."
-
-#: insekta/scenarios/templates/scenarios/list_courses.html:16
+#: insekta/scenarios/templates/scenarios/list_courses.html:19
 msgid "There are currently no courses."
 msgstr "Es gibt zurzeit keine Kurse."
 
-#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:12
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:6
+msgid "There are no challenges for this course."
+msgstr "Es existieren keine Herausforderungen für diesen Kurs."
+
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:8
+msgid "There are no topics for this course."
+msgstr "Es existieren keine Themen für diesen Kurs."
+
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:20
 msgid "Challenge"
 msgstr "Herausforderung"
 
-#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:13
+#: insekta/scenarios/templates/scenarios/scenario_groups_list.html:21
 msgid "Solved exercises"
 msgstr "Gelöste Aufgaben"
 
@@ -821,6 +818,14 @@ msgstr ""
 #, python-format
 msgid "Course: %(title)s"
 msgstr "Kurs: %(title)s"
+
+#: insekta/scenarios/templates/scenarios/view_course.html:12
+msgid ""
+"Challenges provide no explanations and are therefore not suitable to learn "
+"new topics. Anyway, feel free to try them."
+msgstr ""
+"Herausforderungen enthalten keine Erklärungen und sind daher nicht zum "
+"Lernen neuer Themen geeignet. Wie auch immer, probiere sie ruhig aus."
 
 #: insekta/vpn/templates/vpn/README.txt:1
 msgid ""

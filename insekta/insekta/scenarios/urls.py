@@ -4,8 +4,8 @@ from insekta.scenarios import views
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^dontdespair$', views.index, kwargs={
+    url(r'^topiclist$', views.index, name='index'),
+    url(r'^challenges$', views.index, kwargs={
         'is_challenge': True
     }, name='challenges'),
     url(r'^view/(.+)$', views.view, name='view'),
@@ -18,5 +18,9 @@ urlpatterns = [
     url(r'^preview_comment$', views.preview_comment, name='preview_comment'),
     url(r'^save_comment/(.+)$', views.save_comment, name='save_comment'),
     url(r'^courses/$', views.list_courses, name='list_courses'),
-    url(r'^courses/(\d+)$', views.view_course, name='view_course'),
+    url(r'^courses/(\d+)/choose$', views.choose_course, name='choose_course'),
+    url(r'^courses/(\d+)/topiclist$', views.view_course, name='view_course'),
+    url(r'^courses/(\d+)/challenges$', views.view_course, kwargs={
+        'is_challenge': True
+    }, name='view_course_challenges'),
 ]
