@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
+{% block title %}{% blocktrans with title=scenario.title %}Options for "{{ title }}"{% endblocktrans %}{% endblock %}
 
 {% block content %}
 {% url 'scenarios:view' scenario.key as scenario_link %}
