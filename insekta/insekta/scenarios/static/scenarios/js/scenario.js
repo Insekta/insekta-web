@@ -186,4 +186,45 @@ $(function() {
         setCommentState(USER_COMMENTS_ENABLED);
         $('#scenario-comments-link').css('display', 'block').click(toggleCommentIcons);
     }
+
+    /*
+     * Table of contents generation
+     */
+    function generateToc() {
+        var elements = document.getElementById('rendered-scenario').getElementsByTagName('*');
+        var lastLevel = -1;
+        var tocUl = $('<ul></ul>');
+        var appendElem = tocUl;
+        var headingId = 0;
+        for (var i = 0; i < elements.length; i++) {
+            var tag = elements[i];
+            if (!tag.tagName.match(/^(h|H)[3456]/)) {
+                continue;
+            }
+            var level = tag.tagName.substr(1, 1);
+            if (lastLevel == -1 || level == lastLevel) {
+                // pass
+            } else if (level < lastLevel) {
+                appendElem= appendElem.parent();
+            } else if (level > lastLevel) {
+                appendElem = appendElem.last();
+                var subElem = $('<ul></ul>');
+                appendElem.append(subElem);
+                appendElem = subElem;
+            }
+            var tagId = tag.getAttribute('id');
+            if (!tagId) {
+                tagId = 'heading_' + headingId;
+                tag.setAttribute('id', tagId);
+                headingId++;
+            }
+            var entry = $('<li></li>');
+            var link = $('<a></a>').text($(tag).text()).attr('href', '#' + tagId);
+            entry.append(link);
+            appendElem.append(entry);
+            lastLevel = level;
+        }
+        $('#toc').append(tocUl);
+    }
+    generateToc();
 });
