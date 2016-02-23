@@ -213,6 +213,7 @@ def view_course(request, course_pk, is_challenge=False):
 
 
 @login_required
+@require_POST
 def choose_course(request, course_pk):
     course = get_object_or_404(Course, pk=course_pk, enabled=True)
     request.session['course'] = {
