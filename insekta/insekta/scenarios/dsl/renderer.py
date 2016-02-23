@@ -56,13 +56,14 @@ class Renderer:
         task_mac = self.template_tasks[identifier].get_mac(self.user, self.scenario)
 
         panel_type = 'success' if is_solved else 'default'
-        yield '<div class="panel panel-{}" id="task_{}">\n'.format(panel_type, task_mac)
+        yield '<div id="task_{}"></div>'.format(task_mac)
+        yield '<div class="panel panel-{}">\n'.format(panel_type)
         yield '<div class="panel-heading">\n'
         if title:
             panel_title = _('Exercise: {}').format(title)
         else:
             panel_title = _('Exercise')
-        yield '<h3 class="panel-title">{}</h3>\n'.format(escape(panel_title))
+        yield '<span class="panel-title">{}</span>\n'.format(escape(panel_title))
         yield '</div>\n'
         yield '<div class="panel-body">\n'
 
