@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-23 17:39+0100\n"
-"PO-Revision-Date: 2016-02-23 17:41+0100\n"
+"PO-Revision-Date: 2016-02-23 17:43+0100\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -842,7 +842,7 @@ msgstr ""
 
 #: insekta/scenarios/views.py:241
 msgid "The exercises were reset. You can now solve them again."
-msgstr ""
+msgstr "Die Aufgaben wurden zurückgesetzt. Du kannst sie nun erneut lösen."
 
 #: insekta/vpn/templates/vpn/README.txt:1
 msgid ""
