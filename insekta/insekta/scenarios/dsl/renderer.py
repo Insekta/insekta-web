@@ -183,6 +183,7 @@ class Renderer:
         yield ' <span class="hint-text">' + _('Show hint') + '</span>\n'
         yield '</button>\n'
         yield '<div class="alert alert-hint hint-content">\n'
+        yield '<button class="hint-close close pull-right">&times;</button>\n'
         yield caller()
         yield '</div>\n'
         yield '</form>'

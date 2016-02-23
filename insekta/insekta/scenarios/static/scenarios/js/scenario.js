@@ -10,6 +10,15 @@ $(function() {
             return false;
         });
     });
+    $('button.hint-close').each(function() {
+        $(this).click(function(ev) {
+            var hintForm = $(this).parent().parent();
+            hintForm.find('.hint-content').hide();
+            hintForm.find('.hint-button').show();
+            ev.stopPropagation();
+            return false;
+        });
+    });
 
 
     /*
