@@ -11,6 +11,8 @@
 
 #welcome-header {
 	background:url(../images/background.jpg);
+	background-position:center;
+	background-repeat:repeat-x;
 	color:#fff;
 	padding:10px;
 }
