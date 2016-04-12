@@ -31,9 +31,4 @@ class Migration(migrations.Migration):
             name='scenario_group',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='scenarios.ScenarioGroup'),
         ),
-        migrations.RunSQL('''
-            INSERT INTO scenarios_scenariogroupentry (scenario_group_id, scenario_id, order_id)
-              (SELECT old.scenariogroup_id, old.scenario_id, 1
-               FROM scenarios_scenariogroup_scenarios AS old);
-        ''')
     ]
