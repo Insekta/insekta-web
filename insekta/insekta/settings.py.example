@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'insekta.scenarios',
     'insekta.pki',
     'insekta.vpn',
+	'insekta.scenariohelp',
+	'insekta.remoteapi',
 )
 
 MIDDLEWARE_CLASSES = (
