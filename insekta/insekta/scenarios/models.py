@@ -94,7 +94,6 @@ class Scenario(models.Model):
                 comment_id_obj.orphaned = False
                 comment_id_obj.save()
 
-
     def solve(self, user, task_identifier):
         Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
 
