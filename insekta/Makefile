@@ -5,7 +5,7 @@ scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
 jquery_download = http://code.jquery.com/jquery-2.1.4.min.js
-raphaeljs_download = http://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js
+raphaeljs_download = https://raw.githubusercontent.com/DmitryBaranovskiy/raphael/master/raphael.min.js
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
 mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
