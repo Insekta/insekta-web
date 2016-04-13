@@ -109,7 +109,7 @@ class Scenario(models.Model):
         return comment_counts
 
     def has_solved_all(self, user):
-        return self.task.count() == user.solved_tasks.filter(scenario=self).count()
+        return self.tasks.count() == user.solved_tasks.filter(scenario=self).count()
 
     def _load_extra(self):
         if hasattr(self, '_extra'):
