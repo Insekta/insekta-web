@@ -108,6 +108,9 @@ class Scenario(models.Model):
             comment_counts[comment_id.comment_id] = comment_id.num_comments
         return comment_counts
 
+    def has_solved_all(self, user):
+        return self.task.count() == user.solved_tasks.filter(scenario=self).count()
+
     def _load_extra(self):
         if hasattr(self, '_extra'):
             return
