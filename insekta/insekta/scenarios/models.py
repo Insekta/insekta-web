@@ -111,6 +111,9 @@ class Scenario(models.Model):
     def has_solved_all(self, user):
         return self.tasks.count() == user.solved_tasks.filter(scenario=self).count()
 
+    def is_supported_by(self, user):
+        return bool(self.supportedscenario_set.filter(user=user).count())
+
     def _load_extra(self):
         if hasattr(self, '_extra'):
             return

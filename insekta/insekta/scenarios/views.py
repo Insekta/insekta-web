@@ -106,7 +106,9 @@ def view(request, scenario_key):
         'vpn_ip': vpn_ip,
         'notes': notes,
         'comments_enabled': comments_enabled,
-        'num_user_comments': num_user_comments
+        'num_user_comments': num_user_comments,
+        'has_solved_all': scenario.has_solved_all(request.user),
+        'is_supporting': scenario.is_supported_by(request.user),
     })
 
 

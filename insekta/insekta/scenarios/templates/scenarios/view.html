@@ -115,6 +115,15 @@ This topic contains explanations of attack techniques from a black hat's perspec
 
 <div id="toc"></div>
 <div class="tex2jax_process" id="rendered-scenario">{{ rendered_scenario }}</div>
+{% if has_solved_all and not is_supporting %}
+  <div class="alert alert-success">
+      <p>{% trans "Do you want to help others with this topic?" %}</p>
+      <form action="{% url 'scenariohelp:set_support_scenario' scenario.pk %}" method="post">
+          {% csrf_token %}
+          <button class="btn btn-success">{% trans "Yes" %}</button>
+      </form>
+  </div>
+{% endif %}
 {%  endblock content %}
 
 {% block additional_styles %}

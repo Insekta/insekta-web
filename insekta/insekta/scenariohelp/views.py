@@ -183,6 +183,16 @@ def set_support(request):
     return HttpResponse('{"result": "ok"}', content_type='application/json')
 
 
+@require_POST
+@login_required
+def set_support_scenario(request, scenario_pk):
+    scenario = get_object_or_404(Scenario, pk=scenario_pk, enabled=True)
+
+    SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
+    messages.success(request, _('Thank you for helping!'))
+    return redirect('scenarios:view', scenario.key)
+
+
 def _annotate_is_seen(question_list, user):
     seen_questions = SeenQuestion.objects.filter(user=user,
                                                  question__in=question_list)
