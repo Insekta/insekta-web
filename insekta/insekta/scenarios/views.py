@@ -194,7 +194,7 @@ def save_comment(request, scenario_key):
 @login_required
 def list_courses(request):
     return render(request, 'scenarios/list_courses.html', {
-        'courses': Course.objects.order_by('title'),
+        'courses': Course.objects.filter(enabled=True).order_by('title'),
         'active_nav': 'courses'
     })
 
