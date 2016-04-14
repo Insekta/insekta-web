@@ -114,7 +114,7 @@ class Choice:
 class QuestionTask(TemplateTask):
     task_type = 'question'
 
-    def __init__(self, identifier, case_sensitive=True, strip=True, **kwargs):
+    def __init__(self, identifier, case_sensitive=False, strip=True, **kwargs):
         super().__init__(identifier)
         self.answers = []
         self.case_sensitive = case_sensitive
