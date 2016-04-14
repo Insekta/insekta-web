@@ -142,7 +142,7 @@ class QuestionTask(TemplateTask):
             if self.strip:
                 expected_answer = expected_answer.strip()
             if not self.case_sensitive:
-                expected_answer = answer.lower()
+                expected_answer = expected_answer.lower()
             if answer == expected_answer:
                 return True
         return False
