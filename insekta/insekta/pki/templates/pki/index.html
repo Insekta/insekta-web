@@ -8,7 +8,7 @@
 <h2>{% trans 'Your certificates' %}</h2>
 
 {% url 'vpn:index' as vpn_link %}
-{% if has_valid_certificate %}
+{% if valid_certificate %}
 <p class="alert alert-info">
 {% blocktrans %}You have a valid certificate. You should now go and <a href="{{ vpn_link }}">configure VPN</a>{% endblocktrans %}.
 </p>
@@ -21,7 +21,6 @@
             <th>{% trans 'Fingerprint (SHA256)' %}</th>
             <th>{% trans 'Expire date' %}</th>
             <th>{% trans 'Status' %}</th>
-            <th>{% trans 'Action' %}</th>
         </tr>
     </thead>
     <tbody>
@@ -35,29 +34,31 @@
             {% elif certificate.is_expired %}
             <span class="label label-warning">Expired</span>
             {% else %}
-            <span class="label label-success">Valid</span>
+            <span class="label label-success">Active</span>
             {% endif %}
-            </td>
-            <td>
-                {% if not certificate.is_revoked %}
-                <form method="post" action="{% url 'pki:revoke_certificate' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="fingerprint" value="{{ certificate.fingerprint }}">
-                    <button class="btn btn-warning">Revoke</button>
-                </form>
-                {% endif %}
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+{% if valid_certificate %}
+<form method="post" action="{% url 'pki:revoke_certificate' %}">
+    {% csrf_token %}
+    <input type="hidden" name="fingerprint" value="{{ valid_certificate.fingerprint }}">
+    <button class="btn btn-warning">Revoke active certificate</button>
+</form>
+{% endif %}
+
 {% else %}
 <p>{% blocktrans %}You don't have any certificates yet. If you want to connect to the VPN you have create one.{%  endblocktrans %}</p>
 {% endif %}
 
+{% if not valid_certificate %}
 <p>
     <a href="{% url 'pki:create_certificate' %}" class="btn btn-primary">
     {% trans 'Create new certificate' %}
     </a>
 </p>
+{% endif %}
 {% endblock content %}

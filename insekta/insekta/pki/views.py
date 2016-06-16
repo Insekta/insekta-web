@@ -9,20 +9,22 @@ from insekta.pki.forms import CreateCertificateForm
 @login_required
 def index(request):
     certificates = list(Certificate.objects.filter(user=request.user))
-    has_valid_certificate = False
-    for certificate in certificates:
-        if certificate.is_valid:
-            has_valid_certificate = True
-            break
+    valid_certificates = [cert for cert in certificates if cert.is_valid]
+    valid_certificate = valid_certificates[0] if valid_certificates else None
     certificates.sort(key=lambda cert: (cert.is_valid, cert.expires))
     return render(request, 'pki/index.html', {
         'certificates': certificates,
-        'has_valid_certificate': has_valid_certificate,
+        'valid_certificate': valid_certificate,
         'active_nav': 'account'
     })
 
 @login_required()
 def create_certificate(request):
+    certificates = Certificate.objects.filter(user=request.user)
+    has_valid_certificate = any(cert.is_valid for cert in certificates)
+    if has_valid_certificate:
+        return redirect('pki:index')
+
     error = None
     if request.method == 'POST':
         form = CreateCertificateForm(request.POST)
