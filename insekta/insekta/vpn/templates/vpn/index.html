@@ -9,7 +9,7 @@
 
 {% if has_valid_certificate %}
 <p>
-    <a class="btn btn-primary" href="{% url 'vpn:download_bundle' code %}">
+    <a class="btn btn-primary" href="{% url 'vpn:download_config' code %}">
     {% trans 'Download VPN bundle' %}
     </a>
 </p>

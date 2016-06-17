@@ -11,8 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 
-from insekta.vpn.bundlebuilder import write_vpn_bundle
-from insekta.pki.models import Certificate
+from insekta.pki.models import Certificate, get_user_certificate
 
 
 @login_required
@@ -28,7 +27,7 @@ def index(request):
 
 # This does not have login_required because the authentication can also be
 # done using a code in the URL to be friendly to wget.
-def download_bundle(request, code):
+def download_config(request, code):
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -39,9 +38,14 @@ def download_bundle(request, code):
         User = get_user_model()
         user = get_object_or_404(User, pk=user_id)
 
-    resp = HttpResponse(content_type='application/x-tgz')
-    write_vpn_bundle(user, resp)
-    return resp
+    certificate = get_user_certificate(user)
+    with open(settings.CA_CERTIFICATE_FILE, 'rb') as f:
+        ca_certificate = f.read().strip()
+    return render(request, 'vpn/client.conf', {
+        'remote': settings.VPN_SERVER,
+        'certificate': certificate.pem_data.strip(),
+        'ca_certificate': ca_certificate
+    }, content_type='application/x-openvpn-profile')
 
 
 def _generate_download_code(user_id):
