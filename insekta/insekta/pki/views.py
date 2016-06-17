@@ -2,15 +2,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-from insekta.pki.models import Certificate, SignError
+from insekta.pki.models import Certificate, SignError, get_user_certificate
 from insekta.pki.forms import CreateCertificateForm
 
 
 @login_required
 def index(request):
     certificates = list(Certificate.objects.filter(user=request.user))
-    valid_certificates = [cert for cert in certificates if cert.is_valid]
-    valid_certificate = valid_certificates[0] if valid_certificates else None
+    valid_certificate = get_user_certificate(request.user, certificates)
     certificates.sort(key=lambda cert: (cert.is_valid, cert.expires))
     return render(request, 'pki/index.html', {
         'certificates': certificates,

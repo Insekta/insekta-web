@@ -62,3 +62,10 @@ class Certificate(models.Model):
         self.expires = cert.not_valid_after.replace(tzinfo=pytz.UTC)
         fingerprint = binascii.hexlify(cert.fingerprint(hashes.SHA256()))
         self.fingerprint = fingerprint.decode()
+
+
+def get_user_certificate(user, certificates=None):
+    if certificates is None:
+        certificates = Certificate.objects.filter(user=user)
+    valid_certificates = [cert for cert in certificates if cert.is_valid]
+    return valid_certificates[0] if valid_certificates else None
