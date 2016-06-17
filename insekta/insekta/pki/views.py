@@ -19,9 +19,7 @@ def index(request):
 
 @login_required()
 def create_certificate(request):
-    certificates = Certificate.objects.filter(user=request.user)
-    has_valid_certificate = any(cert.is_valid for cert in certificates)
-    if has_valid_certificate:
+    if get_user_certificate(request.user):
         return redirect('pki:index')
 
     error = None
