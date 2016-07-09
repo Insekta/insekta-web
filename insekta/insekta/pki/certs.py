@@ -3,7 +3,7 @@ import uuid
 
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.x509.oid import NameOID
 
@@ -38,7 +38,7 @@ class CSRSigner:
         return self.sign_public_key(csr.public_key(), username)
 
     def sign_public_key(self, public_key, username):
-        if isinstance(public_key, RSAPublicKey) and public_key.key_size < 2048:
+        if isinstance(public_key, rsa.RSAPublicKey) and public_key.key_size < 2048:
             raise SignError('RSA modulus must be at least 2048 bits.')
 
         builder = x509.CertificateBuilder()
@@ -62,6 +62,19 @@ class CSRSigner:
             algorithm=hashes.SHA256(),
             backend=self.backend)
         return certificate
+
+
+def generate_private_key():
+    return rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048,
+        backend=default_backend())
+
+
+def key_to_pem(key):
+    return key.private_bytes(encoding=serialization.Encoding.PEM,
+                             format=serialization.PrivateFormat.TraditionalOpenSSL,
+                             encryption_algorithm=serialization.NoEncryption())
 
 
 def cert_to_pem(cert: x509.Certificate):

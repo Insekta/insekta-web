@@ -46,7 +46,7 @@
 <form method="post" action="{% url 'pki:revoke_certificate' %}">
     {% csrf_token %}
     <input type="hidden" name="fingerprint" value="{{ valid_certificate.fingerprint }}">
-    <button class="btn btn-warning">Revoke active certificate</button>
+    <p><button class="btn btn-warning">Revoke active certificate</button></p>
 </form>
 {% endif %}
 
@@ -56,8 +56,12 @@
 
 {% if not valid_certificate %}
 <p>
-    <a href="{% url 'pki:create_certificate' %}" class="btn btn-primary">
-    {% trans 'Create new certificate' %}
+    <form method="post" action="{% url 'pki:create_certificate_auto' %}" style="display:inline;">
+        {% csrf_token %}
+        <button class="btn btn-primary">{% trans 'Create certificate' %}</button>
+    </form>
+    <a href="{% url 'pki:create_certificate' %}" class="btn btn-default">
+    {% trans 'Submit CSR (for experts)' %}
     </a>
 </p>
 {% endif %}

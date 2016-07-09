@@ -17,7 +17,7 @@ def index(request):
         'active_nav': 'account'
     })
 
-@login_required()
+@login_required
 def create_certificate(request):
     if get_user_certificate(request.user):
         return redirect('pki:index')
@@ -41,6 +41,16 @@ def create_certificate(request):
         'error': error,
         'active_nav': 'account'
     })
+
+@require_POST
+@login_required
+def create_certificate_auto(request):
+    if get_user_certificate(request.user):
+        return redirect('pki:index')
+    Certificate.create_automatically(request.user)
+    if request.GET.get('redirect') == 'vpn':
+        return redirect('vpn:index')
+    return redirect('pki:index')
 
 @require_POST
 @login_required

@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 import pytz
 
-from insekta.pki.certs import CSRSigner, SignError, pem_to_cert, cert_to_pem
+from insekta.pki.certs import CSRSigner, SignError, pem_to_cert, cert_to_pem, generate_private_key, key_to_pem
 
 
 class Certificate(models.Model):
@@ -15,6 +15,7 @@ class Certificate(models.Model):
     fingerprint = models.CharField(max_length=64, unique=True)
     expires = models.DateTimeField()
     is_revoked = models.BooleanField(default=False)
+    private_key_pem = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return 'Certificate {} for {}'.format(self.fingerprint, self.user)
@@ -54,6 +55,17 @@ class Certificate(models.Model):
         x509_cert = signer.sign_csr(csr_pem, user.username)
         cert = cls(user=user)
         cert.set_x509_certificate(x509_cert)
+        cert.save()
+        return cert
+
+    @classmethod
+    def create_automatically(cls, user):
+        private_key = generate_private_key()
+        signer = CSRSigner(settings.CA_PRIVATE_KEY_FILE, settings.CA_CERTIFICATE_FILE)
+        x509_cert = signer.sign_public_key(private_key.public_key(), user.username)
+        cert = cls(user=user)
+        cert.set_x509_certificate(x509_cert)
+        cert.private_key_pem = key_to_pem(private_key)
         cert.save()
         return cert
 
