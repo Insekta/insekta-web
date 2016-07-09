@@ -16,11 +16,10 @@ from insekta.pki.models import Certificate, get_user_certificate
 
 @login_required
 def index(request):
-    certificates = Certificate.objects.filter(user=request.user)
-    has_valid_certificate = any(cert.is_valid for cert in certificates)
+    certificate = get_user_certificate(request.user)
     code = _generate_download_code(request.user.pk)
     return render(request, 'vpn/index.html', {
-        'has_valid_certificate': has_valid_certificate,
+        'certificate': certificate,
         'code': code,
         'active_nav': 'account'
     })
@@ -44,8 +43,9 @@ def download_config(request, code):
     return render(request, 'vpn/client.conf', {
         'remote': settings.VPN_SERVER,
         'certificate': certificate.pem_data.strip(),
+        'private_key': certificate.private_key_pem.strip(),
         'ca_certificate': ca_certificate
-    }, content_type='application/x-openvpn-profile')
+    }, content_type='text/plain') #content_type='application/x-openvpn-profile')
 
 
 def _generate_download_code(user_id):

@@ -7,16 +7,28 @@
 {% include 'account/nav.html' with tab='vpn' %}
 <h2>{% trans 'VPN' %}</h2>
 
-{% if has_valid_certificate %}
+{% if certificate %}
+{% if certificate.private_key_pem %}
+<p class="alert alert-warning">Your OpenVPN configuration contains your login credentials. Please do not share it.</p>
+{% endif %}
 <p>
     <a class="btn btn-primary" href="{% url 'vpn:download_config' code %}">
-    {% trans 'Download VPN bundle' %}
+    {% trans 'Download OpenVPN configuration' %}
     </a>
 </p>
 {% else %}
 <p class="alert alert-warning">
-{% url 'pki:index' as cert_url %}
-{% blocktrans %}You have no valid certificates. Please <a href="{{ cert_url }}">get one</a> first.{% endblocktrans %}
+    {% blocktrans %}You have no valid certificates. Please create one first to be able to download your VPN configuration.{% endblocktrans %}
 </p>
+<div>
+    <form method="post" action="{% url 'pki:create_certificate_auto' %}?redirect=vpn" style="display:inline;">
+        {% csrf_token %}
+        <button class="btn btn-primary">{% trans 'Create certificate' %}</button>
+    </form>
+    <a href="{% url 'pki:create_certificate' %}" class="btn btn-default">
+        {% trans 'Submit CSR (for experts)' %}
+    </a>
+</div>
+
 {% endif %}
 {% endblock content %}
