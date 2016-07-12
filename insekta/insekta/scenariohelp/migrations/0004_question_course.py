@@ -5,14 +5,19 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 
-from insekta.scenarios.models import Course
+
+default_course_pk = None
 
 
-default_course = Course.objects.create(short_name='TMP', title='question_course_migration')
+def forwards_func_tmp(apps, schema_editor):
+    global default_course_pk
+    Course = apps.get_model('scenarios', 'Course')
+    default_course_pk = Course.objects.create(short_name='TMP', title='question_course_migration')
 
 
 def forwards_func(apps, schema_editor):
-    Question = apps.get_model('scenariohelp', 'question')
+    Question = apps.get_model('scenariohelp', 'Question')
+    Course = apps.get_model('scenarios', 'Course')
     delete_tmp = True
     for question in Question.objects.all():
         groups = list(question.scenario.groups.all())
@@ -22,11 +27,7 @@ def forwards_func(apps, schema_editor):
         question.course = groups[0].course
         question.save()
     if delete_tmp:
-        default_course.delete()
-
-
-def reverse_func(apps, schema_editor):
-    pass
+        Course.objects.get(pk=default_course_pk).delete()
 
 
 class Migration(migrations.Migration):
@@ -37,11 +38,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(forwards_func_tmp, migrations.RunPython.noop),
         migrations.AddField(
             model_name='question',
             name='course',
-            field=models.ForeignKey(default=default_course.pk, on_delete=django.db.models.deletion.CASCADE, to='scenarios.Course'),
+            field=models.ForeignKey(default=default_course_pk, on_delete=django.db.models.deletion.CASCADE, to='scenarios.Course'),
             preserve_default=False,
         ),
-        migrations.RunPython(forwards_func, reverse_func)
+        migrations.RunPython(forwards_func, migrations.RunPython.noop)
     ]
