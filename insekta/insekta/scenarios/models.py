@@ -193,6 +193,7 @@ class Task(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=120)
     short_name = models.CharField(max_length=15)
+    key = models.CharField(max_length=120, unique=True)
     description = models.TextField(blank=True, null=True)
     enabled = models.BooleanField(default=False)
 
