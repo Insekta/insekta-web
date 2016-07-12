@@ -34,6 +34,7 @@
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
     <td>{% format_user question.author %}</td>
+	<td>{{ question.course.title }}</td>
     <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
 </tr>
 {% endfor %}

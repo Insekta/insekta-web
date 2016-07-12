@@ -2,8 +2,7 @@ from django.conf import settings
 from django.db import models, connection
 from django.utils.timezone import now
 
-from insekta.scenarios.models import Scenario
-
+from insekta.scenarios.models import Course, Scenario
 
 READ_STATES = (
     ('read', 'Read questions')
@@ -15,6 +14,7 @@ class Question(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     time_created = models.DateTimeField(default=now)
     scenario = models.ForeignKey(Scenario)
+    course = models.ForeignKey(Course)
     is_solved = models.BooleanField(default=False, db_index=True)
     seen_by_author = models.BooleanField(default=True)
 

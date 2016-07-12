@@ -13,6 +13,7 @@
 <tr>
     <th>{% trans 'Title' %}</th>
     <th>{% trans 'Asked at' %}</th>
+	<th>{% trans 'Course' %}</th>
     <th>{% trans 'Topic' %}</th>
     <th>{% trans 'Is solved' %}</th>
 </tr>
@@ -27,6 +28,7 @@
         <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+	<td><a href="#">{{ question.course.title }}</a></td>
     <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
     <td>
         {% if question.is_solved %}

@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 from insekta.base.utils import describe_allowed_markup
 from insekta.scenariohelp.forms import NewQuestionForm
 from insekta.scenariohelp.models import SupportedScenario, Question, SeenQuestion, Post
-from insekta.scenarios.models import Scenario
+from insekta.scenarios.models import Course, Scenario
 
 
 NUM_SOLVED_PER_PAGE = 25
@@ -82,7 +82,10 @@ def scenario_questions(request, scenario_key):
 
 @login_required
 def new_question(request, scenario_key):
+    if 'course' not in request.session:
+        return redirect('scenarios:list_courses')
     scenario = get_object_or_404(Scenario, key=scenario_key, enabled=True)
+    course = get_object_or_404(Course, pk=request.session['course']['pk'])
 
     preview = ''
     if request.method == 'POST':
@@ -97,6 +100,7 @@ def new_question(request, scenario_key):
                 question = Question.objects.create(
                     title=form.cleaned_data['title'],
                     author=request.user,
+                    course=course,
                     scenario=scenario)
                 question.post_answer(request.user, preview, question.time_created)
                 messages.success(request, _('Question was saved.'))
