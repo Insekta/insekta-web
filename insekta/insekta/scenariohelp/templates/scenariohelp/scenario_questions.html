@@ -21,8 +21,8 @@
 <h2>{% blocktrans with scenario_title=scenario.title%}Questions for "{{ scenario_title }}"{% endblocktrans %}</h2>
 
 <p>
-    <a href="{% url 'scenarios:view' course.key scenario.key %}" class="btn btn-default">
-        {% trans 'Back to topic' %}
+    <a href="{% url 'scenariohelp:new_question' course.key scenario.key %}" class="btn btn-primary">
+        {% trans 'New question' %}
     </a>
     <a href="{% url 'scenariohelp:my_questions' %}" class="btn btn-default">
         {% trans 'View all my questions' %}
