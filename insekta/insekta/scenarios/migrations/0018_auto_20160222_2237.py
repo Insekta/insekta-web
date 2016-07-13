@@ -7,11 +7,15 @@ import django.db.models.deletion
 
 from insekta.scenarios.models import Course
 
+default_course = None
 
-try:
-    default_course = Course.objects.all()[0].pk
-except (IndexError, OperationalError):
-    default_course = None
+def forward_func(apps, schema_editor):
+    global default_course
+    Course = apps.get_model('scenarios', 'Course')
+    try:
+        default_course = Course.objects.all()[0].pk
+    except (IndexError, OperationalError):
+        default_course = None
 
 
 class Migration(migrations.Migration):
@@ -21,6 +25,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(forward_func, migrations.RunPython.noop),
         migrations.RemoveField(
             model_name='course',
             name='scenario_groups',
