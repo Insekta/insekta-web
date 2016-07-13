@@ -5,8 +5,40 @@
 
 {% block title %}{{ question.title }}{% endblock %}
 
+{% block breadcrumb %}
+{% if is_own and src == 'my_questions' %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
+    <li class="active">{{ question.title }}</li>
+</ol>
+{% elif src == 'scenario' %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li>
+        <a href="{% url 'scenarios:view_course' question.course.key %}">{{ question.course.title }}</a>
+        {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
+    </li>
+    <li><a href=""
+
+    <li><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></li>
+    <li><a href="{% url 'scenariohelp:scenario_questions' question.course.key question.scenario.key %}">{% trans 'Questions' %}</a></li>
+    <li class="active">{{ question.title }}</li>
+</ol>
+{% elif src == 'help_others' %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'scenariohelp:index' %}">{% trans 'Help others' %}</a></li>
+    <li class="active">{{ question.title }}</li>
+</ol>
+{% endif %}
+
+{% endblock %}
+
 {% block content %}
-{% if is_own %}
+{% if is_own and src == 'my_questions' %}
 {% include 'account/nav.html' with tab='my_questions' %}
 {% endif %}
 
@@ -21,6 +53,10 @@
 <tr>
     <th>{% trans 'Asked at' %}</th>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
+</tr>
+<tr>
+    <th>{% trans "Course" %}</th>
+    <td><a href="{% url 'scenarios:view_course' question.course.key %}">{{ question.course.title }}</a></td>
 </tr>
 <tr>
     <th>{% trans "Topic" %}</th>

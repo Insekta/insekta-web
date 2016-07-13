@@ -3,6 +3,14 @@
 
 {% block title %}{% trans 'My questions' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="active">{% trans 'My questions' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {% include 'account/nav.html' with tab='my_questions' %}
 <h2>{% trans 'My questions' %}</h2>
@@ -29,7 +37,7 @@
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
 	<td><a href="#">{{ question.course.title }}</a></td>
-    <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></td>
+    <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}?src=my_questions">{{ question.scenario.title }}</a></td>
     <td>
         {% if question.is_solved %}
         <span class="glyphicon glyphicon-ok" title="{% trans 'Yes' %}"></span>

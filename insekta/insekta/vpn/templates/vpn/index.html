@@ -3,6 +3,14 @@
 
 {% block title %}{% trans 'VPN' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="active">{% trans 'VPN' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {% include 'account/nav.html' with tab='vpn' %}
 <h2>{% trans 'VPN' %}</h2>

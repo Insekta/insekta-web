@@ -4,6 +4,19 @@
 
 {% block title %}{% blocktrans with scenario_title=scenario.title%}Questions for "{{ scenario_title }}"{% endblocktrans %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li>
+        <a href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a>
+        {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
+    </li>
+    <li><a href="{% url 'scenarios:view' course.key scenario.key %}">{{ scenario.title }}</a></li>
+    <li class="active">{% trans 'Questions' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <h2>{% blocktrans with scenario_title=scenario.title%}Questions for "{{ scenario_title }}"{% endblocktrans %}</h2>
 
@@ -36,7 +49,7 @@
             {% if not question.seen_by_author %}
                 <span class="glyphicon glyphicon-asterisk" title="{% trans 'new answer' %}"></span>
             {% endif %}
-            <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+            <a href="{% url 'scenariohelp:view' question.pk %}?src=scenario">{{ question.title }}</a>
         </td>
         <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
     </tr>
@@ -62,7 +75,7 @@
             {% if not question.is_seen %}
                 <span class="glyphicon glyphicon-asterisk" title="{% trans "New" %}"></span>
             {% endif %}
-            <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+            <a href="{% url 'scenariohelp:view' question.pk %}?src=scenario">{{ question.title }}</a>
         </td>
         <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
         <td>{% format_user question.author %}</td>

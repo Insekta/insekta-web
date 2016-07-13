@@ -3,6 +3,14 @@
 
 {% block title %}{% trans 'Account' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="active">{% trans 'Overview' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {% include 'account/nav.html' with tab='account' %}
 

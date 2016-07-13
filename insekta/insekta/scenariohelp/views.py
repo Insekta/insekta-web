@@ -158,7 +158,8 @@ def view_question(request, question_pk):
         'answer_preview': answer_preview,
         'allowed_markup': allowed_markup,
         'is_own': is_own,
-        'active_nav': 'account' if is_own else 'help'
+        'active_nav': 'account' if is_own else 'help',
+        'src': request.GET.get('src', 'scenario')
     })
 
 

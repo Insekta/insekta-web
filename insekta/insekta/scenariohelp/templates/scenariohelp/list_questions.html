@@ -4,6 +4,13 @@
 
 {% block title %}{% trans "Open questions" %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="active">{% trans 'Help others' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <h2>{% trans 'Open questions' %}</h2>
 
@@ -20,6 +27,7 @@
     <th>{% trans "Title" %}</th>
     <th>{% trans "Asked at" %}</th>
     <th>{% trans "Asked by" %}</th>
+    <th>{% trans "Course" %}</th>
     <th>{% trans "Topic" %}</th>
 </tr>
 </thead>
@@ -28,14 +36,14 @@
 <tr>
     <td>
         {% if not question.is_seen %}
-        <span class="glyphicon glyphicon-asterisk" title="{% trans "New" %}"></span>
+        <span class="glyphicon glyphicon-asterisk" title="{% trans 'New' %}"></span>
         {% endif %}
-        <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
+        <a href="{% url 'scenariohelp:view' question.pk %}?src=help_others">{{ question.title }}</a>
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
     <td>{% format_user question.author %}</td>
 	<td>{{ question.course.title }}</td>
-    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+    <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></td>
 </tr>
 {% endfor %}
 </tbody>

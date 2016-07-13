@@ -3,6 +3,13 @@
 
 {% block title %}{% trans 'Courses' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="active">{% trans 'Courses' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 <h2>{% trans 'Courses' %}</h2>
 

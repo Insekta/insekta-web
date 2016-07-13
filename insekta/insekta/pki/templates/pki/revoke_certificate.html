@@ -3,6 +3,15 @@
 
 {% block title %}{% trans 'Revoke certificate' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li><a href="{% url 'pki:index' %}">{% trans 'Certificates' %}</a></li>
+    <li class="active">{% trans 'Revoke certificate' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {% include 'account/nav.html' with tab='pki' %}
 <h2>{% trans 'Revoke certificate' %}</h2>

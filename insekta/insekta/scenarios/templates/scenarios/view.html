@@ -4,6 +4,18 @@
 
 {%  block title %}{{ scenario.title }}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li>
+        <a href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a>
+        {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
+    </li>
+    <li class="active">{{ scenario.title }}</li>
+</ol>
+{% endblock %}
+
 {%  block content %}
 <div id="scenario-bar-container">
     <div class="alert-toolbar scenario-bar-absolute" id="scenario-bar">

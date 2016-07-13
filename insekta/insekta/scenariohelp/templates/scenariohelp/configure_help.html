@@ -4,6 +4,14 @@
 
 {% block title %}{% trans 'Configure help' %}{% endblock %}
 
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="active">{% trans 'Configure help' %}</li>
+</ol>
+{% endblock %}
+
 {% block content %}
 {% include 'account/nav.html' with tab='configure_help' %}
 <h2>{% trans 'Configure help' %}</h2>
