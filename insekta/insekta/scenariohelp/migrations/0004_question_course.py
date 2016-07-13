@@ -12,7 +12,7 @@ default_course_pk = None
 def forwards_func_tmp(apps, schema_editor):
     global default_course_pk
     Course = apps.get_model('scenarios', 'Course')
-    default_course_pk = Course.objects.create(short_name='TMP', title='question_course_migration')
+    default_course_pk = Course.objects.create(short_name='TMP', title='question_course_migration').pk
 
 
 def forwards_func(apps, schema_editor):
