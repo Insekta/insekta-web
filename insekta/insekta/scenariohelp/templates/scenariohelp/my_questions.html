@@ -29,7 +29,7 @@
     </td>
     <td>{{ question.time_created|date:"SHORT_DATETIME_FORMAT" }}</td>
 	<td><a href="#">{{ question.course.title }}</a></td>
-    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+    <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></td>
     <td>
         {% if question.is_solved %}
         <span class="glyphicon glyphicon-ok" title="{% trans 'Yes' %}"></span>

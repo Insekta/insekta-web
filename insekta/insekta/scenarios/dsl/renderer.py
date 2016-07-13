@@ -28,7 +28,8 @@ def collect_to_str(fn):
 
 
 class Renderer:
-    def __init__(self, scenario, user, csrf_token, virtual_machines, vpn_ip):
+    def __init__(self, course, scenario, user, csrf_token, virtual_machines, vpn_ip):
+        self.course = course
         self.scenario = scenario
         self.user = user
         self.csrf_token = csrf_token
@@ -75,7 +76,7 @@ class Renderer:
                 msg = _('Sorry, your answer is incorrect.')
                 yield '<div class="alert alert-danger">{}</div>\n'.format(msg)
 
-        form_action = '{}#task_{}'.format(self.scenario.get_absolute_url(), task_mac)
+        form_action = '{}#task_{}'.format(self.scenario.get_absolute_url(self.course), task_mac)
         yield '<form method="post" action="{}">\n'.format(form_action)
         yield '<input type="hidden" name="csrfmiddlewaretoken" value="{}">\n'.format(
             self.csrf_token)

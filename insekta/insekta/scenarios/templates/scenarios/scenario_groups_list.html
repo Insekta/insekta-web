@@ -24,7 +24,7 @@
 <tbody>
 {% for scenario in scenario_group.scenarios %}
     <tr>
-        <td><a href="{% url 'scenarios:view' scenario.key %}">{{ scenario.title }}</a></td>
+        <td><a href="{% url 'scenarios:view' course.key scenario.key %}">{{ scenario.title }}</a></td>
         <td>
             {% scenario_progress scenario.num_tasks_solved scenario.num_tasks %}
             &nbsp;<small>({{ scenario.num_tasks_solved }}/{{ scenario.num_tasks }})</small>

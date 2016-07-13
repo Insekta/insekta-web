@@ -97,8 +97,8 @@ class Scenario(models.Model):
     def solve(self, user, task_identifier):
         Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
 
-    def get_absolute_url(self):
-        return reverse('scenarios:view', args=(self.key, ))
+    def get_absolute_url(self, course):
+        return reverse('scenarios:view', args=(course.key, self.key, ))
 
     def get_comment_counts(self):
         comment_ids = CommentId.objects.filter(scenario=self, orphaned=False).annotate(
@@ -113,6 +113,9 @@ class Scenario(models.Model):
 
     def is_supported_by(self, user):
         return bool(self.supportedscenario_set.filter(user=user).count())
+
+    def is_inside_course(self, course):
+        return self.groups.filter(course=course).count() > 0
 
     def _load_extra(self):
         if hasattr(self, '_extra'):

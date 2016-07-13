@@ -4,7 +4,7 @@ import bleach
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
@@ -27,19 +27,16 @@ COMPONENT_SCRIPTS = {
 
 
 @login_required
-def index(request, is_challenge=False):
-    if 'course' in request.session:
-        name = 'scenarios:view_course'
-        if is_challenge:
-            name += '_challenges'
-        return redirect(name, request.session['course']['pk'])
-    else:
-        return redirect('scenarios:list_courses')
+def index(request):
+    return redirect('scenarios:list_courses')
 
 
 @login_required
-def view(request, scenario_key):
+def view(request, course_key, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
+    course = get_object_or_404(Course, key=course_key)
+    if not scenario.is_inside_course(course):
+        raise Http404('Scenario is not contained in this course.')
 
     if scenario.show_ethics_reminder and not request.user.accepted_ethics:
         ethics_url = (reverse('ethics:view') + "?next=" +
@@ -79,7 +76,7 @@ def view(request, scenario_key):
 
     # Initialize renderer and submit request to it
     csrf_token = get_token(request)
-    renderer = Renderer(scenario, request.user, csrf_token, virtual_machines, vpn_ip)
+    renderer = Renderer(course, scenario, request.user, csrf_token, virtual_machines, vpn_ip)
     if request.method == 'POST':
         tpl_task = renderer.submit(request.POST)
         if tpl_task:
@@ -94,6 +91,7 @@ def view(request, scenario_key):
     num_user_comments = json.dumps(scenario.get_comment_counts())
 
     return render(request, 'scenarios/view.html', {
+        'course': course,
         'scenario': scenario,
         'rendered_scenario': renderer.render(),
         'additional_stylesheets': additional_stylesheets,
@@ -202,8 +200,8 @@ def list_courses(request):
 
 
 @login_required
-def view_course(request, course_pk, is_challenge=False):
-    course = get_object_or_404(Course, pk=course_pk, enabled=True)
+def view_course(request, course_key, is_challenge=False):
+    course = get_object_or_404(Course, key=course_key, enabled=True)
     scenario_groups = list(course.scenario_groups.filter(hidden=False).order_by('order_id'))
     scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
                                                   is_challenge=is_challenge,
@@ -217,18 +215,7 @@ def view_course(request, course_pk, is_challenge=False):
 
 
 @login_required
-@require_POST
-def choose_course(request, course_pk):
-    course = get_object_or_404(Course, pk=course_pk, enabled=True)
-    request.session['course'] = {
-        'pk': course.pk,
-        'short_name': course.short_name
-    }
-    return redirect('scenarios:index')
-
-
-@login_required
-def show_options(request, scenario_key):
+def show_options(request, course_key, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
     return render(request, 'scenarios/show_options.html', {
         'scenario': scenario

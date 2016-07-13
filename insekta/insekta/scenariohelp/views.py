@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
@@ -47,8 +47,11 @@ def my_questions(request):
 
 
 @login_required
-def scenario_questions(request, scenario_key):
+def scenario_questions(request, course_key, scenario_key):
     scenario = get_object_or_404(Scenario, key=scenario_key)
+    course = get_object_or_404(Course, key=course_key)
+    if not scenario.is_inside_course(course):
+        raise Http404('No such scenario in this course.')
     unsolved_questions = list(Question.objects.select_related()
                               .filter(is_solved=False, scenario=scenario)
                               .order_by('-time_created'))
@@ -72,6 +75,7 @@ def scenario_questions(request, scenario_key):
         solved_page = paginator.page(1)
 
     return render(request, 'scenariohelp/scenario_questions.html', {
+        'course': course,
         'scenario': scenario,
         'my_unsolved': my_unsolved,
         'others_unsolved': others_unsolved,
@@ -81,11 +85,11 @@ def scenario_questions(request, scenario_key):
 
 
 @login_required
-def new_question(request, scenario_key):
-    if 'course' not in request.session:
-        return redirect('scenarios:list_courses')
+def new_question(request, course_key, scenario_key):
     scenario = get_object_or_404(Scenario, key=scenario_key, enabled=True)
-    course = get_object_or_404(Course, pk=request.session['course']['pk'])
+    course = get_object_or_404(Course, key=course_key)
+    if not scenario.is_inside_course(course):
+        raise Http404('No such scenario in this course.')
 
     preview = ''
     if request.method == 'POST':
@@ -104,7 +108,7 @@ def new_question(request, scenario_key):
                     scenario=scenario)
                 question.post_answer(request.user, preview, question.time_created)
                 messages.success(request, _('Question was saved.'))
-                return redirect('scenariohelp:scenario_questions', scenario.key)
+                return redirect('scenariohelp:scenario_questions', course.key, scenario.key)
 
     else:
         form = NewQuestionForm()
@@ -112,6 +116,7 @@ def new_question(request, scenario_key):
     allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST,
                                              settings.ATTR_WHITELIST)
     return render(request, 'scenariohelp/new_question.html', {
+        'course': course,
         'scenario': scenario,
         'form': form,
         'preview': preview,

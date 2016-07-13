@@ -10,15 +10,15 @@
         <ul class="nav nav-pills">
             <li><a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
             <li><a id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a></li>
-            <li><a href="{% url 'scenariohelp:new_question' scenario.key %}">{% trans 'Ask question' %}</a></li>
-            <li><a href="{% url 'scenariohelp:scenario_questions' scenario.key %}">{% trans 'Questions' %}</a></li>
+            <li><a href="{% url 'scenariohelp:new_question' course.key scenario.key %}">{% trans 'Ask question' %}</a></li>
+            <li><a href="{% url 'scenariohelp:scenario_questions' course.key scenario.key %}">{% trans 'Questions' %}</a></li>
             <li>
                 <a id="scenario-comments-link">{% trans 'Comments:' %}
                     <strong id="scenario-comments-off">{% trans 'off' %}</strong>
                     <strong id="scenario-comments-on">{% trans 'on' %}</strong>
                 </a>
             </li>
-            <li><a href="{% url 'scenarios:show_options' scenario.key %}">{% trans 'Options' %}</a></li>
+            <li><a href="{% url 'scenarios:show_options' course.key scenario.key %}">{% trans 'Options' %}</a></li>
         </ul>
     </div>
 </div>
@@ -68,14 +68,14 @@ This topic contains explanations of attack techniques from a black hat's perspec
         <div id="vm-panel">
 
         {% if vms_running %}
-        <form method="post" action="{% url 'scenarios:disable_vms' scenario.key %}">
+        <form method="post" action="{% url 'scenarios:disable_vms' course.key scenario.key %}">
         {% csrf_token %}
         <button class="btn btn-danger" style="float:right;margin-left:2em;">
             {% trans 'Destroy virtual machines' %}
         </button>
         </form>
         {% else %}
-        <form method="post" action="{% url 'scenarios:enable_vms' scenario.key %}">
+        <form method="post" action="{% url 'scenarios:enable_vms' course.key scenario.key %}">
         {% csrf_token %}
         <button class="btn btn-success" style="float:right;margin-left:2em;">
             {% trans 'Start virtual machines' %}
@@ -118,7 +118,7 @@ This topic contains explanations of attack techniques from a black hat's perspec
 {% if has_solved_all and not is_supporting %}
   <div class="alert alert-success">
       <p>{% trans "Do you want to help others with this topic?" %}</p>
-      <form action="{% url 'scenariohelp:set_support_scenario' scenario.pk %}" method="post">
+      <form action="{% url 'scenariohelp:set_support_scenario' course.key scenario.key %}" method="post">
           {% csrf_token %}
           <button class="btn btn-success">{% trans "Yes" %}</button>
       </form>
@@ -138,7 +138,7 @@ This topic contains explanations of attack techniques from a black hat's perspec
     {% include 'base/mathjax.html' %}
     <script type="text/javascript">
     // <![CDATA[
-    var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
+    var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' course.key scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     var SAVE_COMMENTS_STATE_URL = "{% url 'scenarios:save_comments_state' %}";
     var PREVIEW_COMMENT_URL = "{% url 'scenarios:preview_comment' %}";

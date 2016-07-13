@@ -7,14 +7,11 @@
 <h2>{% trans 'Courses' %}</h2>
 
 {% if courses %}
-<div class="list-group">
+<ul class="list-group">
 {% for course in courses %}
-    <form method="post" action="{% url 'scenarios:choose_course' course.pk %}">
-   {% csrf_token %}
-   <button class="list-group-item{% if request.session.course.pk == course.pk %} active{% endif %}">{{ course.title }}</button>
-    </form>
+   <li class="list-group-item"><a href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a></li>
 {% endfor %}
-</div>
+</ul>
 {% else %}
 <p>{% trans 'There are currently no courses.' %}</p>
 {% endif %}

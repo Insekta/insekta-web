@@ -26,20 +26,8 @@
                 <div id="navbar">
                     <ul class="nav navbar-nav">
                         {% if user.is_authenticated %}
-                        {% if request.session.course %}
-                        <li{% if active_nav == 'topics' %} class="active"{% endif %}>
-                            <a href="{% url 'scenarios:index' %}">{% trans 'Topics' %}</a>
-                        </li>
-                        <li{% if active_nav == 'challenges' %} class="active"{% endif %}>
-                            <a href="{% url 'scenarios:challenges' %}">{% trans 'Challenges' %}</a>
-                        </li>
-                        {% endif %}
                         <li{% if active_nav == 'courses' %} class="active"{% endif %}>
-                            <a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}
-                            {% if request.session.course %}
-                                <span class="badge">{{ request.session.course.short_name }}</span>
-                            {% endif %}
-                            </a>
+                            <a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a>
                         </li>
                         <li{% if active_nav == 'help' %} class="active"{% endif %}>
                             <a href="{% url 'scenariohelp:index' %}">

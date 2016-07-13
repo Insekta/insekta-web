@@ -24,7 +24,7 @@
 </tr>
 <tr>
     <th>{% trans "Topic" %}</th>
-    <td><a href="{% url 'scenarios:view' question.scenario.key %}">{{ question.scenario.title }}</a></td>
+    <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></td>
 </tr>
 </tbody>
 </table>
