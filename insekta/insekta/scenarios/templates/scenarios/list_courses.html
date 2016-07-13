@@ -14,11 +14,11 @@
 <h2>{% trans 'Courses' %}</h2>
 
 {% if courses %}
-<ul class="list-group">
+<div class="list-group">
 {% for course in courses %}
-   <li class="list-group-item"><a href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a></li>
+   <a class="list-group-item" href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a>
 {% endfor %}
-</ul>
+</div>
 {% else %}
 <p>{% trans 'There are currently no courses.' %}</p>
 {% endif %}
