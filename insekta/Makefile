@@ -4,7 +4,7 @@ base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
-jquery_download = http://code.jquery.com/jquery-2.1.4.min.js
+jquery_download = http://code.jquery.com/jquery-2.2.4.min.js
 raphaeljs_download = https://raw.githubusercontent.com/DmitryBaranovskiy/raphael/master/raphael.min.js
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
 mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
@@ -27,7 +27,7 @@ locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 components: ${components_static}mathjax ${components_static}raphaeljs ${components_static}flot
 
 ${base_static}js/jquery.min.js:
-	wget -O $@ '${jquery_download}'
+	wget --no-use-server-timestamps -O $@ '${jquery_download}'
 
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
@@ -49,7 +49,7 @@ ${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js
 
 ${components_static}raphaeljs:
 	mkdir -p $@
-	wget -P $@ ${raphaeljs_download}
+	wget --no-use-server-timestamps -P $@ ${raphaeljs_download}
 
 ${components_static}flot:
 	wget -O ${flot_tmp} '${flot_download}'
