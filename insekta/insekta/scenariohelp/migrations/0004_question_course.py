@@ -42,8 +42,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='question',
             name='course',
-            field=models.ForeignKey(default=default_course_pk, on_delete=django.db.models.deletion.CASCADE, to='scenarios.Course'),
+            field=models.ForeignKey(default=default_course_pk, on_delete=django.db.models.deletion.CASCADE, to='scenarios.Course', null=True),
             preserve_default=False,
         ),
-        migrations.RunPython(forwards_func, migrations.RunPython.noop)
+        migrations.RunPython(forwards_func, migrations.RunPython.noop),
+        migrations.AlterField(
+            model_name='question',
+            name='course',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='scenarios.Course'),
+        ),
     ]
