@@ -39,7 +39,7 @@ def view(request, course_key, scenario_key):
 
     if scenario.show_ethics_reminder and not request.user.accepted_ethics:
         ethics_url = (reverse('ethics:view') + "?next=" +
-                      reverse('scenarios:view', args=(scenario_key, )))
+                      reverse('scenarios:view', args=(course.key, scenario_key, )))
         return redirect(ethics_url)
 
 
@@ -111,20 +111,22 @@ def view(request, course_key, scenario_key):
 
 @require_POST
 @login_required
-def enable_vms(request, scenario_key):
+def enable_vms(request, course_key, scenario_key):
+    course = get_object_or_404(Course, key=course_key)
     vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
     if vm_resource:
         remote_api.start_vm_resource(vm_resource, request.user)
-    return redirect('scenarios:view', scenario_key)
+    return redirect('scenarios:view', course.key, scenario_key)
 
 
 @require_POST
 @login_required
-def disable_vms(request, scenario_key):
+def disable_vms(request, course_key, scenario_key):
+    course = get_object_or_404(Course, key=course_key)
     vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
     if vm_resource:
         remote_api.stop_vm_resource(vm_resource, request.user)
-    return redirect('scenarios:view', scenario_key)
+    return redirect('scenarios:view', course.key, scenario_key)
 
 
 @require_POST
