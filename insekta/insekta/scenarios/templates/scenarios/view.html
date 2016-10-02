@@ -150,7 +150,7 @@ This topic contains explanations of attack techniques from a black hat's perspec
     {% include 'base/mathjax.html' %}
     <script type="text/javascript">
     // <![CDATA[
-    var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' course.key scenario.key %}"{% else %}null{% endif %};
+    var PING_URL = {% if vms_running %}"{% url 'scenarios:ping_vms' scenario.key %}"{% else %}null{% endif %};
     var NOTES_SAVE_URL = "{% url 'scenarios:save_notes' scenario.key %}";
     var SAVE_COMMENTS_STATE_URL = "{% url 'scenarios:save_comments_state' %}";
     var PREVIEW_COMMENT_URL = "{% url 'scenarios:preview_comment' %}";
