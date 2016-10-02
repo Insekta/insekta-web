@@ -1,6 +1,3 @@
-import bleach
-
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
@@ -9,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_POST
 
-from insekta.base.utils import describe_allowed_markup
+from insekta.base.utils import describe_allowed_markup, sanitize_markup
 from insekta.scenariohelp.forms import NewQuestionForm
 from insekta.scenariohelp.models import SupportedScenario, Question, SeenQuestion, Post
 from insekta.scenarios.models import Course, Scenario
@@ -96,10 +93,7 @@ def new_question(request, course_key, scenario_key):
         form = NewQuestionForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data['text']
-            preview = bleach.clean(bleach.linkify(text),
-                                   tags=settings.TAG_WHITELIST,
-                                   attributes=settings.ATTR_WHITELIST)
-
+            preview = sanitize_markup(text)
             if 'save' in request.POST:
                 question = Question.objects.create(
                     title=form.cleaned_data['title'],
@@ -113,8 +107,7 @@ def new_question(request, course_key, scenario_key):
     else:
         form = NewQuestionForm()
 
-    allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST,
-                                             settings.ATTR_WHITELIST)
+    allowed_markup = describe_allowed_markup()
     return render(request, 'scenariohelp/new_question.html', {
         'course': course,
         'scenario': scenario,
@@ -140,17 +133,14 @@ def view_question(request, question_pk):
             return redirect('scenariohelp:my_questions')
 
         answer = request.POST.get('answer', '')
-        answer_preview = bleach.clean(bleach.linkify(answer),
-                                      tags=settings.TAG_WHITELIST,
-                                      attributes=settings.ATTR_WHITELIST)
+        answer_preview = sanitize_markup(answer)
         if 'save' in request.POST:
             if not question.is_solved:
                 question.post_answer(request.user, answer_preview)
                 return redirect('scenariohelp:view', question.pk)
 
     is_own = question.author == request.user
-    allowed_markup = describe_allowed_markup(settings.TAG_WHITELIST,
-                                             settings.ATTR_WHITELIST)
+    allowed_markup = describe_allowed_markup()
     return render(request, 'scenariohelp/view_question.html', {
         'question': question,
         'posts': posts,
