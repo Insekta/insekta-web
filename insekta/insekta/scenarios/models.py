@@ -144,7 +144,7 @@ class Scenario(models.Model):
 
     @classmethod
     def update_or_create_from_key(cls, key):
-        if not re.match('^[a-z0-9][a-z0-9-]*$', key):
+        if not re.match('^[a-z0-9][a-z0-9-_]*$', key):
             raise ScenarioError('Invalid characters in key: {}'.format(key))
         try:
             with open(os.path.join(settings.SCENARIO_DIR, key, 'meta.json')) as f:
