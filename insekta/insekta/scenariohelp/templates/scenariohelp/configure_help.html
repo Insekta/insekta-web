@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 
 {% block title %}{% trans 'Configure help' %}{% endblock %}
 
@@ -16,24 +17,70 @@
 {% include 'account/nav.html' with tab='configure_help' %}
 <h2>{% trans 'Configure help' %}</h2>
 
-<p>{% trans 'Thank you for helping others! You will see help requests for the following topics:' %}</p>
+<form id="course_form" method="post" class="form-inline">
+{% csrf_token %}
+<div class="form-group">
+    <label for="id_course">{% trans 'Course:' %}</label>
+    {% render_field course_form.course %}
+</div>
+</form>
 
-{% for scenario in scenarios %}
-<div class="checkbox" id="chosen-scenarios">
+{% if course %}
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="course" value="{{ course.pk }}">
+<input type="hidden" name="change_support" value="1">
+<p>{% trans 'You will see help requests for the following topics:' %}</p>
+
+{% if scenario_topics %}
+<h3>{% trans 'Topics' %}</h3>
+{% for scenario_group in scenario_topics %}
+<h4>{{ scenario_group.title }}</h4>
+{% for scenario in scenario_group.scenarios %}
+<div class="checkbox">
     <label>
-        <input type="checkbox" name="{{ scenario.key }}"{% if scenario.is_supported %} checked{% endif %}>
+        <input type="checkbox" name="sc_{{ scenario.key }}"{% if scenario.is_supported %} checked{% endif %}>
         {{ scenario.title }}
-        {% if scenario.is_challenge %}<span class="lessimportant"> ({% trans 'challenge' %})</span>{% endif %}
     </label>
 </div>
 {% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if scenario_challenges %}
+<h3>{% trans 'Challenges' %}</h3>
+{% for scenario_group in scenario_challenges %}
+<h4>{{ scenario_group.title }}</h4>
+{% for scenario in scenario_group.scenarios %}
+<div class="checkbox">
+    <label>
+        <input type="checkbox" name="sc_{{ scenario.key }}"{% if scenario.is_supported %} checked{% endif %}>
+        {{ scenario.title }}
+    </label>
+</div>
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+
+<p>
+    <button class="btn btn-primary">{% trans 'Save' %}</button>
+</p>
+</form>
+{% endif %}
 {% endblock %}
 
 {% block additional_scripts %}
 <script type="text/javascript">
 // <[!CDATA[
-var SET_SUPPORT_URL = '{% url 'scenariohelp:set_support' %}';
+$(function() {
+    $('#id_course').on('change', function() {
+        $('#course_form').submit();
+    });
+});
 // ]]>
 </script>
+<!--
 <script type="text/javascript" src="{% static 'scenariohelp/js/configure_help.js' %}"></script>
+-->
 {% endblock %}

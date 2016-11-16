@@ -1,3 +1,6 @@
+import copy
+
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
@@ -9,8 +12,7 @@ from django.views.decorators.http import require_POST
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
 from insekta.scenariohelp.forms import NewQuestionForm
 from insekta.scenariohelp.models import SupportedScenario, Question, SeenQuestion, Post
-from insekta.scenarios.models import Course, Scenario
-
+from insekta.scenarios.models import Course, Scenario, ScenarioGroup
 
 NUM_SOLVED_PER_PAGE = 25
 
@@ -155,16 +157,55 @@ def view_question(request, question_pk):
 
 @login_required
 def configure_help(request):
-    supported_scenario_pks = set()
-    for supported in SupportedScenario.objects.filter(user=request.user):
-        supported_scenario_pks.add(supported.scenario.pk)
+    courses = Course.objects.filter(enabled=True)
 
-    scenarios = list(Scenario.objects.filter(enabled=True).order_by('title'))
-    for scenario in scenarios:
-        scenario.is_supported = scenario.pk in supported_scenario_pks
+    class CourseForm(forms.Form):
+        course = forms.ModelChoiceField(courses)
+
+    course = None
+    if request.method == 'POST':
+        course_form = CourseForm(request.POST)
+        if course_form.is_valid():
+            course = course_form.cleaned_data['course']
+    else:
+        course_form = CourseForm()
+
+    scenario_topics = scenario_challenges = []
+    if course:
+        scenario_topics = list(course.scenario_groups.filter(hidden=False).order_by('order_id'))
+        scenario_challenges = copy.deepcopy(scenario_topics)
+        scenario_topics = ScenarioGroup.annotate_list(scenario_topics, is_challenge=False)
+        scenario_challenges = ScenarioGroup.annotate_list(scenario_challenges, is_challenge=True)
+        scenarios = []
+        for scenario_group in scenario_topics:
+            scenarios += scenario_group.scenarios
+        for scenario_group in scenario_challenges:
+            scenarios += scenario_group.scenarios
+
+        supported_scenarios = SupportedScenario.objects.filter(
+                user=request.user, scenario__in=scenarios)
+        supported_pks = set(supported.scenario.pk for supported in supported_scenarios)
+        for scenario in scenarios:
+            scenario.is_supported = scenario.pk in supported_pks
+        if request.method == 'POST' and 'change_support' in request.POST:
+            disable_support = []
+            enabled_support = []
+            for scenario in scenarios:
+                if 'sc_' + scenario.key in request.POST:
+                    scenario.is_supported = True
+                    enabled_support.append(scenario)
+                else:
+                    scenario.is_supported = False
+                    disable_support.append(scenario)
+            SupportedScenario.objects.filter(scenario__in=disable_support).delete()
+            for scenario in enabled_support:
+                SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
 
     return render(request, 'scenariohelp/configure_help.html', {
-        'scenarios': scenarios,
+        'course': course,
+        'course_form': course_form,
+        'scenario_topics': scenario_topics,
+        'scenario_challenges': scenario_challenges,
         'active_nav': 'account'
     })
 
