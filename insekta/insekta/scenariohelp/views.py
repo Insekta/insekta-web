@@ -200,6 +200,7 @@ def configure_help(request):
             SupportedScenario.objects.filter(scenario__in=disable_support).delete()
             for scenario in enabled_support:
                 SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
+            messages.success(request, _('Supported topics/challenges configured successfully.'))
 
     return render(request, 'scenariohelp/configure_help.html', {
         'course': course,
@@ -208,30 +209,6 @@ def configure_help(request):
         'scenario_challenges': scenario_challenges,
         'active_nav': 'account'
     })
-
-
-@require_POST
-@login_required
-def set_support(request):
-    scenario_key = request.POST.get('scenario', '')
-    scenario = get_object_or_404(Scenario, key=scenario_key, enabled=True)
-    enabled = request.POST.get('enabled') == '1'
-
-    if enabled:
-        SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
-    else:
-        SupportedScenario.objects.filter(user=request.user, scenario=scenario).delete()
-    return HttpResponse('{"result": "ok"}', content_type='application/json')
-
-
-@require_POST
-@login_required
-def set_support_scenario(request, scenario_pk):
-    scenario = get_object_or_404(Scenario, pk=scenario_pk, enabled=True)
-
-    SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
-    messages.success(request, _('Thank you for helping!'))
-    return redirect('scenarios:view', scenario.key)
 
 
 def _annotate_is_seen(question_list, user):
