@@ -49,7 +49,7 @@ def download_config(request, code):
         'certificate': certificate.pem_data.strip(),
         'private_key': private_key,
         'ca_certificate': ca_certificate
-    }, content_type='text/plain') #content_type='application/x-openvpn-profile')
+    }, content_type='application/x-openvpn-profile')
 
 
 def _generate_download_code(user_id):
