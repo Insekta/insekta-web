@@ -40,10 +40,14 @@ def download_config(request, code):
     certificate = get_user_certificate(user)
     with open(settings.CA_CERTIFICATE_FILE, 'rb') as f:
         ca_certificate = f.read().strip()
+
+    private_key = ''
+    if certificate.private_key_pem:
+        private_key = certificate.private_key_pem.strip()
     return render(request, 'vpn/client.conf', {
         'remote': settings.VPN_SERVER,
         'certificate': certificate.pem_data.strip(),
-        'private_key': certificate.private_key_pem.strip(),
+        'private_key': private_key,
         'ca_certificate': ca_certificate
     }, content_type='text/plain') #content_type='application/x-openvpn-profile')
 
