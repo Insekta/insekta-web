@@ -23,5 +23,5 @@ urlpatterns = [
         'is_challenge': True
     }, name='view_course_challenges'),
     url(r'^options/(.+)/(.+)$', views.show_options, name='show_options'),
-    url(r'^reset_tasks/(.+)$', views.reset_tasks, name='reset_tasks'),
+    url(r'^reset_tasks/(.+)/(.+)$', views.reset_tasks, name='reset_tasks'),
 ]

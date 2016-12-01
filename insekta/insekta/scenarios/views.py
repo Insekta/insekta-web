@@ -213,19 +213,21 @@ def view_course(request, course_key, is_challenge=False):
 
 @login_required
 def show_options(request, course_key, scenario_key):
+    course = get_object_or_404(Course, key=course_key)
     scenario = _get_scenario(scenario_key, request.user)
     return render(request, 'scenarios/show_options.html', {
+        'course': course,
         'scenario': scenario
     })
 
 
 @login_required
 @require_POST
-def reset_tasks(request, scenario_key):
+def reset_tasks(request, course_key, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
     request.user.solved_tasks.filter(scenario=scenario).delete()
     messages.success(request, _('The exercises were reset. You can now solve them again.'))
-    return redirect('scenarios:show_options', scenario.key)
+    return redirect('scenarios:show_options', course_key, scenario.key)
 
 
 def _get_comments_response(request, comment_id):

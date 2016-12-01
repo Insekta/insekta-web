@@ -4,10 +4,10 @@
 {% block title %}{% blocktrans with title=scenario.title %}Options for "{{ title }}"{% endblocktrans %}{% endblock %}
 
 {% block content %}
-{% url 'scenarios:view' scenario.key as scenario_link %}
+{% url 'scenarios:view' course.key scenario.key as scenario_link %}
 <h2>{% blocktrans with title=scenario.title %}Options for "<a href="{{ scenario_link }}">{{ title }}</a>"{% endblocktrans %}</h2>
 
-<form method="post" action="{% url 'scenarios:reset_tasks' scenario.key %}">
+<form method="post" action="{% url 'scenarios:reset_tasks' course.key scenario.key %}">
 {% csrf_token %}
 <button class="btn btn-default">{% trans 'Reset exercises' %}</button>
 </form>
