@@ -225,7 +225,7 @@ def show_options(request, course_key, scenario_key):
 @require_POST
 def reset_tasks(request, course_key, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
-    request.user.solved_tasks.filter(scenario=scenario).delete()
+    request.user.solved_tasks.through.objects.filter(task__scenario=scenario).delete()
     messages.success(request, _('The exercises were reset. You can now solve them again.'))
     return redirect('scenarios:show_options', course_key, scenario.key)
 
