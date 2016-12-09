@@ -195,6 +195,9 @@ class Renderer:
         except KeyError:
             return default if default is not None else '$IP'
 
+    def _call_vm_enabled(self, vm_name):
+        return vm_name in self.virtual_machines
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -214,7 +217,8 @@ class Renderer:
             'media': self._call_media,
             'code': self._call_code,
             'hint': self._call_hint,
-            'vm_ip': self._call_vm_ip
+            'vm_ip': self._call_vm_ip,
+            'vm_enabled': self._call_vm_enabled,
         }
 
     def render(self, context=None):
