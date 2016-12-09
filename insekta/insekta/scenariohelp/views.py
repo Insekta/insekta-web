@@ -211,6 +211,16 @@ def configure_help(request):
     })
 
 
+@require_POST
+@login_required
+def set_support_scenario(request, course_key, scenario_key):
+    scenario = get_object_or_404(Scenario, key=scenario_key, enabled=True)
+
+    SupportedScenario.objects.get_or_create(user=request.user, scenario=scenario)
+    messages.success(request, _('Thank you for helping!'))
+    return redirect('scenarios:view', course_key, scenario.key)
+
+
 def _annotate_is_seen(question_list, user):
     seen_questions = SeenQuestion.objects.filter(user=user,
                                                  question__in=question_list)
