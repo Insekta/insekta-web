@@ -23,7 +23,7 @@ from insekta.base import views as base_views
 
 urlpatterns = [
     url(r'^$', base_views.index, name='index'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^account/', include('insekta.account.urls')),
     url(r'^topics/', include('insekta.scenarios.urls')),
     url(r'^help/', include('insekta.scenariohelp.urls')),
