@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from insekta.account import views
 
 
+app_name = 'account'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login$', auth_views.login, name='login', kwargs={

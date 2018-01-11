@@ -3,6 +3,7 @@ from django.conf.urls import url
 from insekta.scenarios import views
 
 
+app_name = 'scenarios'
 urlpatterns = [
     url(r'^topiclist$', views.index, name='index'),
     url(r'^challenges$', views.index, kwargs={

@@ -3,6 +3,7 @@ from django.conf.urls import url
 from insekta.pki import views
 
 
+app_name = 'pki'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'create_certificate_csr$', views.create_certificate, name='create_certificate'),

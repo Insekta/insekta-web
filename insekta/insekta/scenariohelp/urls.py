@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from insekta.scenariohelp import views
 
+
+app_name = 'scenariohelp'
 urlpatterns = [
     url(r'^$', views.list_questions, name='index'),
     url(r'^view/(\d+)$', views.view_question, name='view'),
