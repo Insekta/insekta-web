@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('fingerprint', models.CharField(unique=True, max_length=64)),
                 ('expires', models.DateTimeField()),
                 ('revoked', models.BooleanField(default=False)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
         ),
     ]

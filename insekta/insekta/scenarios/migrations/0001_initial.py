@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('identifier', models.CharField(max_length=120)),
                 ('task_type', models.CharField(max_length=32)),
-                ('scenario', models.ForeignKey(related_name='tasks', to='scenarios.Scenario')),
+                ('scenario', models.ForeignKey(related_name='tasks', to='scenarios.Scenario', on_delete=models.CASCADE)),
                 ('solved_by', models.ManyToManyField(to=settings.AUTH_USER_MODEL, related_name='solved_tasks')),
             ],
         ),
