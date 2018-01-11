@@ -27,7 +27,7 @@ def index(request):
 # This does not have login_required because the authentication can also be
 # done using a code in the URL to be friendly to wget.
 def download_config(request, code):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         user = request.user
     else:
         try:
