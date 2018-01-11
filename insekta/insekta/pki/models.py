@@ -10,7 +10,7 @@ from insekta.pki.certs import CSRSigner, SignError, pem_to_cert, cert_to_pem, ge
 
 
 class Certificate(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     pem_data = models.TextField()
     fingerprint = models.CharField(max_length=64, unique=True)
     expires = models.DateTimeField()

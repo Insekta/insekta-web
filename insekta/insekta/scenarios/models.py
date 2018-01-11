@@ -184,7 +184,7 @@ class Scenario(models.Model):
 
 
 class Task(models.Model):
-    scenario = models.ForeignKey(Scenario, related_name='tasks')
+    scenario = models.ForeignKey(Scenario, related_name='tasks', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=120)
     solved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
                                        related_name='solved_tasks')
@@ -206,7 +206,7 @@ class Course(models.Model):
 
 class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
-    course = models.ForeignKey(Course, related_name='scenario_groups')
+    course = models.ForeignKey(Course, related_name='scenario_groups', on_delete=models.CASCADE)
     hidden = models.BooleanField(default=False)
     order_id = models.IntegerField(default=1)
     description = models.TextField(blank=True, null=True)
@@ -267,8 +267,8 @@ class ScenarioGroup(models.Model):
 
 
 class ScenarioGroupEntry(models.Model):
-    scenario = models.ForeignKey(Scenario)
-    scenario_group = models.ForeignKey(ScenarioGroup)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    scenario_group = models.ForeignKey(ScenarioGroup, on_delete=models.CASCADE)
     order_id = models.IntegerField(default=1)
 
     def __str__(self):
@@ -276,8 +276,8 @@ class ScenarioGroupEntry(models.Model):
 
 
 class Notes(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    scenario = models.ForeignKey(Scenario)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
 
     class Meta:
@@ -289,7 +289,7 @@ class Notes(models.Model):
 
 class CommentId(models.Model):
     comment_id = models.CharField(max_length=64)
-    scenario = models.ForeignKey(Scenario)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
     orphaned = models.BooleanField(default=False)
 
     class Meta:
@@ -303,8 +303,8 @@ class CommentId(models.Model):
 
 
 class Comment(models.Model):
-    comment_id = models.ForeignKey(CommentId, related_name='comments')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    comment_id = models.ForeignKey(CommentId, related_name='comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(default=now)
     text = models.TextField()
 

@@ -11,10 +11,10 @@ READ_STATES = (
 
 class Question(models.Model):
     title = models.CharField(max_length=120)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(default=now)
-    scenario = models.ForeignKey(Scenario)
-    course = models.ForeignKey(Course)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     is_solved = models.BooleanField(default=False, db_index=True)
     seen_by_author = models.BooleanField(default=True)
 
@@ -55,8 +55,8 @@ class Question(models.Model):
 
 
 class Post(models.Model):
-    question = models.ForeignKey(Question)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(default=now)
     text = models.TextField()
 
@@ -65,8 +65,8 @@ class Post(models.Model):
 
 
 class SeenQuestion(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    question = models.ForeignKey(Question)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('question', 'user')
@@ -76,8 +76,9 @@ class SeenQuestion(models.Model):
 
 
 class SupportedScenario(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='supported_scenarios')
-    scenario = models.ForeignKey(Scenario)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='supported_scenarios',
+                             on_delete=models.CASCADE)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('user', 'scenario')
