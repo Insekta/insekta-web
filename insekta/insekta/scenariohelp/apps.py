@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
-
-class ScenariohelpConfig(AppConfig):
+class ScenarioHelpConfig(AppConfig):
     name = 'scenariohelp'
+
