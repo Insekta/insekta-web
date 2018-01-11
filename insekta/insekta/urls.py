@@ -24,20 +24,20 @@ from insekta.base import views as base_views
 urlpatterns = [
     url(r'^$', base_views.index, name='index'),
     url(r'^admin/', admin.site.urls),
-    url(r'^account/', include('insekta.account.urls')),
-    url(r'^topics/', include('insekta.scenarios.urls')),
-    url(r'^help/', include('insekta.scenariohelp.urls')),
+    url(r'^account/', include('insekta.account.urls', namespace='account')),
+    url(r'^topics/', include('insekta.scenarios.urls', namespace='scenarios')),
+    url(r'^help/', include('insekta.scenariohelp.urls', namespace='scenariohelp')),
 ]
 
 if 'insekta.ethics' in settings.INSTALLED_APPS:
     urlpatterns += [
-        url(r'^ethics/', include('insekta.ethics.urls')),
+        url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     ]
 
 if 'insekta.vpn' in settings.INSTALLED_APPS:
     urlpatterns += [
-        url(r'^pki/', include('insekta.pki.urls')),
-        url(r'^vpn/', include('insekta.vpn.urls')),
+        url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
+        url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),
     ]
 
 if settings.DEBUG:
