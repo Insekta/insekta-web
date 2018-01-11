@@ -22,22 +22,22 @@ from insekta.base import views as base_views
 
 
 urlpatterns = [
-    url(r'^$', base_views.index, name='index'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^account/', include('insekta.account.urls', namespace='account')),
-    url(r'^topics/', include('insekta.scenarios.urls', namespace='scenarios')),
-    url(r'^help/', include('insekta.scenariohelp.urls', namespace='scenariohelp')),
+#    url(r'^$', base_views.index, name='index'),
+#    url(r'^admin/', include(admin.site.urls)),
+    url(r'^account/', include('insekta.account.urls')),
+    url(r'^topics/', include('insekta.scenarios.urls')),
+    url(r'^help/', include('insekta.scenariohelp.urls')),
 ]
 
 if 'insekta.ethics' in settings.INSTALLED_APPS:
     urlpatterns += [
-        url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
+        url(r'^ethics/', include('insekta.ethics.urls')),
     ]
 
 if 'insekta.vpn' in settings.INSTALLED_APPS:
     urlpatterns += [
-        url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
-        url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),
+        url(r'^pki/', include('insekta.pki.urls')),
+        url(r'^vpn/', include('insekta.vpn.urls')),
     ]
 
 if settings.DEBUG:
