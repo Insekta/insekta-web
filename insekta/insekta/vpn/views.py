@@ -43,7 +43,7 @@ def download_config(request, code):
 
     private_key = ''
     if certificate.private_key_pem:
-        private_key = certificate.private_key_pem.decode().strip()
+        private_key = certificate.private_key_pem.strip()
     return render(request, 'vpn/client.conf', {
         'remote': settings.VPN_SERVER,
         'certificate': certificate.pem_data.strip(),
