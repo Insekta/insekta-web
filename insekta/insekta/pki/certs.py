@@ -74,7 +74,7 @@ def generate_private_key():
 def key_to_pem(key):
     return key.private_bytes(encoding=serialization.Encoding.PEM,
                              format=serialization.PrivateFormat.TraditionalOpenSSL,
-                             encryption_algorithm=serialization.NoEncryption())
+                             encryption_algorithm=serialization.NoEncryption()).decode()
 
 
 def cert_to_pem(cert: x509.Certificate):
