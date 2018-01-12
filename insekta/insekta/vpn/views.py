@@ -38,12 +38,12 @@ def download_config(request, code):
         user = get_object_or_404(User, pk=user_id)
 
     certificate = get_user_certificate(user)
-    with open(settings.CA_CERTIFICATE_FILE, 'rb') as f:
+    with open(settings.CA_CERTIFICATE_FILE) as f:
         ca_certificate = f.read().strip()
 
     private_key = ''
     if certificate.private_key_pem:
-        private_key = certificate.private_key_pem.strip()
+        private_key = certificate.private_key_pem.decode().strip()
     return render(request, 'vpn/client.conf', {
         'remote': settings.VPN_SERVER,
         'certificate': certificate.pem_data.strip(),
