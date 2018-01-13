@@ -7,6 +7,7 @@ from insekta.account import views
 app_name = 'account'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^register$', views.register, name='register'),
     url(r'^login$', auth_views.login, name='login', kwargs={
         'template_name': 'account/login.html'
     }),
