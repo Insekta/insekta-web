@@ -14,7 +14,7 @@ mathjax_tmp := $(shell mktemp -u).zip
 YUI_COMPRESSOR := $(shell scripts/yuicompressor.py --find)
 
 
-static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min    .js' -o -name '*.min.css' \))
+static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min.js' -o -name '*.min.css' \))
 
 all: css js components locales
 
