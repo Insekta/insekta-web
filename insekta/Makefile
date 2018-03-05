@@ -16,7 +16,7 @@ YUI_COMPRESSOR := $(shell scripts/yuicompressor.py --find)
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min.js' -o -name '*.min.css' \))
 
-all: css js components locales
+all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
@@ -32,7 +32,10 @@ ${base_static}js/jquery.min.js:
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
-${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/bootstrap-theme.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
+${base_static}css/bootstrap.css: ${base_static}scss/custom.scss
+	sass $< > $@
+
+${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | $(YUI_COMPRESSOR) -o $@ --type css --charset utf-8
 
 ${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
@@ -66,6 +69,10 @@ ${components_static}mathjax:
 	rm -rf $@/fonts/HTML-CSS/TeX/png
 	rm -rf $@/fonts/HTML-CSS/TeX/svg
 	rm ${mathjax_tmp}
+
+node_modules: package.json
+	npm install
+	touch node_modules
 
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
 
