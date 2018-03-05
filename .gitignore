@@ -9,7 +9,6 @@ insekta/insekta/scenarios/static/scenarios/css/pygments.css
 insekta/.sass-cache/
 insekta/db.sqlite3
 insekta/insekta/base/static/css/bootstrap.css
-insekta/insekta/base/static/scss/
 insekta/node_modules/
 insekta/package-lock.json
 insekta/package.json
