@@ -1,0 +1,30 @@
+@font-face {
+	font-family: 'Fira Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/FiraSans-Regular.woff2") format("woff2"), url("../fonts/FiraSans-Regular.woff") format("woff");
+}
+@font-face {
+	font-family: 'Fira Sans';
+	font-style: bold;
+	font-weight: 700;
+	src: url("../fonts/FiraSans-Bold.woff2") format("woff2"), url("../fonts/FiraSans-Bold.woff") format("woff");
+}
+@font-face {
+	font-family: 'Fira Mono';
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/FiraMono-Regular.woff2") format("woff2"), url("../fonts/FiraMono-Regular.woff") format("woff");
+}
+@font-face {
+	font-family: 'Fira Mono';
+	font-style: bold;
+	font-weight: 700;
+	src: url("../fonts/FiraMono-Bold.woff2") format("woff2"), url("../fonts/FiraMono-Bold.woff") format("woff");
+}
+
+$font-family-sans-serif: "Fira Sans";
+$font-family-monospace: "Fira Mono";
+$font-size-base: 1.25rem;
+
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
