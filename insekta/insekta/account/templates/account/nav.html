@@ -1,8 +1,8 @@
 {% load i18n %}
-<ul class="nav nav-tabs">
-    <li{% if tab == 'account' %} class="active"{% endif %}><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
-    <li{% if tab == 'pki' %} class="active"{% endif %}><a href="{% url 'pki:index' %}">{% trans 'Certificates' %}</a></li>
-    <li{% if tab == 'vpn' %} class="active"{% endif %}><a href="{% url 'vpn:index' %}">{% trans 'VPN' %}</a></li>
-    <li{% if tab == 'my_questions' %} class="active"{% endif %}><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
-    <li{% if tab == 'configure_help' %} class="active"{% endif %}><a href="{% url 'scenariohelp:configure_help' %}">{% trans 'Configure help' %}</a></li>
-</ul>
+<div class="nav nav-tabs mb-3">
+    <a class="nav-item nav-link{% if tab == 'account' %} active{% endif %}" href="{% url 'account:index' %}">{% trans 'Account' %}</a>
+    <a class="nav-item nav-link{% if tab == 'pki' %} active{% endif %}" href="{% url 'pki:index' %}">{% trans 'Certificates' %}</a>
+    <a class="nav-item nav-link{% if tab == 'vpn' %} active{% endif %}" href="{% url 'vpn:index' %}">{% trans 'VPN' %}</a>
+    <a class="nav-item nav-link{% if tab == 'my_questions' %} active{% endif %}" href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a>
+    <a class="nav-item nav-link{% if tab == 'configure_help' %} active{% endif %} "href="{% url 'scenariohelp:configure_help' %}">{% trans 'Configure help' %}</a>
+</div>
