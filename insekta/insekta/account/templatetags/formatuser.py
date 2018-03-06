@@ -15,5 +15,5 @@ def format_user(user):
         name = user.username
 
     return mark_safe(('<span class="user">'
-                      '<span class="glyphicon glyphicon-user"></span> {}</span>'
+                      '<i class="fas fa-user"></i> {}'
                       '</span>').format(name))

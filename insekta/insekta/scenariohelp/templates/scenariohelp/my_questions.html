@@ -31,7 +31,7 @@
 <tr>
     <td>
         {% if not question.seen_by_author %}
-        <span class="glyphicon glyphicon-asterisk" title="{% trans 'new answer' %}"></span>
+        <i class="fas fa-asterisk" title="{% trans 'new answer' %}"></i>
         {% endif %}
         <a href="{% url 'scenariohelp:view' question.pk %}">{{ question.title }}</a>
     </td>
@@ -40,9 +40,9 @@
     <td><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}?src=my_questions">{{ question.scenario.title }}</a></td>
     <td>
         {% if question.is_solved %}
-        <span class="glyphicon glyphicon-ok" title="{% trans 'Yes' %}"></span>
+        <i class="fas fa-thumbs-up" title="{% trans 'Yes' %}"></i>
         {% else %}
-        <span class="glyphicon glyphicon-remove" title="{% trans 'No' %}"></span>
+        <i class="fas fa-thumbs-down" title="{% trans 'No' %}"></i>
         {% endif %}
     </td>
 </tr>

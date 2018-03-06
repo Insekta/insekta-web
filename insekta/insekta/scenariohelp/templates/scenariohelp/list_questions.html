@@ -36,7 +36,7 @@
 <tr>
     <td>
         {% if not question.is_seen %}
-        <span class="glyphicon glyphicon-asterisk" title="{% trans 'New' %}"></span>
+        <i class="fas fa-asterisk" title="{% trans 'New' %}"></i>
         {% endif %}
         <a href="{% url 'scenariohelp:view' question.pk %}?src=help_others">{{ question.title }}</a>
     </td>

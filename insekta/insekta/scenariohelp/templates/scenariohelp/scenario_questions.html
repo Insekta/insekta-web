@@ -47,7 +47,7 @@
     <tr>
         <td>
             {% if not question.seen_by_author %}
-                <span class="glyphicon glyphicon-asterisk" title="{% trans 'new answer' %}"></span>
+                <i class="fas fa-asterisk" title="{% trans 'new answer' %}"></i>
             {% endif %}
             <a href="{% url 'scenariohelp:view' question.pk %}?src=scenario">{{ question.title }}</a>
         </td>
@@ -73,7 +73,7 @@
     <tr>
         <td>
             {% if not question.is_seen %}
-                <span class="glyphicon glyphicon-asterisk" title="{% trans "New" %}"></span>
+                <i class="fas fa-asterisk" title="{% trans "New" %}"></i>
             {% endif %}
             <a href="{% url 'scenariohelp:view' question.pk %}?src=scenario">{{ question.title }}</a>
         </td>
