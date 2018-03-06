@@ -108,7 +108,7 @@ $(function() {
             if (typeof(numComments) == 'undefined') {
                 numComments = 0;
             }
-            var commentIcon = $('<a><span class="glyphicon glyphicon-comment"></span></a>');
+            var commentIcon = $('<a><i class="fas fa-comment"></i></a>');
             if (numComments > 0) {
                 commentIcon.prepend(numComments + ' ').css('color', '#907');
             } else {
