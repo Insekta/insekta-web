@@ -1,17 +1,17 @@
 #welcome-header {
-	background:url(../images/background.jpg);
-	background-position:center;
-	background-repeat:repeat-x;
-	color:#fff;
-	padding:10px;
+    background:url(../images/background.jpg);
+    background-position:center;
+    background-repeat:repeat-x;
+    color:#fff;
+    padding:10px;
 }
 
 #welcome-header a {
-	color:#a0ebff;
+    color:#a0ebff;
 }
 
 .navbar-brand {
-	background:url(../images/insekta-32.png) no-repeat left center;
+    background:url(../images/insekta-32.png) no-repeat left center;
     padding-left:40px;
 }
 
