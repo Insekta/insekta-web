@@ -56,17 +56,17 @@ class Renderer:
         is_solved = self._task_is_solved()
         task_mac = self.template_tasks[identifier].get_mac(self.user, self.scenario)
 
-        panel_type = 'success' if is_solved else 'default'
+        panel_type = 'success text-white' if is_solved else 'light'
         yield '<div id="task_{}"></div>'.format(task_mac)
-        yield '<div class="panel panel-{}">\n'.format(panel_type)
-        yield '<div class="panel-heading">\n'
+        yield '<div class="card mb-3">\n'
+        yield '<div class="card-header bg-{}">\n'.format(panel_type)
         if title:
             panel_title = _('Exercise: {}').format(title)
         else:
             panel_title = _('Exercise')
-        yield '<span class="panel-title">{}</span>\n'.format(escape(panel_title))
+        yield '{}\n'.format(escape(panel_title))
         yield '</div>\n'
-        yield '<div class="panel-body">\n'
+        yield '<div class="card-body">\n'
 
         if self._is_submitted_task():
             if self.submitted_valid:
@@ -106,7 +106,7 @@ class Renderer:
         option_mac = tpl_task.choices[name].get_mac(self.user, self.scenario,
                                                     tpl_task.identifier)
         choice_type = 'radio' if tpl_task.task_type == 'single_choice' else 'checkbox'
-        yield '<div class="{}">\n'.format(choice_type)
+        yield '<div class="form-check">\n'
         yield '<label>\n'
         extra = ''
         if is_solved:
@@ -120,9 +120,9 @@ class Renderer:
             if add_check:
                 extra += ' checked'
         if choice_type == 'radio':
-            input_str = '<input type="radio" name="answer" value="{}"{}>'
+            input_str = '<input type="radio" class="form-check-input" name="answer" value="{}"{}>'
         else:
-            input_str = '<input type="checkbox" name="{}" value="1"{}>'
+            input_str = '<input type="checkbox" class="form-check-input" name="{}" value="1"{}>'
         yield input_str.format(option_mac, extra)
         yield caller()
         yield '</label>\n'
