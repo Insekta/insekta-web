@@ -8,30 +8,28 @@
 {% block breadcrumb %}
 {% if is_own and src == 'my_questions' %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
-    <li><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
-    <li class="active">{{ question.title }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenariohelp:my_questions' %}">{% trans 'My questions' %}</a></li>
+    <li class="breadcrumb-item active">{{ question.title }}</li>
 </ol>
 {% elif src == 'scenario' %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
-    <li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li class="breadcrumb-item">
         <a href="{% url 'scenarios:view_course' question.course.key %}">{{ question.course.title }}</a>
         {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
     </li>
-    <li><a href=""
-
-    <li><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></li>
-    <li><a href="{% url 'scenariohelp:scenario_questions' question.course.key question.scenario.key %}">{% trans 'Questions' %}</a></li>
-    <li class="active">{{ question.title }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'scenarios:view' question.course.key question.scenario.key %}">{{ question.scenario.title }}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenariohelp:scenario_questions' question.course.key question.scenario.key %}">{% trans 'Questions' %}</a></li>
+    <li class="breadcrumb-item active">{{ question.title }}</li>
 </ol>
 {% elif src == 'help_others' %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'scenariohelp:index' %}">{% trans 'Help others' %}</a></li>
-    <li class="active">{{ question.title }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenariohelp:index' %}">{% trans 'Help others' %}</a></li>
+    <li class="breadcrumb-item active">{{ question.title }}</li>
 </ol>
 {% endif %}
 

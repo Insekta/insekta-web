@@ -5,9 +5,9 @@
 
 {% block breadcrumb %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
-    <li class="active">{% trans 'VPN' %}</li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'account:index' %}">{% trans 'Account' %}</a></li>
+    <li class="breadcrumb-item active">{% trans 'VPN' %}</li>
 </ol>
 {% endblock %}
 

@@ -5,9 +5,9 @@
 
 {% block breadcrumb %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
-    <li class="active">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li class="breadcrumb-item active">
         {{ course.title }}
         {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
     </li>

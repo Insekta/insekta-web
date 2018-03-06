@@ -6,14 +6,14 @@
 
 {% block breadcrumb %}
 <ol class="breadcrumb">
-    <li><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
-    <li><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
-    <li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+    <li class="breadcrumb-item">
         <a href="{% url 'scenarios:view_course' course.key %}">{{ course.title }}</a>
         {% if is_challenge %}<small>({% trans 'Challenges' %})</small>{% endif %}
     </li>
-    <li><a href="{% url 'scenarios:view' course.key scenario.key %}">{{ scenario.title }}</a></li>
-    <li class="active">{% trans 'Questions' %}</li>
+    <li class="breadcrumb-item"><a href="{% url 'scenarios:view' course.key scenario.key %}">{{ scenario.title }}</a></li>
+    <li class="breadcrumb-item active">{% trans 'Questions' %}</li>
 </ol>
 {% endblock %}
 
