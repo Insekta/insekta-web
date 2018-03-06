@@ -20,7 +20,7 @@ all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js
+js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js ${base_static}js/bootstrap.js
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
@@ -34,6 +34,9 @@ ${scenarios_static}css/pygments.css:
 
 ${base_static}css/bootstrap.css: ${base_static}scss/custom.scss
 	sass $< > $@
+
+${base_static}js/bootstrap.js: node_modules/bootstrap/dist/js/bootstrap.js node_modules
+	cat $< > $@
 
 ${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ | $(YUI_COMPRESSOR) -o $@ --type css --charset utf-8

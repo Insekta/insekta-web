@@ -5,6 +5,7 @@
 insekta/insekta/settings.py
 insekta/testenv
 insekta/insekta/base/static/components
+insekta/insekta/base/static/js/bootstrap.js
 insekta/insekta/scenarios/static/scenarios/css/pygments.css
 insekta/.sass-cache/
 insekta/db.sqlite3
