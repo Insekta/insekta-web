@@ -7,22 +7,24 @@
 {% block nav %}{% endblock %}
 
 {% block precontent %}
-<div id="welcome-header">
-    <div class="container">
-        <img src="{% static 'images/insekta-glowing.png' %}" alt="" class="pull-left" style="margin-right:10px;">
+<div id="welcome-header" class="p-5">
+    <div class="d-flex justify-content-center">
+    <img src="{% static 'images/insekta-glowing.png' %}" alt="" class="float-left" style="margin-right:10px;">
+    <div class="d-flex flex-column">
         <h1>{% trans 'Welcome to Insekta' %}</h1>
         {% url 'account:register' as register_url %}
         {% blocktrans %}<p>Want to learn something about IT security? <a href="{{ register_url }}">register for an account</a>.</p>{% endblocktrans %}
-        <form class="navbar-form" action="{% url 'account:login' %}" method="post">
+        <form class="form-inline" action="{% url 'account:login' %}" method="post">
             {% csrf_token %}
-            <div class="form-group">
+            <div class="form-group mr-1">
                 <input type="text" name="username" placeholder="{% trans 'Username' %}" class="form-control">
             </div>
-            <div class="form-group">
+            <div class="form-group mr-1">
                 <input type="password" name="password" placeholder="{% trans 'Password' %}" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">{% trans 'Sign in' %}</button>
+            <button type="submit" class="btn btn-success mr-1">{% trans 'Sign in' %}</button>
         </form>
+    </div>
     </div>
 </div>
 {% endblock precontent %}
@@ -30,15 +32,15 @@
 {% block content %}
 <div class="row">
     <div class="col-md-4">
-        <h2>{% trans 'Learn' %}</h2>
+        <h2 class="my-3">{% trans 'Learn' %}</h2>
         <p>{% blocktrans %}At Insekta you get comprehensible explanations to various topics of IT security. Topics might include visualisations and interactive elements to make understanding easier.{% endblocktrans %}</p>
     </div>
     <div class="col-md-4">
-        <h2>{% trans 'Exercise' context "Taking exercises" %}</h2>
+        <h2 class="my-3">{% trans 'Exercise' context "Taking exercises" %}</h2>
         <p>{% blocktrans %}Nearly every topic contains useful exercises you can use to check your knowledge. Ranging from simple multiple choice questions to programming exercises.{% endblocktrans %}</p>
     </div>
     <div class="col-md-4">
-        <h2>{% trans 'Get help' %}</h2>
+        <h2 class="my-3">{% trans 'Get help' %}</h2>
         <p>{% blocktrans %}In case you are stuck with some topic you can always ask for help. Other students who already solved exercises from this topic can help you.{% endblocktrans %}</p>
     </div>
 </div>
