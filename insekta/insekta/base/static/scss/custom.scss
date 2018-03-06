@@ -27,5 +27,7 @@ $font-family-sans-serif: "Fira Sans";
 $font-family-monospace: "Fira Mono";
 $font-size-base: 1.25rem;
 $line-height-base: 1.35;
+$enable-gradients: true;
+$enable-shadows: true;
 
 @import "../../../../node_modules/bootstrap/scss/bootstrap";

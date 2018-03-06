@@ -28,3 +28,7 @@
 .lessimportant {
     color:#aaa;
 }
+
+.highlighttable pre {
+    padding:5px;
+}
