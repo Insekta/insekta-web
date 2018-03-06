@@ -19,19 +19,17 @@
 {%  block content %}
 <div id="scenario-bar-container">
     <div class="alert-toolbar scenario-bar-absolute" id="scenario-bar">
-        <ul class="nav nav-pills">
-            <li><a href="#top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
-            <li><a id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a></li>
-            <li><a href="{% url 'scenariohelp:new_question' course.key scenario.key %}">{% trans 'Ask question' %}</a></li>
-            <li><a href="{% url 'scenariohelp:scenario_questions' course.key scenario.key %}">{% trans 'Questions' %}</a></li>
-            <li>
-                <a id="scenario-comments-link">{% trans 'Comments:' %}
-                    <strong id="scenario-comments-off">{% trans 'off' %}</strong>
-                    <strong id="scenario-comments-on">{% trans 'on' %}</strong>
-                </a>
-            </li>
-            <li><a href="{% url 'scenarios:show_options' course.key scenario.key %}">{% trans 'Options' %}</a></li>
-        </ul>
+        <div class="nav nav-pills">
+            <a class="nav-item nav-link" href="#top"><i class="fas fa-arrow-up"></i></span></a>
+            <a class="nav-item nav-link" id="scenario-notes-link" title="{% trans 'Your notes' %}">{% trans 'Notes' %}</a>
+            <a class="nav-item nav-link" href="{% url 'scenariohelp:new_question' course.key scenario.key %}">{% trans 'Ask question' %}</a>
+            <a class="nav-item nav-link" href="{% url 'scenariohelp:scenario_questions' course.key scenario.key %}">{% trans 'Questions' %}</a>
+            <a class="nav-item nav-link" id="scenario-comments-link">{% trans 'Comments:' %}
+                <strong id="scenario-comments-off">{% trans 'off' %}</strong>
+                <strong id="scenario-comments-on">{% trans 'on' %}</strong>
+            </a>
+            <a class="nav-item nav-link" href="{% url 'scenarios:show_options' course.key scenario.key %}">{% trans 'Options' %}</a>
+        </div>
     </div>
 </div>
 
