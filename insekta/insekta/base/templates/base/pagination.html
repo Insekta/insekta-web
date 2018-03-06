@@ -1,24 +1,24 @@
 {% with paginator=page.paginator %}
     <ul class="pagination">
-        <li{% if not page.has_previous %} class="disabled"{% endif %}>
+        <li class="page-item{% if not page.has_previous %} disabled{% endif %}">
             {% if page.has_previous %}
-                <a href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page.previous_page_number }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">
+                <aclass="page-link" href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page.previous_page_number }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">
             {% endif %}
-            <span>&laquo;</span>
+            <span class="page-link">&laquo;</span>
             {% if page.has_previous %}
                 </a>
             {% endif %}
         </li>
         {% for page_no in paginator.page_range %}
-            <li {% if page_no == page.number %} class="active"{% endif %}>
-                <a href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page_no }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">{{ page_no }}</a>
+            <li class="page-item{% if page_no == page.number %} active{% endif %}">
+                <a class="page-link" href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page_no }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">{{ page_no }}</a>
             </li>
         {% endfor %}
-        <li{% if not page.has_next %} class="disabled"{% endif %}>
+        <li class="page-item{% if not page.has_next %} disabled{% endif %}">
             {% if page.has_next %}
-                <a href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page.next_page_number }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">
+                <a class="page-link" href="{% if page_extra %}{{ page_extra }}&amp;{% else %}?{% endif %}page={{ page.next_page_number }}{% if page_anchor %}#{{ page_anchor }}{% endif %}">
             {% endif %}
-            <span>&raquo;</span>
+            <span class="page-link">&raquo;</span>
             {% if page.has_next %}
                 </a>
             {% endif %}
