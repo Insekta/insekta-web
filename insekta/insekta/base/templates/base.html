@@ -18,40 +18,28 @@
 
     <body class="tex2jax_ignore">
 {% block nav %}
-        <nav class="navbar navbar-default" id="top">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light mb-4" id="top">
             <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{% url 'index' %}">Insekta</a>
-                </div>
-                <div id="navbar">
-                    <ul class="nav navbar-nav">
-                        {% if user.is_authenticated %}
-                        <li{% if active_nav == 'courses' %} class="active"{% endif %}>
-                            <a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a>
-                        </li>
-                        <li{% if active_nav == 'help' %} class="active"{% endif %}>
-                            <a href="{% url 'scenariohelp:index' %}">
-                                {% trans 'Help others' %}
-                                {% num_new_questions user as num_new %}
-                                {% if num_new > 0 %}
-                                <span class="badge">{{ num_new }}</span>
-                                {% endif %}
-                            </a>
-                        </li>
-                        <li{% if active_nav == 'account' %} class="active"{% endif %}>
-                            <a href="{% url 'account:index' %}">{% trans 'Account' %}</a>
-                        </li>
-                        {% if user.is_staff %}
-                        <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <a class="nav-tiem nav-link{% if active_nav == 'courses' %} active{% endif %}" href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a>
+                    <a class="nav-tiem nav-link{% if active_nav == 'help' %} active{% endif %}" href="{% url 'scenariohelp:index' %}">
+                        {% trans 'Help others' %}
+                        {% num_new_questions user as num_new %}
+                        {% if num_new > 0 %}
+                        <span class="badge">{{ num_new }}</span>
                         {% endif %}
-                        <li><a href="{% url 'account:logout' %}">{% trans 'Logout' %}</a></li>
-                        {% else %}
-                        <li{% if active_nav == 'login' %} class="active"{% endif %}>
-                            <a href="{% url 'account:login' %}">Login</a>
-                        </li>
-                        {% endif %}
-                    </ul>
+                    </a>
+                    <a class="nav-item nav-link{% if active_nav == 'account' %} active{% endif %}" href="{% url 'account:index' %}">{% trans 'Account' %}</a>
+                    {% if user.is_staff %}
+                    <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    {% endif %}
+                    <a class="nav-item nav-link" href="{% url 'account:logout' %}">{% trans 'Logout' %}</a>
+                    {% else %}
+                    <a class="nav-item nav-link{% if active_nav == 'login' %} active{% endif %}" href="{% url 'account:login' %}">Login</a>
+                    {% endif %}
                 </div>
+                <a class="navbar-brand" href="{% url 'index' %}">Insekta</a>
             </div>
         </nav>
 {% endblock nav %}
