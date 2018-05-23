@@ -53,3 +53,5 @@ Enjoy
 Your Insekta installation is now available on port 8000.
 
 Have fun! :)
+
+Further documentation on insekta can be found on https://insekta.readthedocs.io/.
