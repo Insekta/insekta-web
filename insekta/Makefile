@@ -96,9 +96,11 @@ testenv/vpn/ca.crt: testenv/vpn/ca.key
 clean:
 	rm -rf ${base_static}css/insekta.css \
 		   ${base_static}css/insekta.min.css \
+		   ${base_static}css/bootstrap.css \
 		   ${base_static}css/bootstrap.min.css \
 		   ${scenarios_static}css/pygments.css \
 		   ${base_static}js/insekta.min.js \
+		   ${base_static}js/bootstrap.js \
 		   ${base_static}js/jquery.min.js \
 		   ${base_static}components
 
