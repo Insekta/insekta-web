@@ -8,10 +8,7 @@ app_name = 'account'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^register$', views.register, name='register'),
-    url(r'^login$', auth_views.login, name='login', kwargs={
-        'template_name': 'account/login.html'
-    }),
-    url(r'logout$', auth_views.logout, name='logout', kwargs={
-        'next_page': '/'
-    }),
+    url(r'^login$', auth_views.LoginView.as_view(template_name='account/login.html'),
+        name='login'),
+    url(r'logout$', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
 ]
