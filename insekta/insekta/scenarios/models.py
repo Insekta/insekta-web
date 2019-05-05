@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.conf import settings
 from django.db.models import Count
@@ -187,10 +188,20 @@ class Task(models.Model):
     scenario = models.ForeignKey(Scenario, related_name='tasks', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=120)
     solved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
+                                       through='TaskSolve',
                                        related_name='solved_tasks')
 
     def __str__(self):
         return '{} ({})'.format(self.identifier, self.scenario)
+
+
+class TaskSolve(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    answer = JSONField(blank=True, null=True)
+
+    class Meta:
+        unique_together = (('task', 'user'),)
 
 
 class Course(models.Model):
