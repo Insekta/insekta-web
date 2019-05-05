@@ -206,12 +206,20 @@ class Renderer:
         return vm_name in self.virtual_machines
 
     def _call_script_input(self, name, type='text'):
+        task = self._get_current_task()
+        try:
+            answer = str(self._solved_task_answers[task.identifier][name])
+            disabled = True
+        except KeyError:
+            disabled = False
+            answer = ''
+        disabled_attr = ' disabled="disabled"' if disabled else ''
         if type == 'longtext':
-            return '<textarea rows="2" name="{}" class="form-control"></textarea>'.format(
-                escape(name))
+            return '<textarea rows="2" name="{}" class="form-control"{}>{}</textarea>'.format(
+                escape(name), disabled_attr, escape(answer))
         else:
-            return '<input name="{}" type="{}" class="form-control" />'.format(
-                escape(name), escape(type))
+            return '<input name="{}" type="{}" class="form-control" value="{}" {}/>'.format(
+                escape(name), escape(type), escape(answer), disabled_attr)
 
     def _call_script_values(self):
         task = self._get_current_task()
