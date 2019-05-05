@@ -77,9 +77,9 @@ def view(request, course_key, scenario_key):
     csrf_token = get_token(request)
     renderer = Renderer(course, scenario, request.user, csrf_token, virtual_machines, vpn_ip)
     if request.method == 'POST':
-        tpl_task = renderer.submit(request.POST)
-        if tpl_task:
-            scenario.solve(request.user, tpl_task.identifier)
+        submit_result = renderer.submit(request.POST)
+        if submit_result.is_correct:
+            scenario.solve(request.user, submit_result.task.identifier)
 
     try:
         notes = Notes.objects.get(user=request.user, scenario=scenario).content

@@ -2,6 +2,7 @@ import functools
 import hmac
 import io
 import os
+from collections import namedtuple
 
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -15,6 +16,9 @@ from insekta.scenarios.dsl.templateloader import ScenarioTemplateLoader
 
 
 __all__ = ['Renderer']
+
+
+SubmitResult = namedtuple('SubmitResult', ['is_correct', 'task', 'answer'])
 
 
 def collect_to_str(fn):
@@ -272,8 +276,8 @@ class Renderer:
                 if tpl_task.validate(self.submitted_values):
                     self.submitted_valid = True
                     self._solved_task_identifiers.add(tpl_task.identifier)
-                    return tpl_task
-        return False
+                    return SubmitResult(True, tpl_task, self.submitted_values)
+        return SubmitResult(False, None, None)
 
 
 _template_loader = ScenarioTemplateLoader(settings.SCENARIO_DIR)
