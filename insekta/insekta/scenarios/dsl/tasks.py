@@ -1,6 +1,7 @@
 import hashlib
 import hmac
 
+from django.apps.registry import apps
 from django.conf import settings
 
 
@@ -152,8 +153,47 @@ class QuestionTask(TemplateTask):
             self.__class__.__name__, self.answers, self.case_sensitive, self.strip)
 
 
+class ScriptTask(TemplateTask):
+    task_type = 'script'
+
+    def __init__(self, identifier, script_name, **kwargs):
+        super().__init__(identifier)
+        self.script_name = script_name
+        self.fields = set()
+
+    def check_for_errors(self):
+        if not self.fields:
+            raise TemplateTaskError('Empty fields in script')
+
+    def extract_values(self, user, scenario, form_values):
+        values = {key: value for key, value in form_values.items()
+                  if key in self.fields}
+        for field in self.fields:
+            if field not in values:
+                values[field] = None
+        values['_seed'] = user.pk
+        return values
+
+    def validate(self, values):
+        script_instance = self._get_script_instance(values['_seed'])
+        return script_instance.validate(values)
+
+    def get_values(self, user):
+        script_instance = self._get_script_instance(user.pk)
+        return script_instance.generate()
+
+    def _get_script_instance(self, seed):
+        app_config = apps.get_app_config('scenarios')
+        class_obj = app_config.script_classes[self.script_name]
+        return class_obj(seed)
+
+    def __repr__(self):
+        return '{}({})'.format(self.__class__.__name__, self.identifier)
+
+
 task_classes = {
     MultipleChoiceTask.task_type: MultipleChoiceTask,
     SingleChoiceTask.task_type: SingleChoiceTask,
-    QuestionTask.task_type: QuestionTask
+    QuestionTask.task_type: QuestionTask,
+    ScriptTask.task_type: ScriptTask
 }

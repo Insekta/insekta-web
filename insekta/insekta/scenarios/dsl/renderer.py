@@ -198,6 +198,18 @@ class Renderer:
     def _call_vm_enabled(self, vm_name):
         return vm_name in self.virtual_machines
 
+    def _call_script_input(self, name, type='text'):
+        if type == 'longtext':
+            return '<textarea rows="2" name="{}" class="form-control"></textarea>'.format(
+                escape(name))
+        else:
+            return '<input name="{}" type="{}" class="form-control" />'.format(
+                escape(name), escape(type))
+
+    def _call_script_values(self):
+        task = self._get_current_task()
+        return task.get_values(self.user)
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_identifiers
 
@@ -219,6 +231,8 @@ class Renderer:
             'hint': self._call_hint,
             'vm_ip': self._call_vm_ip,
             'vm_enabled': self._call_vm_enabled,
+            'script_values': self._call_script_values,
+            'script_input': self._call_script_input,
         }
 
     def render(self, context=None):

@@ -68,6 +68,9 @@ class TaskParser:
             elif call_name == 'answer':
                 self._handle_answer(node)
                 return
+            elif call_name == 'script_input':
+                self._handle_script_input(node)
+                return
 
         for child_node in node.iter_child_nodes():
             self._visit_node(child_node)
@@ -110,6 +113,13 @@ class TaskParser:
         if not isinstance(answers, list):
             answers = [answers]
         self._task.answers = answers
+
+    def _handle_script_input(self, node: nodes.Node):
+        kwargs = self._parse_kwargs(node)
+        if 'name' not in kwargs:
+            raise ParserError('script_input attribute "name" is required (line {})'.format(
+                node.lineno), node.lineno)
+        self._task.fields.add(kwargs['name'])
 
     @staticmethod
     def _parse_kwargs(node: nodes.Node):
