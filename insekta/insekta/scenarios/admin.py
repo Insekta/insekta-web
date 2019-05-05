@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from insekta.scenarios.models import (Scenario, ScenarioGroup, ScenarioGroupEntry,
-                                      Task, CommentId, Comment, Course)
+                                      Task, CommentId, Comment, Course, TaskSolve)
 
 
 class ScenarioAdmin(admin.ModelAdmin):
@@ -84,3 +84,4 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(CommentId, CommentIdAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Course, CourseAdmin)
+admin.site.register(TaskSolve)

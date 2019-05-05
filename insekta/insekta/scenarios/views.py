@@ -79,7 +79,7 @@ def view(request, course_key, scenario_key):
     if request.method == 'POST':
         submit_result = renderer.submit(request.POST)
         if submit_result.is_correct:
-            scenario.solve(request.user, submit_result.task.identifier)
+            scenario.solve(request.user, submit_result.task, submit_result.answer)
 
     try:
         notes = Notes.objects.get(user=request.user, scenario=scenario).content

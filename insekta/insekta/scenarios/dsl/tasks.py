@@ -16,6 +16,8 @@ class TemplateTaskError(Exception):
 
 
 class TemplateTask:
+    must_remember_answer = False
+
     def __init__(self, identifier):
         self.identifier = identifier
 
@@ -157,6 +159,7 @@ class QuestionTask(TemplateTask):
 
 class ScriptTask(TemplateTask):
     task_type = 'script'
+    must_remember_answer = True
 
     def __init__(self, identifier, script_name, **kwargs):
         super().__init__(identifier)

@@ -4,7 +4,7 @@ import re
 import shutil
 
 from django.contrib.postgres.fields import JSONField
-from django.db import models
+from django.db import models, IntegrityError
 from django.conf import settings
 from django.db.models import Count
 from django.utils.timezone import now
@@ -95,8 +95,14 @@ class Scenario(models.Model):
                 comment_id_obj.orphaned = False
                 comment_id_obj.save()
 
-    def solve(self, user, task_identifier):
-        Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
+    def solve(self, user, task_obj, answer):
+        task = Task.objects.get(scenario=self, identifier=task_obj.identifier)
+        if not task_obj.must_remember_answer:
+            answer = None
+        try:
+            TaskSolve.objects.create(task=task, user=user, answer=answer)
+        except IntegrityError:
+            pass
 
     def get_absolute_url(self, course):
         return reverse('scenarios:view', args=(course.key, self.key, ))
