@@ -4,6 +4,8 @@ import hmac
 from django.apps.registry import apps
 from django.conf import settings
 
+from insekta.scenarios.dsl.scripts import InvalidUserInputError
+
 
 __all__ = ['TemplateTaskError', 'TemplateTask', 'MultipleChoiceTask', 'Choice',
            'QuestionTask', 'task_classes']
@@ -176,7 +178,10 @@ class ScriptTask(TemplateTask):
 
     def validate(self, values):
         script_instance = self._get_script_instance(values['_seed'])
-        return script_instance.validate(values)
+        try:
+            return script_instance.validate(values)
+        except InvalidUserInputError:
+            return False
 
     def get_values(self, user):
         script_instance = self._get_script_instance(user.pk)
@@ -184,7 +189,10 @@ class ScriptTask(TemplateTask):
 
     def _get_script_instance(self, seed):
         app_config = apps.get_app_config('scenarios')
-        class_obj = app_config.script_classes[self.script_name]
+        try:
+            class_obj = app_config.script_classes[self.script_name]
+        except KeyError:
+            raise TemplateTaskError('No such script: {}'.format(self.script_name))
         return class_obj(seed)
 
     def __repr__(self):
