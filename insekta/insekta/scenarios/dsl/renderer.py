@@ -13,6 +13,7 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 from insekta.scenarios.dsl.templateloader import ScenarioTemplateLoader
+from insekta.scenarios.models import Task, TaskSolve
 
 
 __all__ = ['Renderer']
@@ -45,9 +46,11 @@ class Renderer:
         for fn_name, fn in self._get_template_functions().items():
             self.env.globals[fn_name] = fn
 
-        self._solved_task_identifiers = set()
-        for task in user.solved_tasks.filter(scenario=scenario):
-            self._solved_task_identifiers.add(task.identifier)
+        self._solved_task_answers = {}
+        tasks = Task.objects.filter(scenario=scenario)
+        solves = TaskSolve.objects.filter(user=user, task__in=tasks).select_related('task')
+        for task_solve in solves:
+            self._solved_task_answers[task_solve.task.identifier] = task_solve.answer
 
         self.submitted_values = {}
         self.submitted_task = None
@@ -96,7 +99,7 @@ class Renderer:
 
     @collect_to_str
     def _call_require_task(self, caller, identifier, **kwargs):
-        if identifier in self._solved_task_identifiers:
+        if identifier in self._solved_task_answers:
             yield caller()
         else:
             msg = _('<strong>Here be dragons.</strong> '
@@ -215,7 +218,7 @@ class Renderer:
         return task.get_values(self.user)
 
     def _task_is_solved(self):
-        return self._current_task_identifier in self._solved_task_identifiers
+        return self._current_task_identifier in self._solved_task_answers
 
     def _get_current_task(self):
         return self.template_tasks[self._current_task_identifier]
@@ -275,7 +278,7 @@ class Renderer:
                 self.submitted_task = tpl_task
                 if tpl_task.validate(self.submitted_values):
                     self.submitted_valid = True
-                    self._solved_task_identifiers.add(tpl_task.identifier)
+                    self._solved_task_answers[tpl_task.identifier] = self.submitted_values
                     return SubmitResult(True, tpl_task, self.submitted_values)
         return SubmitResult(False, None, None)
 
