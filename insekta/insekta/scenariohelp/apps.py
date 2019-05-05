@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 class ScenarioHelpConfig(AppConfig):
-    name = 'scenariohelp'
+    name = 'insekta.scenariohelp'
 
