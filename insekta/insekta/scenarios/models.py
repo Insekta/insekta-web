@@ -216,9 +216,26 @@ class Course(models.Model):
     key = models.CharField(max_length=120, unique=True)
     description = models.TextField(blank=True, null=True)
     enabled = models.BooleanField(default=False)
+    requires_registration = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+
+class CourseRun(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)
+    enabled = models.BooleanField(default=False)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+    def __str__(self):
+        return '{}: {}'.format(self.course, self.name)
+
+
+class TaskPoints(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
 
 
 class ScenarioGroup(models.Model):
