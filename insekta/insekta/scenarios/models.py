@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models, IntegrityError
 from django.conf import settings
 from django.db.models import Count
+from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.urls import reverse
 
@@ -217,6 +218,10 @@ class Course(models.Model):
     description = models.TextField(blank=True, null=True)
     enabled = models.BooleanField(default=False)
     requires_registration = models.BooleanField(default=False)
+
+    @cached_property
+    def current_run(self):
+        return CourseRun.objects.get(course=self, enabled=True)
 
     def __str__(self):
         return self.title
