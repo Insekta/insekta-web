@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% blocktrans with title=course.title %}Registration: {{ title }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'scenarios:list_courses' %}">{% trans 'Courses' %}</a></li>
+        <li class="breadcrumb-item active">
+            {{ course.title }} ({% trans 'Registration' %})
+        </li>
+    </ol>
+{% endblock %}
+
+
+{% block content %}
+    <h2>{% blocktrans with title=course.title %}Registration: {{ title }}{% endblocktrans %}</h2>
+
+    {{ course.description|safe }}
+
+    {% if current_run %}
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary">{% trans 'Register for this course' %} ({{ current_run.name }})</button>
+    </form>
+    {% else %}
+    <p><strong>{% trans 'This course is currently not offered.' %}</strong></p>
+    {% endif %}
+{% endblock %}
