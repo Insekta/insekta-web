@@ -226,7 +226,8 @@ class CourseRun(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     enabled = models.BooleanField(default=False)
-    participants = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                          blank=True)
 
     def __str__(self):
         return '{}: {}'.format(self.course, self.name)
