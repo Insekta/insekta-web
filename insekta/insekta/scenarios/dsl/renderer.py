@@ -215,7 +215,7 @@ class Renderer:
             answer = ''
         disabled_attr = ' disabled="disabled"' if disabled else ''
         if type == 'longtext':
-            return '<textarea rows="2" name="{}" class="form-control"{}>{}</textarea>'.format(
+            return '<textarea rows="5" name="{}" class="form-control"{}>{}</textarea>'.format(
                 escape(name), disabled_attr, escape(answer))
         else:
             return '<input name="{}" type="{}" class="form-control" value="{}" {}/>'.format(
