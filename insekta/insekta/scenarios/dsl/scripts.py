@@ -8,7 +8,9 @@ class BaseScript:
     def __init__(self, seed):
         self._seed = seed
 
-    def get_rng(self, domain=''):
+    def get_rng(self, domain=None):
+        if domain is None:
+            domain = self.__class__.__name__
         seed = self._seed.to_bytes(8, 'big')
         seed += domain.encode()
         r = random.Random()
