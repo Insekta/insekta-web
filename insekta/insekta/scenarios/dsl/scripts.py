@@ -8,9 +8,11 @@ class BaseScript:
     def __init__(self, seed):
         self._seed = seed
 
-    def get_rng(self):
+    def get_rng(self, domain=''):
+        seed = self._seed.to_bytes(8, 'big')
+        seed += domain.encode()
         r = random.Random()
-        r.seed(self._seed)
+        r.seed(seed)
         return r
 
     def validate(self, values):
