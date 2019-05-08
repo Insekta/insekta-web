@@ -45,6 +45,7 @@ def safe_float(x):
 def safe_hex(x):
     if x.startswith('0x'):
         x = x[2:]
+    x = re.sub(r'\s+', '', x)
     try:
         return binascii.unhexlify(x)
     except binascii.Error:
