@@ -8,6 +8,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models, IntegrityError
 from django.conf import settings
 from django.db.models import Count
+from django.db.models.signals import pre_save
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.urls import reverse
@@ -404,3 +405,29 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{}: {} at {}'.format(self.comment_id, self.author, self.time_created)
+
+
+def _copy_task_solve(sender, instance, **kwargs):
+    user = instance.user
+    scenario_groups = instance.task.scenario.groups.all()
+    courses = Course.objects.filter(scenario_groups__in=scenario_groups)
+    course_runs = CourseRun.objects.filter(enabled=True,
+                                           course__in=courses,
+                                           participants=user)
+    for course_run in course_runs:
+
+        try:
+            task_group = TaskGroup.objects.get(
+                taskconfiguration__task=instance.task, course_run=course_run)
+        except TaskGroup.DoesNotExist:
+            continue
+        if task_group.deadline_at < now():
+            continue
+        archived_solve, created = TaskSolveArchive.objects.get_or_create(
+            course_run=course_run, user=user, task=instance.task)
+        archived_solve.answer = instance.answer
+        archived_solve.is_correct = instance.is_correct
+        archived_solve.save()
+
+
+pre_save.connect(_copy_task_solve, sender=TaskSolve)
