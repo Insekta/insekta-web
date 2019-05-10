@@ -212,7 +212,10 @@ class Renderer:
             disabled = True
         except KeyError:
             disabled = False
-            answer = str(self.submitted_values.get(name, ''))
+            if self._is_submitted_task():
+                answer = str(self.submitted_values.get(name, ''))
+            else:
+                answer = ''
         attrs = {'name': name, 'class': 'form-control'}
         if disabled:
             attrs['disabled'] = 'disabled'
