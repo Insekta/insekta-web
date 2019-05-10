@@ -88,8 +88,21 @@ class TaskConfigurationAdmin(admin.ModelAdmin):
     list_display = ('task', )
 
 
+class TaskConfigurationInline(admin.TabularInline):
+    model = TaskConfiguration
+
+
 class TaskGroupAdmin(admin.ModelAdmin):
-    list_display = ('name', 'deadline_at')
+    list_display = ('name', 'course_run', 'deadline_at')
+    inlines = [TaskConfigurationInline]
+
+
+class TaskSolveAdmin(admin.ModelAdmin):
+    list_display = ('task', 'user', 'is_correct')
+
+
+class TaskSolveArchiveAdmin(admin.ModelAdmin):
+    list_display = ('task', 'user', 'course_run', 'is_correct')
 
 
 admin.site.register(Scenario, ScenarioAdmin)
@@ -101,5 +114,5 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(CourseRun, CourseRunAdmin)
 admin.site.register(TaskConfiguration, TaskConfigurationAdmin)
 admin.site.register(TaskGroup, TaskGroupAdmin)
-admin.site.register(TaskSolve)
-admin.site.register(TaskSolveArchive)
+admin.site.register(TaskSolve, TaskSolveAdmin)
+admin.site.register(TaskSolveArchive, TaskSolveArchiveAdmin)
