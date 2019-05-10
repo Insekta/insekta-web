@@ -205,21 +205,30 @@ class Renderer:
     def _call_vm_enabled(self, vm_name):
         return vm_name in self.virtual_machines
 
-    def _call_script_input(self, name, type='text'):
+    def _call_script_input(self, name, type='text', placeholder=''):
         task = self._get_current_task()
         try:
             answer = str(self._solved_task_answers[task.identifier][name])
             disabled = True
         except KeyError:
             disabled = False
-            answer = ''
-        disabled_attr = ' disabled="disabled"' if disabled else ''
+            answer = str(self.submitted_values.get(name, ''))
+        attrs = {'name': name, 'class': 'form-control'}
+        if disabled:
+            attrs['disabled'] = 'disabled'
         if type == 'longtext':
-            return '<textarea rows="5" name="{}" class="form-control"{}>{}</textarea>'.format(
-                escape(name), disabled_attr, escape(answer))
+            attrs['rows'] = '5'
         else:
-            return '<input name="{}" type="{}" class="form-control" value="{}" {}/>'.format(
-                escape(name), escape(type), escape(answer), disabled_attr)
+            attrs['type'] = type
+            attrs['value'] = answer
+            if placeholder:
+                attrs['placeholder'] = placeholder
+        attrs_str = ' '.join('{}="{}"'.format(key, escape(value))
+                             for key, value in attrs.items())
+        if type == 'longtext':
+            return '<textarea {}>{}</textarea>'.format(attrs_str, escape(answer))
+        else:
+            return '<input {}/>'.format(attrs_str)
 
     def _call_script_values(self):
         task = self._get_current_task()
