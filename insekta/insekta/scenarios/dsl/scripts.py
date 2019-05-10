@@ -42,14 +42,17 @@ def safe_float(x):
         raise InvalidUserInputError()
 
 
-def safe_hex(x):
+def safe_hex(x, length=None):
     if x.startswith('0x'):
         x = x[2:]
     x = re.sub(r'\s+', '', x)
     try:
-        return binascii.unhexlify(x)
+        retval = binascii.unhexlify(x)
     except binascii.Error:
         raise InvalidUserInputError()
+    if length is not None and len(retval) != length:
+        raise InvalidUserInputError()
+    return retval
 
 
 def safe_base64(x):
