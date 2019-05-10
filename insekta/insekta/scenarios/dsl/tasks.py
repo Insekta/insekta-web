@@ -196,7 +196,7 @@ class ScriptTask(TemplateTask):
             class_obj = app_config.script_classes[self.script_name]
         except KeyError:
             raise TemplateTaskError('No such script: {}'.format(self.script_name))
-        return class_obj(seed)
+        return class_obj(seed, self.identifier)
 
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, self.identifier)
