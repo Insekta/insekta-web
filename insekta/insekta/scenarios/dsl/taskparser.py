@@ -18,9 +18,10 @@ class TaskParser:
     valid_identifier = re.compile('^[a-z]+[a-z0-9_]*$')
     valid_task_types = ('multiple_choice', 'question')
 
-    def __init__(self, ast):
+    def __init__(self, ast, scenario):
         self.ast = ast
         self._task = None
+        self._scenario = scenario
 
     def get_tasks(self):
         tasks = {}
@@ -42,6 +43,7 @@ class TaskParser:
             if kwargs['type'] not in task_classes:
                 raise ParserError('Invalid type in task on line {}'.format(
                     call_node.lineno), call_node.lineno)
+            kwargs['scenario'] = self._scenario
 
             self._task = task_classes[kwargs['type']](**kwargs)
 
@@ -130,8 +132,8 @@ class TaskParser:
         return kwargs
 
     @classmethod
-    def from_filename(cls, filename):
+    def from_filename(cls, filename, scenario):
         env = Environment()
         with open(filename) as f:
             template_source = f.read()
-        return cls(env.parse(template_source))
+        return cls(env.parse(template_source), scenario)

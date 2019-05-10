@@ -161,9 +161,10 @@ class ScriptTask(TemplateTask):
     task_type = 'script'
     must_remember_answer = True
 
-    def __init__(self, identifier, script_name, **kwargs):
+    def __init__(self, identifier, script_name, scenario, **kwargs):
         super().__init__(identifier)
         self.script_name = script_name
+        self.scenario = scenario
         self.fields = set()
 
     def check_for_errors(self):
@@ -191,9 +192,9 @@ class ScriptTask(TemplateTask):
         return script_instance.generate()
 
     def _get_script_instance(self, seed):
-        app_config = apps.get_app_config('scenarios')
+        script_classes = self.scenario.get_script_classes()
         try:
-            class_obj = app_config.script_classes[self.script_name]
+            class_obj = script_classes[self.script_name]
         except KeyError:
             raise TemplateTaskError('No such script: {}'.format(self.script_name))
         return class_obj(seed, self.identifier)

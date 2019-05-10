@@ -2,6 +2,7 @@ import json
 import os
 import re
 import shutil
+from collections import namedtuple
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models, IntegrityError
@@ -12,6 +13,10 @@ from django.utils.timezone import now
 from django.urls import reverse
 
 from insekta.scenarios.dsl.taskparser import TaskParser
+
+_scenario_script_cache = {}
+
+ScriptCacheEntry = namedtuple('ScriptCacheEntry', ['mtime', 'script_classes'])
 
 
 class ScenarioError(Exception):
@@ -53,8 +58,32 @@ class Scenario(models.Model):
     def get_template_filename(self):
         return os.path.join(self.get_scenario_dir(), 'scenario.html')
 
+    def get_scripts_filename(self):
+        return os.path.join(self.get_scenario_dir(), 'scripts.py')
+
     def get_template_tasks(self):
-        return TaskParser.from_filename(self.get_template_filename()).get_tasks()
+        return TaskParser.from_filename(self.get_template_filename(), self).get_tasks()
+
+    def get_script_classes(self):
+        scripts_filename = self.get_scripts_filename()
+        try:
+            mtime = os.stat(scripts_filename).st_mtime
+            script_cache = _scenario_script_cache.get(self.pk)
+            if script_cache:
+                if script_cache.mtime == mtime:
+                    return script_cache.script_classes
+            with open(scripts_filename) as f:
+                mod = {}
+                exec(f.read(), mod, mod)
+                if 'script_classes' not in mod:
+                    raise ValueError('{} is missing script_classes'.format(
+                        scripts_filename
+                    ))
+                cache_entry = ScriptCacheEntry(mtime, mod['script_classes'])
+                _scenario_script_cache[self.pk] = cache_entry
+                return mod['script_classes']
+        except IOError:
+            return {}
 
     def update_tasks(self, purge=False):
         existing_tasks = {}
