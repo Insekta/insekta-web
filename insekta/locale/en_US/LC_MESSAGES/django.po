@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-13 13:15+0100\n"
+"POT-Creation-Date: 2019-05-10 19:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: insekta/account/templates/account/index.html:4
 #: insekta/account/templates/account/index.html:9
 #: insekta/account/templates/account/nav.html:3
-#: insekta/base/templates/base.html:42
+#: insekta/base/templates/base.html:33
 #: insekta/pki/templates/pki/create_certificate.html:10
 #: insekta/pki/templates/pki/index.html:9
 #: insekta/pki/templates/pki/revoke_certificate.html:9
@@ -42,7 +42,8 @@ msgstr ""
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:9
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:11
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:18
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:32
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:30
+#: insekta/scenarios/templates/scenarios/course_registration.html:8
 #: insekta/scenarios/templates/scenarios/list_courses.html:8
 #: insekta/scenarios/templates/scenarios/view.html:9
 #: insekta/scenarios/templates/scenarios/view_course.html:8
@@ -61,18 +62,18 @@ msgstr ""
 
 #: insekta/account/templates/account/login.html:16
 #: insekta/account/templates/account/register.html:16
-#: insekta/base/templates/base/index.html:19
+#: insekta/base/templates/base/index.html:20
 msgid "Username"
 msgstr ""
 
-#: insekta/account/templates/account/login.html:21
-#: insekta/account/templates/account/register.html:42
-#: insekta/base/templates/base/index.html:22
+#: insekta/account/templates/account/login.html:20
+#: insekta/account/templates/account/register.html:38
+#: insekta/base/templates/base/index.html:23
 msgid "Password"
 msgstr ""
 
-#: insekta/account/templates/account/login.html:25
-#: insekta/base/templates/base/index.html:24
+#: insekta/account/templates/account/login.html:23
+#: insekta/base/templates/base/index.html:25
 msgid "Sign in"
 msgstr ""
 
@@ -107,30 +108,31 @@ msgstr ""
 
 #: insekta/account/templates/account/register.html:5
 #: insekta/account/templates/account/register.html:8
+#: insekta/scenarios/templates/scenarios/course_registration.html:11
 msgid "Registration"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:24
+#: insekta/account/templates/account/register.html:23
 msgid "Email"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:32
+#: insekta/account/templates/account/register.html:30
 msgid "First name"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:37
+#: insekta/account/templates/account/register.html:34
 msgid "Last name"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:47
+#: insekta/account/templates/account/register.html:42
 msgid "Confirm password"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:55
+#: insekta/account/templates/account/register.html:49
 msgid "Invitation code"
 msgstr ""
 
-#: insekta/account/templates/account/register.html:62
+#: insekta/account/templates/account/register.html:55
 msgid "Register"
 msgstr ""
 
@@ -142,10 +144,11 @@ msgstr ""
 msgid "Account created successfully."
 msgstr ""
 
-#: insekta/base/templates/base.html:30
+#: insekta/base/templates/base.html:25
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:11
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:10
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:19
+#: insekta/scenarios/templates/scenarios/course_registration.html:9
 #: insekta/scenarios/templates/scenarios/list_courses.html:4
 #: insekta/scenarios/templates/scenarios/list_courses.html:9
 #: insekta/scenarios/templates/scenarios/list_courses.html:14
@@ -154,68 +157,68 @@ msgstr ""
 msgid "Courses"
 msgstr ""
 
-#: insekta/base/templates/base.html:34
+#: insekta/base/templates/base.html:27
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:10
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:33
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:31
 msgid "Help others"
 msgstr ""
 
-#: insekta/base/templates/base.html:47
+#: insekta/base/templates/base.html:37
 msgid "Logout"
 msgstr ""
 
-#: insekta/base/templates/base.html:63
+#: insekta/base/templates/base.html:51
 msgid ""
 "Please enable JavaScript. Don't worry, we won't set your CPU on fire with "
 "snowflakes on this page."
 msgstr ""
 
-#: insekta/base/templates/base.html:78
+#: insekta/base/templates/base.html:66
 #, python-format
 msgid ""
 "<strong>Hooray!</strong> Someone answered one of <a href="
 "\"%(my_questions_url)s\">your questions</a>."
 msgstr ""
 
-#: insekta/base/templates/base/index.html:13
+#: insekta/base/templates/base/index.html:14
 msgid "Welcome to Insekta"
 msgstr ""
 
-#: insekta/base/templates/base/index.html:15
+#: insekta/base/templates/base/index.html:16
 #, python-format
 msgid ""
 "<p>Want to learn something about IT security? <a href=\"%(register_url)s"
 "\">register for an account</a>.</p>"
 msgstr ""
 
-#: insekta/base/templates/base/index.html:33
+#: insekta/base/templates/base/index.html:35
 msgid "Learn"
 msgstr ""
 
-#: insekta/base/templates/base/index.html:34
+#: insekta/base/templates/base/index.html:36
 msgid ""
 "At Insekta you get comprehensible explanations to various topics of IT "
 "security. Topics might include visualisations and interactive elements to "
 "make understanding easier."
 msgstr ""
 
-#: insekta/base/templates/base/index.html:37
+#: insekta/base/templates/base/index.html:39
 msgctxt "Taking exercises"
 msgid "Exercise"
 msgstr ""
 
-#: insekta/base/templates/base/index.html:38
+#: insekta/base/templates/base/index.html:40
 msgid ""
 "Nearly every topic contains useful exercises you can use to check your "
 "knowledge. Ranging from simple multiple choice questions to programming "
 "exercises."
 msgstr ""
 
-#: insekta/base/templates/base/index.html:41
+#: insekta/base/templates/base/index.html:43
 msgid "Get help"
 msgstr ""
 
-#: insekta/base/templates/base/index.html:42
+#: insekta/base/templates/base/index.html:44
 msgid ""
 "In case you are stuck with some topic you can always ask for help. Other "
 "students who already solved exercises from this topic can help you."
@@ -495,27 +498,27 @@ msgstr ""
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:42
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:67
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:94
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:54
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:52
 msgid "Asked at"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:29
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:68
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:95
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:50
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:48
 msgid "Asked by"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:30
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:24
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:58
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:56
 msgid "Course"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/list_questions.html:31
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:25
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:27
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:62
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:60
 #: insekta/scenarios/templates/scenarios/scenario_groups_list.html:20
 msgid "Topic"
 msgstr ""
@@ -539,7 +542,7 @@ msgid "new answer"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/my_questions.html:43
-#: insekta/scenarios/templates/scenarios/view.html:135
+#: insekta/scenarios/templates/scenarios/view.html:133
 msgid "Yes"
 msgstr ""
 
@@ -564,19 +567,19 @@ msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:41
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:55
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:131
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:129
 #: insekta/scenarios/templates/scenarios/get_comments.html:39
 msgid "Preview"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:50
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:123
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:121
 #: insekta/scenarios/templates/scenarios/get_comments.html:34
 msgid "The following HTML is allowed:"
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/new_question.html:51
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:124
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:122
 #: insekta/scenarios/templates/scenarios/get_comments.html:35
 msgid "Additionally you can use \\( inline math \\) or \\[ block math \\]."
 msgstr ""
@@ -593,7 +596,7 @@ msgid "Questions for \"%(scenario_title)s\""
 msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/scenario_questions.html:16
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:27
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:25
 #: insekta/scenarios/templates/scenarios/view.html:26
 msgid "Questions"
 msgstr ""
@@ -618,45 +621,45 @@ msgstr ""
 msgid "Solved questions"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:71
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:69
 #: insekta/scenarios/templates/scenarios/get_comments.html:6
 msgid "Author"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:72
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:70
 msgid "Post"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:89
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:87
 msgid "This question is solved."
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:92
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:90
 msgid ""
 "Did you get a good answer for your question? If yes, please mark your "
 "question as solved."
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:95
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:93
 msgid "Mark as solved"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:107
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:105
 msgctxt "In response to an answer"
 msgid "Your query"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:109
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:120
-#: insekta/scenarios/dsl/renderer.py:137
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:107
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:118
+#: insekta/scenarios/dsl/renderer.py:144
 msgid "Your answer"
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:127
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:125
 msgid "This question is already solved, you can't answer anymore."
 msgstr ""
 
-#: insekta/scenariohelp/templates/scenariohelp/view_question.html:130
+#: insekta/scenariohelp/templates/scenariohelp/view_question.html:128
 msgctxt "to answer (verb)"
 msgid "Answer"
 msgstr ""
@@ -673,34 +676,48 @@ msgstr ""
 msgid "Thank you for helping!"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:64
+#: insekta/scenarios/dsl/renderer.py:71
 msgid "Exercise: {}"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:66
+#: insekta/scenarios/dsl/renderer.py:73
 msgid "Exercise"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:73
+#: insekta/scenarios/dsl/renderer.py:80
 msgid "Congratulation. Your answer is correct."
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:76
+#: insekta/scenarios/dsl/renderer.py:83
 msgid "Sorry, your answer is incorrect."
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:87
+#: insekta/scenarios/dsl/renderer.py:94
 msgid "Solve exercise"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:98
+#: insekta/scenarios/dsl/renderer.py:105
 msgid ""
 "<strong>Here be dragons.</strong> You have to solve an exercise to uncover "
 "more content."
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:184
+#: insekta/scenarios/dsl/renderer.py:191
 msgid "Show hint"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/course_registration.html:4
+#: insekta/scenarios/templates/scenarios/course_registration.html:18
+#, python-format
+msgid "Registration: %(title)s"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/course_registration.html:25
+msgid "Register for this course"
+msgstr ""
+
+#: insekta/scenarios/templates/scenarios/course_registration.html:28
+msgid "This course is currently not offered."
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/get_comments.html:7
@@ -751,7 +768,7 @@ msgid "Reset exercises"
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/view.html:24
-#: insekta/scenarios/templates/scenarios/view.html:43
+#: insekta/scenarios/templates/scenarios/view.html:41
 msgid "Your notes"
 msgstr ""
 
@@ -759,31 +776,31 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:28
+#: insekta/scenarios/templates/scenarios/view.html:27
 msgid "Comments:"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:29
+#: insekta/scenarios/templates/scenarios/view.html:28
 msgid "off"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:30
+#: insekta/scenarios/templates/scenarios/view.html:29
 msgid "on"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:33
+#: insekta/scenarios/templates/scenarios/view.html:31
 msgid "Options"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:49
+#: insekta/scenarios/templates/scenarios/view.html:47
 msgid "Saved."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:58
+#: insekta/scenarios/templates/scenarios/view.html:55
 msgid "User comments"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:68
+#: insekta/scenarios/templates/scenarios/view.html:66
 #, python-format
 msgid ""
 "\n"
@@ -792,15 +809,15 @@ msgid ""
 "\">hacker ethics</a>.\n"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:86
+#: insekta/scenarios/templates/scenarios/view.html:84
 msgid "Destroy virtual machines"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:93
+#: insekta/scenarios/templates/scenarios/view.html:91
 msgid "Start virtual machines"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:99
+#: insekta/scenarios/templates/scenarios/view.html:97
 #, python-format
 msgid ""
 "Virtual machines are running. If you close this page they will be destroyed "
@@ -808,26 +825,26 @@ msgid ""
 "can manually destroy them if you like."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:101
+#: insekta/scenarios/templates/scenarios/view.html:99
 msgid ""
 "This topic makes use of virtual machines. In order to solve some exercises "
 "you might have to start them."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:105
+#: insekta/scenarios/templates/scenarios/view.html:103
 #, python-format
 msgid "You are connected the VPN and your IP inside the VPN is %(vpn_ip)s."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:108
+#: insekta/scenarios/templates/scenarios/view.html:106
 msgid "The virtual machines should be reachable."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:110
+#: insekta/scenarios/templates/scenarios/view.html:108
 msgid "The virtual machines should be reachable once they are started."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:124
+#: insekta/scenarios/templates/scenarios/view.html:122
 #, python-format
 msgid ""
 "You are not connected to the <a href=\"%(vpn_url)s\">VPN</a>, which is "
@@ -835,7 +852,7 @@ msgid ""
 "href=\"%(this_page_url)s\">this page</a>."
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/view.html:132
+#: insekta/scenarios/templates/scenarios/view.html:130
 msgid "Do you want to help others with this topic?"
 msgstr ""
 
@@ -851,7 +868,7 @@ msgid ""
 "new topics. Anyway, feel free to try them."
 msgstr ""
 
-#: insekta/scenarios/views.py:229
+#: insekta/scenarios/views.py:243
 msgid "The exercises were reset. You can now solve them again."
 msgstr ""
 
