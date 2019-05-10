@@ -206,6 +206,7 @@ class TaskSolve(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     answer = JSONField(blank=True, null=True)
+    is_correct = models.BooleanField(default=True)
 
     class Meta:
         unique_together = (('task', 'user'),)
@@ -238,10 +239,33 @@ class CourseRun(models.Model):
         return '{}: {}'.format(self.course, self.name)
 
 
-class TaskPoints(models.Model):
+class TaskSolveArchive(models.Model):
+    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    answer = JSONField(blank=True, null=True)
+    is_correct = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = (('task', 'user', 'course_run'),)
+
+
+class TaskGroup(models.Model):
+    name = models.CharField(max_length=120)
+    deadline_at = models.DateTimeField()
+    total_points = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class TaskConfiguration(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+    task_group = models.ForeignKey(TaskGroup, blank=True, null=True,
+                                   on_delete=models.CASCADE)
+    delay_solution = models.BooleanField(default=False)
 
 
 class ScenarioGroup(models.Model):
