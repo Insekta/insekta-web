@@ -22,7 +22,9 @@
     {% if current_run %}
     <form method="post">
         {% csrf_token %}
-        <button class="btn btn-primary">{% trans 'Register for this course' %} ({{ current_run.name }})</button>
+        <p>
+            <button class="btn btn-primary">{% trans 'Register for this course' %} ({{ current_run.name }})</button>
+        </p>
     </form>
     {% else %}
     <p><strong>{% trans 'This course is currently not offered.' %}</strong></p>
