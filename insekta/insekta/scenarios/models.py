@@ -129,6 +129,7 @@ class Scenario(models.Model):
         task = Task.objects.get(scenario=self, identifier=task_obj.identifier)
         if not task_obj.must_remember_answer:
             answer = None
+
         try:
             TaskSolve.objects.create(task=task, user=user, answer=answer)
         except IntegrityError:
@@ -283,6 +284,8 @@ class TaskGroup(models.Model):
     name = models.CharField(max_length=120)
     deadline_at = models.DateTimeField()
     total_points = models.IntegerField()
+    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    tasks = models.ManyToManyField(Task, through='TaskConfiguration')
 
     def __str__(self):
         return self.name
@@ -290,10 +293,8 @@ class TaskGroup(models.Model):
 
 class TaskConfiguration(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    task_group = models.ForeignKey('TaskGroup', on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
-    task_group = models.ForeignKey(TaskGroup, blank=True, null=True,
-                                   on_delete=models.CASCADE)
     delay_solution = models.BooleanField(default=False)
 
 
