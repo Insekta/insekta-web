@@ -117,6 +117,11 @@ class TaskParser:
         for keyword in node.kwargs:
             if isinstance(keyword.value, nodes.Const):
                 kwargs[keyword.key] = keyword.value.value
+            elif isinstance(keyword.value, nodes.List): 
+                kwargs[keyword.key] = [] 
+                for elem in keyword.value.items: 
+                    kwargs[keyword.key].append(elem.value)
+            print('expected parsed as', kwargs[keyword.key])
         return kwargs
 
     @classmethod
