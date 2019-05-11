@@ -17,8 +17,10 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
 from django.views.static import serve
+from django.apps import apps
 
 from insekta.base import views as base_views
+
 
 
 urlpatterns = [
@@ -29,12 +31,12 @@ urlpatterns = [
     url(r'^help/', include('insekta.scenariohelp.urls', namespace='scenariohelp')),
 ]
 
-if 'insekta.ethics' in settings.INSTALLED_APPS:
+if apps.is_installed('insekta.ethics'):
     urlpatterns += [
         url(r'^ethics/', include('insekta.ethics.urls', namespace='ethics')),
     ]
 
-if 'insekta.vpn' in settings.INSTALLED_APPS:
+if apps.is_installed('insekta.vpn'):
     urlpatterns += [
         url(r'^pki/', include('insekta.pki.urls', namespace='pki')),
         url(r'^vpn/', include('insekta.vpn.urls', namespace='vpn')),

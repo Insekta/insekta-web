@@ -13,7 +13,8 @@ from django.views.decorators.http import require_POST
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
-from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course
+from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course, CourseRun, \
+    TaskSolve
 
 
 COMPONENT_STYLESHEETS = {
@@ -36,6 +37,9 @@ def view(request, course_key, scenario_key):
     course = get_object_or_404(Course, key=course_key)
     if not scenario.is_inside_course(course):
         raise Http404('Scenario is not contained in this course.')
+
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
 
     if scenario.show_ethics_reminder and not request.user.accepted_ethics:
         ethics_url = (reverse('ethics:view') + "?next=" +
@@ -77,9 +81,9 @@ def view(request, course_key, scenario_key):
     csrf_token = get_token(request)
     renderer = Renderer(course, scenario, request.user, csrf_token, virtual_machines, vpn_ip)
     if request.method == 'POST':
-        tpl_task = renderer.submit(request.POST)
-        if tpl_task:
-            scenario.solve(request.user, tpl_task.identifier)
+        submit_result = renderer.submit(request.POST)
+        if submit_result.is_correct:
+            scenario.solve(request.user, submit_result.task, submit_result.answer)
 
     try:
         notes = Notes.objects.get(user=request.user, scenario=scenario).content
@@ -113,6 +117,8 @@ def view(request, course_key, scenario_key):
 @login_required
 def enable_vms(request, course_key, scenario_key):
     course = get_object_or_404(Course, key=course_key)
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
     vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
     if vm_resource:
         remote_api.start_vm_resource(vm_resource, request.user)
@@ -123,6 +129,8 @@ def enable_vms(request, course_key, scenario_key):
 @login_required
 def disable_vms(request, course_key, scenario_key):
     course = get_object_or_404(Course, key=course_key)
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
     vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
     if vm_resource:
         remote_api.stop_vm_resource(vm_resource, request.user)
@@ -199,6 +207,8 @@ def list_courses(request):
 @login_required
 def view_course(request, course_key, is_challenge=False):
     course = get_object_or_404(Course, key=course_key, enabled=True)
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
     scenario_groups = list(course.scenario_groups.filter(hidden=False).order_by('order_id'))
     scenario_groups = ScenarioGroup.annotate_list(scenario_groups,
                                                   is_challenge=is_challenge,
@@ -214,6 +224,8 @@ def view_course(request, course_key, is_challenge=False):
 @login_required
 def show_options(request, course_key, scenario_key):
     course = get_object_or_404(Course, key=course_key)
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
     scenario = _get_scenario(scenario_key, request.user)
     return render(request, 'scenarios/show_options.html', {
         'course': course,
@@ -224,10 +236,29 @@ def show_options(request, course_key, scenario_key):
 @login_required
 @require_POST
 def reset_tasks(request, course_key, scenario_key):
+    course = get_object_or_404(Course, key=course_key)
+    if _has_to_register(course, request.user):
+        return redirect('scenarios:course_registration', course.key)
     scenario = _get_scenario(scenario_key, request.user)
-    request.user.solved_tasks.through.objects.filter(task__scenario=scenario).delete()
+    TaskSolve.objects.filter(user=request.user, task__scenario=scenario).delete()
     messages.success(request, _('The exercises were reset. You can now solve them again.'))
     return redirect('scenarios:show_options', course_key, scenario.key)
+
+
+@login_required
+def course_registration(request, course_key):
+    course = get_object_or_404(Course, key=course_key)
+    try:
+        current_run = course.current_run
+    except CourseRun.DoesNotExist:
+        current_run = None
+    if request.method == 'POST' and current_run:
+        current_run.participants.add(request.user)
+        return redirect('scenarios:view_course', course.key)
+    return render(request, 'scenarios/course_registration.html', {
+        'course': course,
+        'current_run': current_run
+    })
 
 
 def _get_comments_response(request, comment_id):
@@ -248,3 +279,8 @@ def _get_scenario(scenario_key, user):
             del scenario_filter['enabled']
         scenario = get_object_or_404(Scenario, **scenario_filter)
     return scenario
+
+
+def _has_to_register(course, user):
+    return course.requires_registration and \
+           not course.current_run.participants.filter(pk=user.pk).exists()

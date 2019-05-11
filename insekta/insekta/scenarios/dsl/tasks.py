@@ -1,7 +1,10 @@
 import hashlib
 import hmac
 
+from django.apps.registry import apps
 from django.conf import settings
+
+from insekta.scenarios.dsl.scripts import InvalidUserInputError
 
 
 __all__ = ['TemplateTaskError', 'TemplateTask', 'MultipleChoiceTask', 'Choice',
@@ -13,6 +16,8 @@ class TemplateTaskError(Exception):
 
 
 class TemplateTask:
+    must_remember_answer = False
+
     def __init__(self, identifier):
         self.identifier = identifier
 
@@ -153,8 +158,55 @@ class QuestionTask(TemplateTask):
             self.__class__.__name__, self.answers, self.case_sensitive, self.strip)
 
 
+class ScriptTask(TemplateTask):
+    task_type = 'script'
+    must_remember_answer = True
+
+    def __init__(self, identifier, script_name, scenario, **kwargs):
+        super().__init__(identifier)
+        self.script_name = script_name
+        self.scenario = scenario
+        self.fields = set()
+
+    def check_for_errors(self):
+        if not self.fields:
+            raise TemplateTaskError('Empty fields in script')
+
+    def extract_values(self, user, scenario, form_values):
+        values = {key: value for key, value in form_values.items()
+                  if key in self.fields}
+        for field in self.fields:
+            if field not in values:
+                values[field] = None
+        values['_seed'] = user.pk
+        return values
+
+    def validate(self, values):
+        script_instance = self._get_script_instance(values['_seed'])
+        try:
+            return script_instance.validate(values)
+        except InvalidUserInputError:
+            return False
+
+    def get_values(self, user):
+        script_instance = self._get_script_instance(user.pk)
+        return script_instance.generate()
+
+    def _get_script_instance(self, seed):
+        script_classes = self.scenario.get_script_classes()
+        try:
+            class_obj = script_classes[self.script_name]
+        except KeyError:
+            raise TemplateTaskError('No such script: {}'.format(self.script_name))
+        return class_obj(seed, self.identifier)
+
+    def __repr__(self):
+        return '{}({})'.format(self.__class__.__name__, self.identifier)
+
+
 task_classes = {
     MultipleChoiceTask.task_type: MultipleChoiceTask,
     SingleChoiceTask.task_type: SingleChoiceTask,
-    QuestionTask.task_type: QuestionTask
+    QuestionTask.task_type: QuestionTask,
+    ScriptTask.task_type: ScriptTask
 }

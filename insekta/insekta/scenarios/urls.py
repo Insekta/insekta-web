@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^courses/(.+)/challenges$', views.view_course, kwargs={
         'is_challenge': True
     }, name='view_course_challenges'),
+    url(r'^courses/(.+)/registration$', views.course_registration,
+        name='course_registration'),
     url(r'^options/(.+)/(.+)$', views.show_options, name='show_options'),
     url(r'^reset_tasks/(.+)/(.+)$', views.reset_tasks, name='reset_tasks'),
 ]

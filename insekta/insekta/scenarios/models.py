@@ -2,14 +2,22 @@ import json
 import os
 import re
 import shutil
+from collections import namedtuple
 
-from django.db import models
+from django.contrib.postgres.fields import JSONField
+from django.db import models, IntegrityError
 from django.conf import settings
 from django.db.models import Count
+from django.db.models.signals import pre_save
+from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.urls import reverse
 
 from insekta.scenarios.dsl.taskparser import TaskParser
+
+_scenario_script_cache = {}
+
+ScriptCacheEntry = namedtuple('ScriptCacheEntry', ['mtime', 'script_classes'])
 
 
 class ScenarioError(Exception):
@@ -51,8 +59,32 @@ class Scenario(models.Model):
     def get_template_filename(self):
         return os.path.join(self.get_scenario_dir(), 'scenario.html')
 
+    def get_scripts_filename(self):
+        return os.path.join(self.get_scenario_dir(), 'scripts.py')
+
     def get_template_tasks(self):
-        return TaskParser.from_filename(self.get_template_filename()).get_tasks()
+        return TaskParser.from_filename(self.get_template_filename(), self).get_tasks()
+
+    def get_script_classes(self):
+        scripts_filename = self.get_scripts_filename()
+        try:
+            mtime = os.stat(scripts_filename).st_mtime
+            script_cache = _scenario_script_cache.get(self.pk)
+            if script_cache:
+                if script_cache.mtime == mtime:
+                    return script_cache.script_classes
+            with open(scripts_filename) as f:
+                mod = {}
+                exec(f.read(), mod, mod)
+                if 'script_classes' not in mod:
+                    raise ValueError('{} is missing script_classes'.format(
+                        scripts_filename
+                    ))
+                cache_entry = ScriptCacheEntry(mtime, mod['script_classes'])
+                _scenario_script_cache[self.pk] = cache_entry
+                return mod['script_classes']
+        except IOError:
+            return {}
 
     def update_tasks(self, purge=False):
         existing_tasks = {}
@@ -94,8 +126,15 @@ class Scenario(models.Model):
                 comment_id_obj.orphaned = False
                 comment_id_obj.save()
 
-    def solve(self, user, task_identifier):
-        Task.objects.get(scenario=self, identifier=task_identifier).solved_by.add(user)
+    def solve(self, user, task_obj, answer):
+        task = Task.objects.get(scenario=self, identifier=task_obj.identifier)
+        if not task_obj.must_remember_answer:
+            answer = None
+
+        try:
+            TaskSolve.objects.create(task=task, user=user, answer=answer)
+        except IntegrityError:
+            pass
 
     def get_absolute_url(self, course):
         return reverse('scenarios:view', args=(course.key, self.key, ))
@@ -187,10 +226,21 @@ class Task(models.Model):
     scenario = models.ForeignKey(Scenario, related_name='tasks', on_delete=models.CASCADE)
     identifier = models.CharField(max_length=120)
     solved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
+                                       through='TaskSolve',
                                        related_name='solved_tasks')
 
     def __str__(self):
         return '{} ({})'.format(self.identifier, self.scenario)
+
+
+class TaskSolve(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    answer = JSONField(blank=True, null=True)
+    is_correct = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = (('task', 'user'),)
 
 
 class Course(models.Model):
@@ -199,9 +249,54 @@ class Course(models.Model):
     key = models.CharField(max_length=120, unique=True)
     description = models.TextField(blank=True, null=True)
     enabled = models.BooleanField(default=False)
+    requires_registration = models.BooleanField(default=False)
+
+    @cached_property
+    def current_run(self):
+        return CourseRun.objects.get(course=self, enabled=True)
 
     def __str__(self):
         return self.title
+
+
+class CourseRun(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)
+    enabled = models.BooleanField(default=False)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                          blank=True)
+
+    def __str__(self):
+        return '{}: {}'.format(self.course, self.name)
+
+
+class TaskSolveArchive(models.Model):
+    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    answer = JSONField(blank=True, null=True)
+    is_correct = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = (('task', 'user', 'course_run'),)
+
+
+class TaskGroup(models.Model):
+    name = models.CharField(max_length=120)
+    deadline_at = models.DateTimeField()
+    total_points = models.IntegerField()
+    course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
+    tasks = models.ManyToManyField(Task, through='TaskConfiguration')
+
+    def __str__(self):
+        return self.name
+
+
+class TaskConfiguration(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task_group = models.ForeignKey('TaskGroup', on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
+    delay_solution = models.BooleanField(default=False)
 
 
 class ScenarioGroup(models.Model):
@@ -310,3 +405,29 @@ class Comment(models.Model):
 
     def __str__(self):
         return '{}: {} at {}'.format(self.comment_id, self.author, self.time_created)
+
+
+def _copy_task_solve(sender, instance, **kwargs):
+    user = instance.user
+    scenario_groups = instance.task.scenario.groups.all()
+    courses = Course.objects.filter(scenario_groups__in=scenario_groups)
+    course_runs = CourseRun.objects.filter(enabled=True,
+                                           course__in=courses,
+                                           participants=user)
+    for course_run in course_runs:
+
+        try:
+            task_group = TaskGroup.objects.get(
+                taskconfiguration__task=instance.task, course_run=course_run)
+        except TaskGroup.DoesNotExist:
+            continue
+        if task_group.deadline_at < now():
+            continue
+        archived_solve, created = TaskSolveArchive.objects.get_or_create(
+            course_run=course_run, user=user, task=instance.task)
+        archived_solve.answer = instance.answer
+        archived_solve.is_correct = instance.is_correct
+        archived_solve.save()
+
+
+pre_save.connect(_copy_task_solve, sender=TaskSolve)

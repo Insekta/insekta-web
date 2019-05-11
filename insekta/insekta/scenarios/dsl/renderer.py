@@ -2,6 +2,7 @@ import functools
 import hmac
 import io
 import os
+from collections import namedtuple
 
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -12,9 +13,13 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 from insekta.scenarios.dsl.templateloader import ScenarioTemplateLoader
+from insekta.scenarios.models import Task, TaskSolve
 
 
 __all__ = ['Renderer']
+
+
+SubmitResult = namedtuple('SubmitResult', ['is_correct', 'task', 'answer'])
 
 
 def collect_to_str(fn):
@@ -41,9 +46,11 @@ class Renderer:
         for fn_name, fn in self._get_template_functions().items():
             self.env.globals[fn_name] = fn
 
-        self._solved_task_identifiers = set()
-        for task in user.solved_tasks.filter(scenario=scenario):
-            self._solved_task_identifiers.add(task.identifier)
+        self._solved_task_answers = {}
+        tasks = Task.objects.filter(scenario=scenario)
+        solves = TaskSolve.objects.filter(user=user, task__in=tasks).select_related('task')
+        for task_solve in solves:
+            self._solved_task_answers[task_solve.task.identifier] = task_solve.answer
 
         self.submitted_values = {}
         self.submitted_task = None
@@ -92,7 +99,7 @@ class Renderer:
 
     @collect_to_str
     def _call_require_task(self, caller, identifier, **kwargs):
-        if identifier in self._solved_task_identifiers:
+        if identifier in self._solved_task_answers:
             yield caller()
         else:
             msg = _('<strong>Here be dragons.</strong> '
@@ -198,8 +205,40 @@ class Renderer:
     def _call_vm_enabled(self, vm_name):
         return vm_name in self.virtual_machines
 
+    def _call_script_input(self, name, type='text', placeholder=''):
+        task = self._get_current_task()
+        try:
+            answer = str(self._solved_task_answers[task.identifier][name])
+            disabled = True
+        except KeyError:
+            disabled = False
+            if self._is_submitted_task():
+                answer = str(self.submitted_values.get(name, ''))
+            else:
+                answer = ''
+        attrs = {'name': name, 'class': 'form-control'}
+        if disabled:
+            attrs['disabled'] = 'disabled'
+        if type == 'longtext':
+            attrs['rows'] = '5'
+        else:
+            attrs['type'] = type
+            attrs['value'] = answer
+            if placeholder:
+                attrs['placeholder'] = placeholder
+        attrs_str = ' '.join('{}="{}"'.format(key, escape(value))
+                             for key, value in attrs.items())
+        if type == 'longtext':
+            return '<textarea {}>{}</textarea>'.format(attrs_str, escape(answer))
+        else:
+            return '<input {}/>'.format(attrs_str)
+
+    def _call_script_values(self):
+        task = self._get_current_task()
+        return task.get_values(self.user)
+
     def _task_is_solved(self):
-        return self._current_task_identifier in self._solved_task_identifiers
+        return self._current_task_identifier in self._solved_task_answers
 
     def _get_current_task(self):
         return self.template_tasks[self._current_task_identifier]
@@ -219,6 +258,8 @@ class Renderer:
             'hint': self._call_hint,
             'vm_ip': self._call_vm_ip,
             'vm_enabled': self._call_vm_enabled,
+            'script_values': self._call_script_values,
+            'script_input': self._call_script_input,
         }
 
     def render(self, context=None):
@@ -257,9 +298,9 @@ class Renderer:
                 self.submitted_task = tpl_task
                 if tpl_task.validate(self.submitted_values):
                     self.submitted_valid = True
-                    self._solved_task_identifiers.add(tpl_task.identifier)
-                    return tpl_task
-        return False
+                    self._solved_task_answers[tpl_task.identifier] = self.submitted_values
+                    return SubmitResult(True, tpl_task, self.submitted_values)
+        return SubmitResult(False, None, None)
 
 
 _template_loader = ScenarioTemplateLoader(settings.SCENARIO_DIR)

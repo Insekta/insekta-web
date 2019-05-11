@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from insekta.scenarios.models import (Scenario, ScenarioGroup, ScenarioGroupEntry,
-                                      Task, CommentId, Comment, Course)
+                                      Task, CommentId, Comment, Course, CourseRun,
+                                      TaskConfiguration, TaskGroup, TaskSolve,
+                                      TaskSolveArchive)
 
 
 class ScenarioAdmin(admin.ModelAdmin):
@@ -78,9 +80,39 @@ class CourseAdmin(admin.ModelAdmin):
     inlines = [ScenarioGroupInline]
 
 
+class CourseRunAdmin(admin.ModelAdmin):
+    list_display = ('course', 'name', 'enabled')
+
+
+class TaskConfigurationAdmin(admin.ModelAdmin):
+    list_display = ('task', )
+
+
+class TaskConfigurationInline(admin.TabularInline):
+    model = TaskConfiguration
+
+
+class TaskGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'course_run', 'deadline_at')
+    inlines = [TaskConfigurationInline]
+
+
+class TaskSolveAdmin(admin.ModelAdmin):
+    list_display = ('task', 'user', 'is_correct')
+
+
+class TaskSolveArchiveAdmin(admin.ModelAdmin):
+    list_display = ('task', 'user', 'course_run', 'is_correct')
+
+
 admin.site.register(Scenario, ScenarioAdmin)
 admin.site.register(ScenarioGroup, ScenarioGroupAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(CommentId, CommentIdAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Course, CourseAdmin)
+admin.site.register(CourseRun, CourseRunAdmin)
+admin.site.register(TaskConfiguration, TaskConfigurationAdmin)
+admin.site.register(TaskGroup, TaskGroupAdmin)
+admin.site.register(TaskSolve, TaskSolveAdmin)
+admin.site.register(TaskSolveArchive, TaskSolveArchiveAdmin)
