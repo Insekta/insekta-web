@@ -143,7 +143,6 @@ class QuestionTask(TemplateTask):
         if not self.case_sensitive:
             answer = answer.lower()
     
-        print('magic', self.answers)
         for expected_answer in self.answers:
             if self.strip:
                 expected_answer = expected_answer.strip()
