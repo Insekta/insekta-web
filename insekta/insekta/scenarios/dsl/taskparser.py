@@ -133,7 +133,6 @@ class TaskParser:
                 kwargs[keyword.key] = [] 
                 for elem in keyword.value.items: 
                     kwargs[keyword.key].append(elem.value)
-            print('expected parsed as', kwargs[keyword.key])
         return kwargs
 
     @classmethod
