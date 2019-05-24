@@ -5,9 +5,7 @@ scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
 flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
-mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
-mathjax_tmp := $(shell mktemp -u).zip
 
 UGLIFYJS := node_modules/.bin/uglifyjs
 CLEANCSS := node_modules/.bin/cleancss --skip-rebase
@@ -54,16 +52,14 @@ ${components_static}flot:
 	unzip ${flot_tmp} -d $(dir $@)
 	rm ${flot_tmp}
 
-${components_static}mathjax:
-	wget -O ${mathjax_tmp} '${mathjax_download}'
-	unzip ${mathjax_tmp} -d $(dir $@)
-	mv $(dir $@)/MathJax-master $@
+${components_static}mathjax: node_modules/mathjax
+	mkdir -p ${components_static}
+	cp -r $^ $@
 	rm -rf $@/unpacked
 	rm -rf $@/docs
 	rm -rf $@/tests
 	rm -rf $@/fonts/HTML-CSS/TeX/png
 	rm -rf $@/fonts/HTML-CSS/TeX/svg
-	rm ${mathjax_tmp}
 
 node_modules: package.json
 	npm install
