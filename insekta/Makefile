@@ -19,28 +19,22 @@ all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js ${base_static}js/bootstrap.js
+js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
 components: ${components_static}mathjax ${components_static}flot
 
-${base_static}js/jquery.min.js: node_modules/jquery/dist/jquery.min.js
-	cp $< $@
-
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
-${base_static}css/bootstrap.css: ${base_static}scss/custom.scss
+${base_static}css/bootstrap.css: ${base_static}scss/custom.scss node_modules/bootstrap
 	sass $< > $@
-
-${base_static}js/bootstrap.js: node_modules/bootstrap/dist/js/bootstrap.js node_modules
-	cat $< > $@
 
 ${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ > $@
 
-${base_static}js/insekta.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
+${base_static}js/insekta.js: node_modules/jquery/dist/jquery.min.js node_modules/bootstrap/dist/js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
 	cat $^ > $@
 
 %.min.css: %.css
@@ -72,6 +66,8 @@ node_modules: package.json
 	npm install
 	touch node_modules
 
+node_modules/%: node_modules
+
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
 
 testenv/vpn:
@@ -94,9 +90,8 @@ clean:
 		   ${base_static}css/bootstrap.css \
 		   ${base_static}css/bootstrap.min.css \
 		   ${scenarios_static}css/pygments.css \
+		   ${base_static}js/insekta.js \
 		   ${base_static}js/insekta.min.js \
-		   ${base_static}js/bootstrap.js \
-		   ${base_static}js/jquery.min.js \
 		   ${base_static}components
 
 watchstatic:
