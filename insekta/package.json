@@ -2,7 +2,11 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
-    "sass": "^1.20.1",
+    "uglify-js": "^3.5.15",
     "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^4.3.0",
+    "sass": "^1.20.1"
   }
 }

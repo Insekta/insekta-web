@@ -9,13 +9,13 @@ mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
 mathjax_tmp := $(shell mktemp -u).zip
 
-UGLIFYJS := $(shell which uglifyjs || echo cat)
-CLEANCSS := $(shell (which cleancss > /dev/null && echo "cleancss --skip-rebase") || echo cat)
+UGLIFYJS := node_modules/.bin/uglifyjs
+CLEANCSS := node_modules/.bin/cleancss --skip-rebase
 
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min.js' -o -name '*.min.css' \))
 
-all: node_modules css js components locales
+all: css js components locales
 
 css: ${base_static}css/insekta.min.css
 
@@ -40,10 +40,10 @@ ${base_static}js/insekta.js: node_modules/jquery/dist/jquery.min.js node_modules
 ${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
 	cp $< $@
 
-%.min.css: %.css
+%.min.css: %.css node_modules/.bin/cssclean
 	$(CLEANCSS) $< > $@
 
-%.min.js: %.js
+%.min.js: %.js node_modules/.bin/uglifyjs
 	$(UGLIFYJS) $< > $@
 
 %.mo: %.po
@@ -69,7 +69,10 @@ node_modules: package.json
 	npm install
 	touch node_modules
 
-node_modules/%: node_modules
+node_modules/bootstrap: node_modules
+node_modules/.bin/uglifyjs: node_modules
+node_modules/.bin/cssclean: node_modules
+node_modules/.bin/sass: node_modules
 
 testenv: testenv/scenarios testenv/vpn testenv/vpn/ca.key testenv/vpn/ca.crt
 
@@ -95,13 +98,11 @@ clean:
 		   ${scenarios_static}css/pygments.css \
 		   ${base_static}js/insekta.js \
 		   ${base_static}js/insekta.min.js \
-		   ${base_static}components
+		   ${base_static}components \
+		   node_modules
 
 watchstatic:
 	@while true; do \
 		make css js; \
 		inotifywait -qre close_write ${static_files}; \
 	done
-
-installdeps:
-	npm install -g sass uglify-js clean-css-cli
