@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ error_class }}{% endblock %}
+
+{% block content %}
+<p class="alert alert-danger">
+    <strong>{{ error_class }}{% if error_lineno %} (line {{ error_lineno }}){% endif %}:</strong>
+    {{ error_message }}
+</p>
+
+{% if template_html %}
+{{ template_html }}
+{% endif %}
+{% endblock %}

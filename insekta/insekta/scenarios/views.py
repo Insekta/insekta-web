@@ -1,6 +1,8 @@
+import functools
 import json
 
 from django.contrib import messages
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.http import HttpResponse, Http404
@@ -9,10 +11,15 @@ from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
 from django.conf import settings
 from django.views.decorators.http import require_POST
+from jinja2 import TemplateSyntaxError
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
+from insekta.scenarios.dsl.tasks import TemplateTaskError
 from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course, CourseRun, \
     TaskSolve
 
@@ -33,6 +40,35 @@ def index(request):
 
 @login_required
 def view(request, course_key, scenario_key):
+    try:
+        return _view_scenario(request, course_key, scenario_key)
+    except TemplateSyntaxError as e:
+        if not request.user.is_superuser:
+            raise
+        scenario = Scenario.objects.get(key=scenario_key)
+        with open(scenario.get_template_filename()) as f:
+            template_source = f.read()
+        lexer = get_lexer_by_name('jinja')
+        formatter = HtmlFormatter(linenos=True, hl_lines=[e.lineno])
+        template_html = mark_safe(highlight(template_source, lexer, formatter))
+        return render(request, 'scenarios/render_error.html', {
+            'template_html': template_html,
+            'error_class': e.__class__.__name__,
+            'error_message': str(e),
+            'error_lineno': e.lineno
+        })
+    except TemplateTaskError as e:
+        if not request.user.is_superuser:
+            raise
+        return render(request, 'scenarios/render_error.html', {
+            'error_class': e.__class__.__name__,
+            'error_message': str(e),
+        })
+    except:
+        raise
+
+
+def _view_scenario(request, course_key, scenario_key):
     scenario = _get_scenario(scenario_key, request.user)
     course = get_object_or_404(Course, key=course_key)
     if not scenario.is_inside_course(course):
