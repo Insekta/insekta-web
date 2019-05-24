@@ -22,7 +22,7 @@ from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.dsl.taskparser import ParserError
 from insekta.scenarios.dsl.tasks import TemplateTaskError
 from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course, CourseRun, \
-    TaskSolve
+    TaskSolve, ScenarioError
 
 
 COMPONENT_STYLESHEETS = {
@@ -58,7 +58,7 @@ def view(request, course_key, scenario_key):
             'error_message': str(e),
             'error_lineno': e.lineno
         })
-    except TemplateTaskError as e:
+    except (ScenarioError, TemplateTaskError) as e:
         if not request.user.is_superuser:
             raise
         return render(request, 'scenarios/render_error.html', {
