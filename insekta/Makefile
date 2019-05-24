@@ -4,9 +4,6 @@ base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
-flot_download = http://www.flotcharts.org/downloads/flot-0.8.3.zip
-flot_tmp := $(shell mktemp -u).zip
-
 UGLIFYJS := node_modules/.bin/uglifyjs
 CLEANCSS := node_modules/.bin/cleancss --skip-rebase
 
@@ -21,7 +18,7 @@ js: ${base_static}js/insekta.min.js ${base_static}js/vue.min.js ${scenarios_stat
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
-components: ${components_static}mathjax ${components_static}flot
+components: ${components_static}mathjax
 
 ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
@@ -46,11 +43,6 @@ ${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
 
 %.mo: %.po
 	msgfmt -o $@ $<
-
-${components_static}flot:
-	wget -O ${flot_tmp} '${flot_download}'
-	unzip ${flot_tmp} -d $(dir $@)
-	rm ${flot_tmp}
 
 ${components_static}mathjax: node_modules/mathjax
 	mkdir -p ${components_static}
