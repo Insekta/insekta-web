@@ -38,7 +38,7 @@ ${base_static}js/insekta.js: node_modules/jquery/dist/jquery.min.js node_modules
 ${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
 	cp $< $@
 
-%.min.css: %.css node_modules/.bin/cssclean
+%.min.css: %.css node_modules/.bin/cleancss
 	$(CLEANCSS) $< > $@
 
 %.min.js: %.js node_modules/.bin/uglifyjs
