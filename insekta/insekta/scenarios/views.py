@@ -28,8 +28,6 @@ from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, Comme
 COMPONENT_STYLESHEETS = {
 }
 COMPONENT_SCRIPTS = {
-    'flot': ['flot/jquery.flot.min.js'],
-    'flot-categories': ['flot/jquery.flot.categories.min.js']
 }
 
 
