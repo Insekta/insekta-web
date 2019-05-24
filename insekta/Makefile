@@ -1,4 +1,4 @@
-.PHONY: all css js locales components clean watchstatic installdeps
+.PHONY: all css js locales components clean watchstatic
 
 base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
