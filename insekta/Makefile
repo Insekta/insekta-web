@@ -1,4 +1,4 @@
-.PHONY: all css js locales components clean watchstatic
+.PHONY: all css js locales components clean watchstatic installdeps
 
 base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
@@ -104,3 +104,6 @@ watchstatic:
 		make css js; \
 		inotifywait -qre close_write ${static_files}; \
 	done
+
+installdeps:
+	npm install -g sass uglify-js clean-css-cli
