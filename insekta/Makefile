@@ -19,7 +19,7 @@ all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js
+js: ${base_static}js/insekta.min.js ${base_static}js/vue.min.js ${scenarios_static}js/scenario.min.js
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
@@ -36,6 +36,9 @@ ${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css
 
 ${base_static}js/insekta.js: node_modules/jquery/dist/jquery.min.js node_modules/bootstrap/dist/js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
 	cat $^ > $@
+
+${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
+	cp $< $@
 
 %.min.css: %.css
 	$(CLEANCSS) $< > $@
