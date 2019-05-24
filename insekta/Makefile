@@ -10,7 +10,8 @@ mathjax_download = https://github.com/mathjax/MathJax/archive/master.zip
 flot_tmp := $(shell mktemp -u).zip
 mathjax_tmp := $(shell mktemp -u).zip
 
-YUI_COMPRESSOR := $(shell scripts/yuicompressor.py --find)
+UGLIFYJS := $(shell which uglifyjs || echo cat)
+CLEANCSS := $(shell (which cleancss > /dev/null && echo "cleancss --skip-rebase") || echo cat)
 
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min.js' -o -name '*.min.css' \))
@@ -37,17 +38,17 @@ ${base_static}css/bootstrap.css: ${base_static}scss/custom.scss
 ${base_static}js/bootstrap.js: node_modules/bootstrap/dist/js/bootstrap.js node_modules
 	cat $< > $@
 
-${base_static}css/insekta.min.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
-	cat $^ | $(YUI_COMPRESSOR) -o $@ --type css --charset utf-8
+${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
+	cat $^ > $@
 
-${base_static}js/insekta.min.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
-	cat $^ | $(YUI_COMPRESSOR) -o $@ --type js --charset utf-8
+${base_static}js/insekta.js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
+	cat $^ > $@
 
 %.min.css: %.css
-	$(YUI_COMPRESSOR) -o $@ --type css --charset utf-8 $<
+	$(CLEANCSS) $< > $@
 
 %.min.js: %.js
-	$(YUI_COMPRESSOR) -o $@ --type js --charset utf-8 $<
+	$(UGLIFYJS) $< > $@
 
 %.mo: %.po
 	msgfmt -o $@ $<
