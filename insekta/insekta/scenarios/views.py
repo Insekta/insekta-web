@@ -19,6 +19,7 @@ from pygments.lexers import get_lexer_by_name
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
 from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
+from insekta.scenarios.dsl.taskparser import ParserError
 from insekta.scenarios.dsl.tasks import TemplateTaskError
 from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course, CourseRun, \
     TaskSolve
@@ -42,7 +43,7 @@ def index(request):
 def view(request, course_key, scenario_key):
     try:
         return _view_scenario(request, course_key, scenario_key)
-    except TemplateSyntaxError as e:
+    except (TemplateSyntaxError, ParserError) as e:
         if not request.user.is_superuser:
             raise
         scenario = Scenario.objects.get(key=scenario_key)
