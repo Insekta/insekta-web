@@ -35,8 +35,8 @@ class TaskParser:
                 raise ParserError('Missing identifier in task on line {}'.format(
                     call_node.lineno), call_node.lineno)
             if not self.valid_identifier.match(kwargs['identifier']):
-                raise ParserError('Invalid identifier in task on line {}'.format(
-                    call_node.lineno), call_node.lineno)
+                raise ParserError('Invalid identifier (regex: {}) in task on line {}'.format(
+                    self.valid_identifier.pattern, call_node.lineno), call_node.lineno)
             if 'type' not in kwargs:
                 raise ParserError('Missing type in task on line {}'.format(
                     call_node.lineno), call_node.lineno)
