@@ -298,6 +298,9 @@ class TaskConfiguration(models.Model):
     points = models.IntegerField(default=0)
     delay_solution = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = [('task', 'task_group')]
+
 
 class ScenarioGroup(models.Model):
     title = models.CharField(max_length=255)
