@@ -49,7 +49,7 @@ def safe_hex(x, length=None):
     x = re.sub(r'\s+', '', x)
     try:
         retval = binascii.unhexlify(x)
-    except binascii.Error:
+    except (binascii.Error, ValueError):
         raise InvalidUserInputError()
     if length is not None and len(retval) != length:
         raise InvalidUserInputError()

@@ -84,12 +84,11 @@ def _view_scenario(request, course_key, scenario_key):
     # Load additional stylesheets and scripts
     additional_stylesheets = []
     additional_scripts = []
-    component_path = settings.STATIC_URL + 'components/'
     for component in scenario.get_required_components():
         for stylesheet in COMPONENT_STYLESHEETS.get(component, []):
-            additional_stylesheets.append(component_path + stylesheet)
+            additional_stylesheets.append(settings.STATIC_URL + stylesheet)
         for script in COMPONENT_SCRIPTS.get(component, []):
-            additional_scripts.append(component_path + script)
+            additional_scripts.append(settings.STATIC_URL + script)
     scenario_path = settings.MEDIA_URL + 'scenarios/'
     for stylesheet in scenario.get_css_files():
         additional_stylesheets.append(scenario_path + stylesheet)
