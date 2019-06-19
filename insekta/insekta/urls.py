@@ -48,3 +48,5 @@ if settings.DEBUG:
             'document_root': settings.MEDIA_ROOT,
         }),
    ]
+
+urlpatterns += url(r'^admin/', include('loginas.urls')),

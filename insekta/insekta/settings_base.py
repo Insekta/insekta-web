@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'loginas',
     'insekta.base.apps.BaseConfig',
     'insekta.account.apps.AccountConfig',
     'insekta.ethics.apps.EthicsConfig',
