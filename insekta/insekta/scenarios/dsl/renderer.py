@@ -205,7 +205,7 @@ class Renderer:
     def _call_vm_enabled(self, vm_name):
         return vm_name in self.virtual_machines
 
-    def _call_script_input(self, name, type='text', placeholder=''):
+    def _call_script_input(self, name, type='text', placeholder='', choices=None):
         task = self._get_current_task()
         try:
             answer = str(self._solved_task_answers[task.identifier][name])
@@ -221,6 +221,8 @@ class Renderer:
             attrs['disabled'] = 'disabled'
         if type == 'longtext':
             attrs['rows'] = '5'
+        elif type == 'select':
+            pass
         else:
             attrs['type'] = type
             attrs['value'] = answer
@@ -230,6 +232,16 @@ class Renderer:
                              for key, value in attrs.items())
         if type == 'longtext':
             return '<textarea {}>{}</textarea>'.format(attrs_str, escape(answer))
+        elif type == 'select':
+            options = []
+            for choice_value, choice_text in choices:
+                if self.submitted_values.get(name) == choice_value:
+                    selected = ' selected="selected"'
+                else:
+                    selected = ''
+                options.append('<option value="{}"{}>{}</option>'.format(
+                    escape(choice_value), selected, escape(choice_text)))
+            return '<select {}>{}</select>'.format(attrs_str, '\n'.join(options))
         else:
             return '<input {}/>'.format(attrs_str)
 
