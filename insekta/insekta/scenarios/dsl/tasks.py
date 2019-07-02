@@ -4,7 +4,7 @@ import hmac
 from django.apps.registry import apps
 from django.conf import settings
 
-from insekta.scenarios.dsl.scripts import InvalidUserInputError
+from insekta.scenarios.dsl.scripts import ScriptInputValidationError
 
 
 __all__ = ['TemplateTaskError', 'TemplateTask', 'MultipleChoiceTask', 'Choice',
@@ -184,7 +184,7 @@ class ScriptTask(TemplateTask):
         script_instance = self._get_script_instance(values['_seed'])
         try:
             return script_instance.validate(values)
-        except InvalidUserInputError:
+        except ScriptInputValidationError:
             return False
 
     def get_values(self, user):

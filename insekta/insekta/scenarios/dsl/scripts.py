@@ -3,6 +3,8 @@ import binascii
 import random
 import re
 
+from django.utils.translation import ugettext_lazy as _
+
 
 class BaseScript:
     def __init__(self, seed, task_identifier):
@@ -25,7 +27,7 @@ class BaseScript:
         raise NotImplemented
 
 
-class InvalidUserInputError(Exception):
+class ScriptInputValidationError(Exception):
     pass
 
 
@@ -33,14 +35,14 @@ def safe_int(x):
     try:
         return int(x)
     except (ValueError, TypeError):
-        raise InvalidUserInputError()
+        raise ScriptInputValidationError(_('Input is not a valid integer.'))
 
 
 def safe_float(x):
     try:
         return float(x)
     except (ValueError, TypeError):
-        raise InvalidUserInputError()
+        raise ScriptInputValidationError(_('Input is not a valid real number.'))
 
 
 def safe_hex(x, length=None):
@@ -49,10 +51,13 @@ def safe_hex(x, length=None):
     x = re.sub(r'\s+', '', x)
     try:
         retval = binascii.unhexlify(x)
-    except (binascii.Error, ValueError):
-        raise InvalidUserInputError()
+    except binascii.Error:
+        raise ScriptInputValidationError(_('Input is valid hex encoding.'))
+    except ValueError:
+        raise ScriptInputValidationError(_('Input contains non-hex characters '
+                                           '(invisible unicode?).'))
     if length is not None and len(retval) != length:
-        raise InvalidUserInputError()
+        raise ScriptInputValidationError(_('Input did not match expected length.'))
     return retval
 
 
@@ -60,11 +65,11 @@ def safe_base64(x):
     try:
         return base64.b64decode(x)
     except (ValueError, TypeError):
-        raise InvalidUserInputError()
+        raise ScriptInputValidationError('Input is not valid base64.')
 
 
 def regexp_string(regexp, x):
     if not isinstance(regexp, re.Pattern):
         regexp = re.compile(regexp)
     if not regexp.match(x):
-        raise InvalidUserInputError()
+        raise ScriptInputValidationError('Input does not match the expected format.')
