@@ -235,10 +235,7 @@ class Renderer:
         elif type == 'select':
             options = []
             for choice_value, choice_text in choices:
-                if self.submitted_values.get(name) == choice_value:
-                    selected = ' selected="selected"'
-                else:
-                    selected = ''
+                selected = 'selected="selected"' if answer == choice_value else ''
                 options.append('<option value="{}"{}>{}</option>'.format(
                     escape(choice_value), selected, escape(choice_text)))
             return '<select {}>{}</select>'.format(attrs_str, '\n'.join(options))
