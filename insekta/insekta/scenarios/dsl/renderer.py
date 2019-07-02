@@ -5,6 +5,7 @@ import os
 from collections import namedtuple
 
 from django.conf import settings
+from django.utils import html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from jinja2 import Environment, escape
@@ -12,6 +13,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
+from insekta.scenarios.dsl.scripts import ScriptInputValidationError
 from insekta.scenarios.dsl.templateloader import ScenarioTemplateLoader
 from insekta.scenarios.models import Task, TaskSolve
 
@@ -55,6 +57,7 @@ class Renderer:
         self.submitted_values = {}
         self.submitted_task = None
         self.submitted_valid = False
+        self.validation_error_message = None
         self._current_task_identifier = ''
 
     @collect_to_str
@@ -77,10 +80,15 @@ class Renderer:
 
         if self._is_submitted_task():
             if self.submitted_valid:
-                msg = _('Congratulation. Your answer is correct.')
+                msg = _('Your answer is correct.')
                 yield '<div class="alert alert-success">{}</div>\n'.format(msg)
             else:
-                msg = _('Sorry, your answer is incorrect.')
+                if self.validation_error_message:
+                    error_msg = html.escape(self.validation_error_message)
+                    msg = _('Unfortunately, our answer is incorrect: '
+                            '<strong>{}</strong>').format(error_msg)
+                else:
+                    msg = _('Unfortunately, your answer is incorrect.')
                 yield '<div class="alert alert-danger">{}</div>\n'.format(msg)
 
         form_action = '{}#task_{}'.format(self.scenario.get_absolute_url(self.course), task_mac)
@@ -305,7 +313,11 @@ class Renderer:
                                                                 self.scenario,
                                                                 form_values)
                 self.submitted_task = tpl_task
-                if tpl_task.validate(self.submitted_values):
+                try:
+                    tpl_task.validate(self.submitted_values)
+                except ScriptInputValidationError as e:
+                    self.validation_error_message = e.message
+                else:
                     self.submitted_valid = True
                     self._solved_task_answers[tpl_task.identifier] = self.submitted_values
                     return SubmitResult(True, tpl_task, self.submitted_values)

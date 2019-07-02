@@ -28,7 +28,8 @@ class BaseScript:
 
 
 class ScriptInputValidationError(Exception):
-    pass
+    def __init__(self, message=None):
+        self.message = message
 
 
 def safe_int(x):

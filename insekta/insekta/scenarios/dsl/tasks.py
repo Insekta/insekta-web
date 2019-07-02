@@ -182,10 +182,8 @@ class ScriptTask(TemplateTask):
 
     def validate(self, values):
         script_instance = self._get_script_instance(values['_seed'])
-        try:
-            return script_instance.validate(values)
-        except ScriptInputValidationError:
-            return False
+        if not script_instance.validate(values):
+            raise ScriptInputValidationError(None)
 
     def get_values(self, user):
         script_instance = self._get_script_instance(user.pk)
