@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 19:36+0200\n"
+"POT-Creation-Date: 2019-07-03 03:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -651,7 +651,7 @@ msgstr ""
 
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:107
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:118
-#: insekta/scenarios/dsl/renderer.py:144
+#: insekta/scenarios/dsl/renderer.py:152
 msgid "Your answer"
 msgstr ""
 
@@ -676,34 +676,58 @@ msgstr ""
 msgid "Thank you for helping!"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:71
+#: insekta/scenarios/dsl/renderer.py:74
 msgid "Exercise: {}"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:73
+#: insekta/scenarios/dsl/renderer.py:76
 msgid "Exercise"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:80
-msgid "Congratulation. Your answer is correct."
-msgstr ""
-
 #: insekta/scenarios/dsl/renderer.py:83
-msgid "Sorry, your answer is incorrect."
+msgid "Your answer is correct."
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:94
+#: insekta/scenarios/dsl/renderer.py:88
+msgid "Unfortunately, our answer is incorrect: <strong>{}</strong>"
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:91
+msgid "Unfortunately, your answer is incorrect."
+msgstr ""
+
+#: insekta/scenarios/dsl/renderer.py:102
 msgid "Solve exercise"
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:105
+#: insekta/scenarios/dsl/renderer.py:113
 msgid ""
 "<strong>Here be dragons.</strong> You have to solve an exercise to uncover "
 "more content."
 msgstr ""
 
-#: insekta/scenarios/dsl/renderer.py:191
+#: insekta/scenarios/dsl/renderer.py:199
 msgid "Show hint"
+msgstr ""
+
+#: insekta/scenarios/dsl/scripts.py:39
+msgid "Input is not a valid integer."
+msgstr ""
+
+#: insekta/scenarios/dsl/scripts.py:46
+msgid "Input is not a valid real number."
+msgstr ""
+
+#: insekta/scenarios/dsl/scripts.py:56
+msgid "Input is valid hex encoding."
+msgstr ""
+
+#: insekta/scenarios/dsl/scripts.py:58
+msgid "Input contains non-hex characters (invisible unicode?)."
+msgstr ""
+
+#: insekta/scenarios/dsl/scripts.py:61
+msgid "Input did not match expected length."
 msgstr ""
 
 #: insekta/scenarios/templates/scenarios/course_registration.html:4
@@ -712,11 +736,11 @@ msgstr ""
 msgid "Registration: %(title)s"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/course_registration.html:25
+#: insekta/scenarios/templates/scenarios/course_registration.html:26
 msgid "Register for this course"
 msgstr ""
 
-#: insekta/scenarios/templates/scenarios/course_registration.html:28
+#: insekta/scenarios/templates/scenarios/course_registration.html:30
 msgid "This course is currently not offered."
 msgstr ""
 
@@ -868,7 +892,7 @@ msgid ""
 "new topics. Anyway, feel free to try them."
 msgstr ""
 
-#: insekta/scenarios/views.py:243
+#: insekta/scenarios/views.py:277
 msgid "The exercises were reset. You can now solve them again."
 msgstr ""
 

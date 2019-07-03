@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Insekta 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 19:36+0200\n"
-"PO-Revision-Date: 2019-05-10 19:39+0200\n"
+"POT-Creation-Date: 2019-07-03 03:55+0200\n"
+"PO-Revision-Date: 2019-07-03 03:58+0200\n"
 "Last-Translator: Henning Pridöhl <henning@hprid.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -307,7 +307,7 @@ msgstr ""
 
 #: insekta/ethics/templates/ethics/view_arguments.html:32
 msgid "Take me back."
-msgstr "Bring mich zurück"
+msgstr "Bring mich zurück."
 
 #: insekta/ethics/templates/ethics/view_ethics.html:4
 #: insekta/ethics/templates/ethics/view_ethics.html:7
@@ -737,7 +737,7 @@ msgstr "Deine Rückfrage"
 
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:107
 #: insekta/scenariohelp/templates/scenariohelp/view_question.html:118
-#: insekta/scenarios/dsl/renderer.py:144
+#: insekta/scenarios/dsl/renderer.py:152
 msgid "Your answer"
 msgstr "Deine Antwort"
 
@@ -763,27 +763,31 @@ msgstr "Hilfsangebote für Themen/Herausforderungen erfolgreich gesetzt."
 msgid "Thank you for helping!"
 msgstr "Danke für das Helfen!"
 
-#: insekta/scenarios/dsl/renderer.py:71
+#: insekta/scenarios/dsl/renderer.py:74
 msgid "Exercise: {}"
 msgstr "Aufgabe: {}"
 
-#: insekta/scenarios/dsl/renderer.py:73
+#: insekta/scenarios/dsl/renderer.py:76
 msgid "Exercise"
 msgstr "Aufgabe"
 
-#: insekta/scenarios/dsl/renderer.py:80
-msgid "Congratulation. Your answer is correct."
-msgstr "Glückwunsch. Deine Antwort ist richtig."
-
 #: insekta/scenarios/dsl/renderer.py:83
-msgid "Sorry, your answer is incorrect."
-msgstr "Entschuldige, deine Antwort ist falsch."
+msgid "Your answer is correct."
+msgstr "Deine Antwort ist richtig."
 
-#: insekta/scenarios/dsl/renderer.py:94
+#: insekta/scenarios/dsl/renderer.py:88
+msgid "Unfortunately, our answer is incorrect: <strong>{}</strong>"
+msgstr "Deine Antwort ist leider falsch: <strong>{}</strong>"
+
+#: insekta/scenarios/dsl/renderer.py:91
+msgid "Unfortunately, your answer is incorrect."
+msgstr "Deine Anwort ist leider falsch."
+
+#: insekta/scenarios/dsl/renderer.py:102
 msgid "Solve exercise"
 msgstr "Aufgabe lösen"
 
-#: insekta/scenarios/dsl/renderer.py:105
+#: insekta/scenarios/dsl/renderer.py:113
 msgid ""
 "<strong>Here be dragons.</strong> You have to solve an exercise to uncover "
 "more content."
@@ -791,9 +795,30 @@ msgstr ""
 "<strong>Hier sind Drachen.</strong> Du musst eine Aufgabe lösen, um mehr "
 "Inhalt anzuzeigen."
 
-#: insekta/scenarios/dsl/renderer.py:191
+#: insekta/scenarios/dsl/renderer.py:199
 msgid "Show hint"
 msgstr "Zeige Hinweis"
+
+#: insekta/scenarios/dsl/scripts.py:39
+msgid "Input is not a valid integer."
+msgstr "Die Eingabe ist keine Zahl."
+
+#: insekta/scenarios/dsl/scripts.py:46
+msgid "Input is not a valid real number."
+msgstr "Die Eingabe ist keine reelle Zahl."
+
+#: insekta/scenarios/dsl/scripts.py:56
+msgid "Input is valid hex encoding."
+msgstr "Die Eingabe ist nicht richtig hexkodiert."
+
+#: insekta/scenarios/dsl/scripts.py:58
+msgid "Input contains non-hex characters (invisible unicode?)."
+msgstr ""
+"Die Eingabe enthält nicht-hexadezimale Zeichen (unsichtbares Unicode?)."
+
+#: insekta/scenarios/dsl/scripts.py:61
+msgid "Input did not match expected length."
+msgstr "Die Eingabe entspricht nicht der erwarteten Länge."
 
 #: insekta/scenarios/templates/scenarios/course_registration.html:4
 #: insekta/scenarios/templates/scenarios/course_registration.html:18
@@ -801,11 +826,11 @@ msgstr "Zeige Hinweis"
 msgid "Registration: %(title)s"
 msgstr "Anmeldung: %(title)s"
 
-#: insekta/scenarios/templates/scenarios/course_registration.html:25
+#: insekta/scenarios/templates/scenarios/course_registration.html:26
 msgid "Register for this course"
 msgstr "Zu diesem Kurs anmelden"
 
-#: insekta/scenarios/templates/scenarios/course_registration.html:28
+#: insekta/scenarios/templates/scenarios/course_registration.html:30
 msgid "This course is currently not offered."
 msgstr "Dieser Kurs wird zurzeit nicht angeboten."
 
@@ -974,7 +999,7 @@ msgstr ""
 "Herausforderungen enthalten keine Erklärungen und sind daher nicht zum "
 "Lernen neuer Themen geeignet. Wie auch immer, probiere sie ruhig aus."
 
-#: insekta/scenarios/views.py:243
+#: insekta/scenarios/views.py:277
 msgid "The exercises were reset. You can now solve them again."
 msgstr "Die Aufgaben wurden zurückgesetzt. Du kannst sie nun erneut lösen."
 
@@ -989,6 +1014,9 @@ msgid ""
 msgstr ""
 "Du hast keine gültigen Zertifikate. Bitte erstelle zunäcst eins um deine VPN-"
 "Konfiguration herunterladen zu können."
+
+#~ msgid "Congratulation. Your answer is correct."
+#~ msgstr "Glückwunsch. Deine Antwort ist richtig."
 
 #~ msgid "challenge"
 #~ msgstr "Herausforderung"
