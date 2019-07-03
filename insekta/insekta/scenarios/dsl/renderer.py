@@ -58,6 +58,7 @@ class Renderer:
         self.submitted_task = None
         self.submitted_valid = False
         self.validation_error_message = None
+        self.validation_context = {}
         self._current_task_identifier = ''
 
     @collect_to_str
@@ -254,6 +255,9 @@ class Renderer:
         task = self._get_current_task()
         return task.get_values(self.user)
 
+    def _call_validation_context(self):
+        return self.validation_context
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_answers
 
@@ -277,6 +281,7 @@ class Renderer:
             'vm_enabled': self._call_vm_enabled,
             'script_values': self._call_script_values,
             'script_input': self._call_script_input,
+            'validation_context': self._call_validation_context,
         }
 
     def render(self, context=None):
@@ -314,7 +319,7 @@ class Renderer:
                                                                 form_values)
                 self.submitted_task = tpl_task
                 try:
-                    tpl_task.validate(self.submitted_values)
+                    tpl_task.validate(self.submitted_values, self.validation_context)
                 except ScriptInputValidationError as e:
                     self.validation_error_message = e.message
                 else:

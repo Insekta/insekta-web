@@ -1,5 +1,6 @@
 import hashlib
 import hmac
+from inspect import signature
 
 from django.apps.registry import apps
 from django.conf import settings
@@ -24,7 +25,7 @@ class TemplateTask:
     def check_for_errors(self):
         raise NotImplemented
 
-    def validate(self, values):
+    def validate(self, values, validation_context):
         raise NotImplemented
 
     def extract_values(self, user, scenario, form_values):
@@ -54,7 +55,7 @@ class MultipleChoiceTask(TemplateTask):
             values[choice.name] = bool(form_values.get(choice_mac))
         return values
 
-    def validate(self, values):
+    def validate(self, values, validation_context):
         for choice in self.choices.values():
             if values[choice.name] != choice.correct:
                 return False
@@ -91,7 +92,7 @@ class SingleChoiceTask(TemplateTask):
                 break
         return values
 
-    def validate(self, values):
+    def validate(self, values, validation_context):
         if values['answer'] is None:
             return False
         return self.choices[values['answer']].correct
@@ -136,7 +137,7 @@ class QuestionTask(TemplateTask):
     def extract_values(self, user, scenario, form_values):
         return {'answer': form_values.get('answer', '')}
 
-    def validate(self, values):
+    def validate(self, values, validation_context):
         answer = values['answer']
         if self.strip:
             answer = answer.strip()
@@ -180,9 +181,13 @@ class ScriptTask(TemplateTask):
         values['_seed'] = user.pk
         return values
 
-    def validate(self, values):
+    def validate(self, values, validation_context):
         script_instance = self._get_script_instance(values['_seed'])
-        if not script_instance.validate(values):
+        if len(signature(script_instance.validate).parameters) == 2:
+            is_valid = script_instance.validate(values, validation_context)
+        else:
+            is_valid = script_instance.validate(values)
+        if not is_valid:
             raise ScriptInputValidationError(None)
 
     def get_values(self, user):
