@@ -2,6 +2,7 @@ import json
 import os
 import re
 import shutil
+import sys
 from collections import namedtuple
 
 from django.contrib.postgres.fields import JSONField
@@ -74,8 +75,13 @@ class Scenario(models.Model):
                 if script_cache.mtime == mtime:
                     return script_cache.script_classes
             with open(scripts_filename) as f:
-                mod = {}
-                exec(f.read(), mod, mod)
+                mod = {'sys': sys}
+                old_path = sys.path[:]
+                sys.path.append(os.path.abspath(os.path.dirname(scripts_filename)))
+                try:
+                    exec(f.read(), mod, mod)
+                finally:
+                    sys.path = old_path
                 if 'script_classes' not in mod:
                     raise ValueError('{} is missing script_classes'.format(
                         scripts_filename
