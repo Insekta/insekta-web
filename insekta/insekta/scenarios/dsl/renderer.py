@@ -319,7 +319,11 @@ class Renderer:
                                                                 form_values)
                 self.submitted_task = tpl_task
                 try:
-                    tpl_task.validate(self.submitted_values, self.validation_context)
+                    # The validate function can either return False to signal
+                    # an invalid answer or it can raise a ScriptInputValidationError
+                    # which may contain a message explaining the user's mistake.
+                    if not tpl_task.validate(self.submitted_values, self.validation_context):
+                        raise ScriptInputValidationError()
                 except ScriptInputValidationError as e:
                     self.validation_error_message = e.message
                 else:
