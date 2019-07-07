@@ -189,6 +189,7 @@ class ScriptTask(TemplateTask):
             is_valid = script_instance.validate(values)
         if not is_valid:
             raise ScriptInputValidationError(None)
+        return is_valid
 
     def get_values(self, user):
         script_instance = self._get_script_instance(user.pk)
