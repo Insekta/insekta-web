@@ -15,6 +15,8 @@ from django.utils.timezone import now
 from django.urls import reverse
 
 from insekta.scenarios.dsl.taskparser import TaskParser
+from insekta.scenarios.dsl.tasks import ScriptTask
+
 
 _scenario_script_cache = {}
 
@@ -91,6 +93,23 @@ class Scenario(models.Model):
                 return mod['script_classes']
         except IOError:
             return {}
+
+    def get_download(self, download_key):
+        decrypted_key = ScriptTask.decrypt_download_key(download_key)
+        script_name, user, task_identifier, filename = decrypted_key
+        try:
+            script_class = self.get_script_classes()[script_name]
+        except KeyError:
+            raise ValueError('Invalid script class: {}'.format(script_name))
+        instance = script_class(user.pk, task_identifier)
+        if not hasattr(instance, 'download'):
+            return b''
+        content = instance.download(filename)
+        if content is None:
+            content = b''
+        elif isinstance(content, str):
+            content = content.encode()
+        return content
 
     def update_tasks(self, purge=False):
         existing_tasks = {}

@@ -146,6 +146,12 @@ def _view_scenario(request, course_key, scenario_key):
     })
 
 
+def download(request, course_key, scenario_key, download_key, filename):
+    scenario = _get_scenario(scenario_key, request.user)
+    return HttpResponse(scenario.get_download(download_key),
+                        content_type='application/x-octet-stream')
+
+
 @require_POST
 @login_required
 def enable_vms(request, course_key, scenario_key):

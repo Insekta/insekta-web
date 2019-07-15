@@ -1,9 +1,12 @@
+import base64
 import hashlib
 import hmac
 from inspect import signature
 
-from django.apps.registry import apps
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from nacl.secret import SecretBox
+from nacl.exceptions import CryptoError
 
 from insekta.scenarios.dsl.scripts import ScriptInputValidationError
 
@@ -203,8 +206,36 @@ class ScriptTask(TemplateTask):
             raise TemplateTaskError('No such script: {}'.format(self.script_name))
         return class_obj(seed, self.identifier)
 
+    def get_download_key(self, user, filename):
+        box = ScriptTask.get_secretbox()
+        msg = '{}:{}:{}:{}'.format(self.script_name, user.pk, self.identifier,
+                                   filename).encode()
+        return base64.b32encode(box.encrypt(msg)).decode().rstrip('=')
+
     def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, self.identifier)
+
+    @staticmethod
+    def decrypt_download_key(download_key):
+        User = get_user_model()
+        box = ScriptTask.get_secretbox()
+        download_key = download_key + ('=' * (8 - (len(download_key) % 8)))
+        try:
+            pt = box.decrypt(base64.b32decode(download_key)).decode()
+            script_name, user_pk, task_identifier, filename = pt.split(':', 3)
+            try:
+                user = User.objects.get(pk=user_pk)
+            except User.DoesNotExist:
+                raise ValueError('Invalid user')
+        except (ValueError, CryptoError):
+            raise ValueError('Invalid download')
+        return script_name, user, task_identifier, filename
+
+    @staticmethod
+    def get_secretbox():
+        secret_bytes = settings.SECRET_KEY.encode()
+        key = hashlib.sha256(b'scriptdownload\x00' + secret_bytes).digest()
+        return SecretBox(key)
 
 
 task_classes = {

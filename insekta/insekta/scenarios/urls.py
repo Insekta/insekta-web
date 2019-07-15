@@ -10,6 +10,7 @@ urlpatterns = [
         'is_challenge': True
     }, name='challenges'),
     url(r'^view/(.+)/(.+)$', views.view, name='view'),
+    url(r'^download/(.+)/(.+)/(.+)/(.+)$', views.download, name='download'),
     url(r'^vms/enable/(.+)/(.+)$', views.enable_vms, name='enable_vms'),
     url(r'^vms/disable/(.+)/(.+)$', views.disable_vms, name='disable_vms'),
     url(r'^vms/ping/(.+)$', views.ping_vms, name='ping_vms'),

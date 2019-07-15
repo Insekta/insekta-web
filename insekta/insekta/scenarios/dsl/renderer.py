@@ -5,6 +5,7 @@ import os
 from collections import namedtuple
 
 from django.conf import settings
+from django.urls import reverse
 from django.utils import html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -258,6 +259,12 @@ class Renderer:
     def _call_validation_context(self):
         return self.validation_context
 
+    def _call_download_link(self, filename):
+        task = self._get_current_task()
+        download_key = task.get_download_key(self.user, filename)
+        args = (self.course.key, self.scenario.key, download_key, filename)
+        return reverse('scenarios:download', args=args)
+
     def _task_is_solved(self):
         return self._current_task_identifier in self._solved_task_answers
 
@@ -282,6 +289,7 @@ class Renderer:
             'script_values': self._call_script_values,
             'script_input': self._call_script_input,
             'validation_context': self._call_validation_context,
+            'download_link': self._call_download_link,
         }
 
     def render(self, context=None):
