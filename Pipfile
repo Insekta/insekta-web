@@ -16,6 +16,7 @@ bleach = "*"
 pytz = "*"
 "psycopg2-binary" = "*"
 django-loginas = "*"
+pynacl="*"
 
 [requires]
 python_version = "3.7"
