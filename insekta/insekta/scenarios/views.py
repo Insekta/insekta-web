@@ -1,4 +1,3 @@
-import functools
 import json
 
 from django.contrib import messages
@@ -21,8 +20,8 @@ from insekta.remoteapi.client import remote_api
 from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.dsl.taskparser import ParserError
 from insekta.scenarios.dsl.tasks import TemplateTaskError
-from insekta.scenarios.models import Scenario, ScenarioGroup, Task, Notes, CommentId, Comment, Course, CourseRun, \
-    TaskSolve, ScenarioError
+from insekta.scenarios.models import (Scenario, ScenarioGroup, Notes,
+        CommentId, Comment, Course, CourseRun, TaskSolve, ScenarioError)
 
 
 COMPONENT_STYLESHEETS = {

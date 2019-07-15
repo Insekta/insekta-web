@@ -9,9 +9,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 
-from insekta.pki.models import Certificate, get_user_certificate
+from insekta.pki.models import get_user_certificate
 
 
 @login_required
