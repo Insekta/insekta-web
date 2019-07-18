@@ -219,7 +219,8 @@ class ScriptTask(TemplateTask):
     def decrypt_download_key(download_key):
         User = get_user_model()
         box = ScriptTask.get_secretbox()
-        download_key = download_key + ('=' * (8 - (len(download_key) % 8)))
+        if len(download_key) % 8:
+            download_key = download_key + ('=' * (8 - (len(download_key) % 8)))
         try:
             pt = box.decrypt(base64.b32decode(download_key)).decode()
             script_name, user_pk, task_identifier, filename = pt.split(':', 3)
