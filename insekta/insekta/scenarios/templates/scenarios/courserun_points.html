@@ -7,6 +7,13 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
 
 {% block content %}
 <h2>Points for “{{ course_run.course.title }} – {{ course_run.name }}”</h2>
+<p>
+    {% if ordering == 'points' %}
+    <a href="?ordering=name">Order by name</a>
+    {% else %}
+    <a href="?ordering=points">Order by points</a>
+    {% endif %}
+</p>
 <table class="table table-sm">
     <thead>
     <tr>

@@ -357,11 +357,17 @@ def courserun_points(request, course_run_pk):
         if not results['name']:
             results['name'] = participant.username
     points_table = list(participant_results.values())
-    points_table.sort(key=lambda entry: entry['name'].lower())
+    ordering = request.GET.get('ordering', 'name')
+    if ordering == 'points':
+        ordering_fn = lambda entry: -entry['total_points']
+    else:
+        ordering_fn = lambda entry: entry['name'].lower()
+    points_table.sort(key=ordering_fn)
     return render(request, 'scenarios/courserun_points.html', {
         'points_table': points_table,
         'task_groups': task_groups,
-        'course_run': course_run
+        'course_run': course_run,
+        'ordering': ordering
     })
 
 
