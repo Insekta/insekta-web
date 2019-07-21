@@ -323,10 +323,12 @@ def courserun_points(request, course_run_pk):
         task_points[task_config.task_id] = task_config.points
 
     participant_results = {}
+    max_tasks_points = 0
     max_total_points = 0
     for task_group in task_groups:
         for task in task_group.tasks.order_by('order_id'):
-            max_total_points += task_points[task.pk]
+            max_tasks_points += task_points[task.pk]
+            max_total_points += task_group.total_points
         for participant in participants:
             results = participant_results.setdefault(participant.pk, {
                 'task_groups': [],
@@ -349,7 +351,8 @@ def courserun_points(request, course_run_pk):
             results['task_groups'].append(group)
     for participant in participants:
         results = participant_results[participant.pk]
-        results['total_points'] /= max_total_points
+        results['total_points'] /= max_tasks_points
+        results['total_points'] *= max_total_points
         results['name'] = participant.get_full_name()
         if not results['name']:
             results['name'] = participant.username
