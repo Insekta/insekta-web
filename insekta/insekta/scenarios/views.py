@@ -360,7 +360,8 @@ def courserun_points(request, course_run_pk):
     points_table.sort(key=lambda entry: entry['name'].lower())
     return render(request, 'scenarios/courserun_points.html', {
         'points_table': points_table,
-        'task_groups': task_groups
+        'task_groups': task_groups,
+        'course_run': course_run
     })
 
 

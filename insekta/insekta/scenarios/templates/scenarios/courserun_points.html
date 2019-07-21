@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+Points for “{{ course_run.course.title }} – {{ course_run.name }}”
+{% endblock %}
+
 {% block content %}
+<h2>Points for “{{ course_run.course.title }} – {{ course_run.name }}”</h2>
 <table class="table table-sm">
     <thead>
     <tr>
