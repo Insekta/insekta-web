@@ -19,7 +19,11 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
     <tr>
         <th>Participant</th>
         {% for task_group in task_groups %}
+        {% if not simple %}
         <th colspan="2">{{ task_group.name }}</th>
+        {% else %}
+        <th>{{ task_group.name }}</th>
+        {% endif %}
         {% endfor %}
         <th class="text-right">Total</th>
     </tr>
@@ -29,6 +33,7 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
     <tr>
         <td>{{ row.name }}</td>
         {% for task_group in row.task_groups %}
+        {% if not simple %}
         <td class="nowrap">
             {% for is_solved in task_group.solved_tasks %}{% if is_solved %}<img
                 src="{% static 'scenarios/images/solved.png' %}" alt="1"
@@ -36,6 +41,7 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
                 src="{% static 'scenarios/images/unsolved.png' %}" alt="0"
             >{% endif %}{% endfor %}
         </td>
+        {% endif %}
         <td>{{ task_group.points|floatformat:2 }}</td>
         {% endfor %}
         <td class="text-right">{{ row.total_points|floatformat:2 }}</td>

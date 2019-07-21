@@ -367,7 +367,8 @@ def courserun_points(request, course_run_pk):
         'points_table': points_table,
         'task_groups': task_groups,
         'course_run': course_run,
-        'ordering': ordering
+        'ordering': ordering,
+        'simple': 'simple' in request.GET
     })
 
 
