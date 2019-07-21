@@ -23,6 +23,7 @@ class TemplateTask:
     must_remember_answer = False
 
     def __init__(self, identifier):
+        self.order_id = 1
         self.identifier = identifier
 
     def check_for_errors(self):

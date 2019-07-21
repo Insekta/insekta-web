@@ -119,8 +119,14 @@ class Scenario(models.Model):
         template_tasks = self.get_template_tasks()
         for tpl_task in template_tasks.values():
             unused_task_identifiers.discard(tpl_task.identifier)
-            if tpl_task.identifier not in existing_tasks:
-                Task.objects.create(scenario=self, identifier=tpl_task.identifier)
+            task = existing_tasks.get(tpl_task.identifier)
+            if task:
+                task.order_id = tpl_task.order_id
+                task.save()
+            else:
+                Task.objects.create(scenario=self,
+                                    identifier=tpl_task.identifier,
+                                    order_id=tpl_task.order_id)
         self.num_tasks = len(template_tasks)
 
         if purge:
@@ -253,6 +259,7 @@ class Task(models.Model):
     solved_by = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
                                        through='TaskSolve',
                                        related_name='solved_tasks')
+    order_id = models.IntegerField(default=0)
 
     def __str__(self):
         return '{} ({})'.format(self.identifier, self.scenario)

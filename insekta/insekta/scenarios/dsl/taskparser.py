@@ -46,6 +46,7 @@ class TaskParser:
             kwargs['scenario'] = self._scenario
 
             self._task = task_classes[kwargs['type']](**kwargs)
+            self._task.order_id = len(tasks) + 1
 
             for child_node in callblock_node.body:
                 self._visit_node(child_node)

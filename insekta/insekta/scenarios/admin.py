@@ -25,9 +25,10 @@ class ScenarioGroupAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('identifier', 'scenario', 'num_solved')
+    list_display = ('identifier', 'scenario', 'order_id', 'num_solved')
     list_filter = ('scenario__title', )
     filter_horizontal = ('solved_by', )
+    ordering = ('-scenario__pk', '-order_id')
 
     def num_solved(self, obj):
         return obj.solved_by.count()
