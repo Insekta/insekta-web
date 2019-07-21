@@ -1,6 +1,9 @@
 import json
+from collections import defaultdict
 
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+from django.db.models import Prefetch
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -21,7 +24,8 @@ from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.dsl.taskparser import ParserError
 from insekta.scenarios.dsl.tasks import TemplateTaskError
 from insekta.scenarios.models import (Scenario, ScenarioGroup, Notes,
-        CommentId, Comment, Course, CourseRun, TaskSolve, ScenarioError)
+                                      CommentId, Comment, Course, CourseRun, TaskSolve, ScenarioError, TaskSolveArchive,
+                                      TaskGroup, Task, TaskConfiguration)
 
 
 COMPONENT_STYLESHEETS = {
@@ -296,6 +300,64 @@ def course_registration(request, course_key):
     return render(request, 'scenarios/course_registration.html', {
         'course': course,
         'current_run': current_run
+    })
+
+
+@login_required
+def courserun_points(request, course_run_pk):
+    if not request.user.is_superuser:
+        raise PermissionDenied('Not allowed.')
+    course_run = get_object_or_404(CourseRun, pk=course_run_pk)
+    prefetch = Prefetch('tasks', Task.objects.order_by('order_id'))
+    task_groups = list(TaskGroup.objects.filter(course_run=course_run)
+                                        .order_by('name')
+                                        .prefetch_related(prefetch))
+    participants = list(course_run.participants.all())
+    archived_tasks = TaskSolveArchive.objects.filter(course_run=course_run)
+    solve_lookup = defaultdict(set)
+    for archived_task in archived_tasks:
+        solve_lookup[archived_task.user_id].add(archived_task.task_id)
+
+    task_points = {}
+    for task_config in TaskConfiguration.objects.filter(task_group__in=task_groups):
+        task_points[task_config.task_id] = task_config.points
+
+    participant_results = {}
+    max_total_points = 0
+    for task_group in task_groups:
+        for task in task_group.tasks.order_by('order_id'):
+            max_total_points += task_points[task.pk]
+        for participant in participants:
+            results = participant_results.setdefault(participant.pk, {
+                'task_groups': [],
+                'total_points': 0,
+            })
+            group = {
+                'points': 0,
+                'solved_tasks': []
+            }
+            max_group_points = 0
+            for task in task_group.tasks.order_by('order_id'):
+                points = task_points[task.pk]
+                max_group_points += points
+                is_solved = task.pk in solve_lookup[participant.pk]
+                group['solved_tasks'].append(is_solved)
+                if is_solved:
+                    group['points'] += points
+            results['total_points'] += group['points']
+            group['points'] = group['points'] / max_group_points * task_group.total_points
+            results['task_groups'].append(group)
+    for participant in participants:
+        results = participant_results[participant.pk]
+        results['total_points'] /= max_total_points
+        results['name'] = participant.get_full_name()
+        if not results['name']:
+            results['name'] = participant.username
+    points_table = list(participant_results.values())
+    points_table.sort(key=lambda entry: entry['name'].lower())
+    return render(request, 'scenarios/courserun_points.html', {
+        'points_table': points_table,
+        'task_groups': task_groups
     })
 
 

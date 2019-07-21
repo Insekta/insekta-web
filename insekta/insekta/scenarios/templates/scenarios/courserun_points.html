@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<table class="table table-sm">
+    <thead>
+    <tr>
+        <th>Participant</th>
+        {% for task_group in task_groups %}
+        <th colspan="2">{{ task_group.name }}</th>
+        {% endfor %}
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in points_table %}
+    <tr>
+        <td>{{ row.name }}</td>
+        {% for task_group in row.task_groups %}
+        <td>
+            {% for is_solved in task_group.solved_tasks %}{% if is_solved %}<img
+                src="{% static 'scenarios/images/solved.png' %}" alt="1"
+            >{% else %}<img
+                src="{% static 'scenarios/images/unsolved.png' %}" alt="0"
+            >{% endif %}{% endfor %}
+        </td>
+        <td>{{ task_group.points|floatformat:2 }}</td>
+        {% endfor %}
+        <td>{{ row.total_points|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
