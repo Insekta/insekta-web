@@ -17,7 +17,7 @@
     <tr>
         <td>{{ row.name }}</td>
         {% for task_group in row.task_groups %}
-        <td>
+        <td class="nowrap">
             {% for is_solved in task_group.solved_tasks %}{% if is_solved %}<img
                 src="{% static 'scenarios/images/solved.png' %}" alt="1"
             >{% else %}<img
