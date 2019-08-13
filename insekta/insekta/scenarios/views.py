@@ -318,8 +318,10 @@ def courserun_points(request, course_run_pk):
 def courserun_points_participant(request, course_run_pk):
     return _courserun_points_table(request, course_run_pk, request.user)
 
+
 def _courserun_points_table(request, course_run_pk, participant=None):
     course_run = get_object_or_404(CourseRun, pk=course_run_pk)
+    view_type = 'all' if participant is None else 'participant'
     prefetch = Prefetch('tasks', Task.objects.order_by('order_id'))
     task_groups = list(TaskGroup.objects.filter(course_run=course_run)
                                         .order_by('name')
@@ -384,7 +386,7 @@ def _courserun_points_table(request, course_run_pk, participant=None):
         'course_run': course_run,
         'ordering': ordering,
         'simple': 'simple' in request.GET,
-        'view_type': 'participant' if participant else 'total'
+        'view_type': view_type
     })
 
 

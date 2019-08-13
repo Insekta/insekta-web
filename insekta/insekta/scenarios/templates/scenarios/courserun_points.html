@@ -7,7 +7,7 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
 
 {% block content %}
 <h2>Points for “{{ course_run.course.title }} – {{ course_run.name }}”</h2>
-{% if view == 'total' %}
+{% if view_type == 'all' %}
 <p>
     {% if ordering == 'points' %}
     <a href="?ordering=name">Order by name</a>
@@ -19,7 +19,7 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
 <table class="table table-sm">
     <thead>
     <tr>
-        {% if view == 'total' %}
+        {% if view_type == 'all' %}
         <th>Participant</th>
         {% endif %}
         {% for task_group in task_groups %}
@@ -35,7 +35,7 @@ Points for “{{ course_run.course.title }} – {{ course_run.name }}”
     <tbody>
     {% for row in points_table %}
     <tr>
-        {% if view == 'total' %}
+        {% if view_type == 'all' %}
         <td>{{ row.name }}</td>
         {% endif %}
         {% for task_group in row.task_groups %}
