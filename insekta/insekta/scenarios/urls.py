@@ -26,8 +26,10 @@ urlpatterns = [
     }, name='view_course_challenges'),
     url(r'^courses/(.+)/registration$', views.course_registration,
         name='course_registration'),
-    url(r'^courseruns/(.+)/points$', views.courserun_points,
+    url(r'^courseruns/(.+)/allpoints$', views.courserun_points,
         name='courserun_points'),
+    url(r'^courseruns/(.+)/points$', views.courserun_points_participant,
+        name='courserun_points_participant'),
     url(r'^options/(.+)/(.+)$', views.show_options, name='show_options'),
     url(r'^reset_tasks/(.+)/(.+)$', views.reset_tasks, name='reset_tasks'),
 ]

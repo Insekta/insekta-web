@@ -303,16 +303,31 @@ def course_registration(request, course_key):
     })
 
 
+def participant_points(request):
+    pass
+
+
 @login_required
 def courserun_points(request, course_run_pk):
     if not request.user.is_superuser:
         raise PermissionDenied('Not allowed.')
+    return _courserun_points_table(request, course_run_pk)
+
+
+@login_required
+def courserun_points_participant(request, course_run_pk):
+    return _courserun_points_table(request, course_run_pk, request.user)
+
+def _courserun_points_table(request, course_run_pk, participant=None):
     course_run = get_object_or_404(CourseRun, pk=course_run_pk)
     prefetch = Prefetch('tasks', Task.objects.order_by('order_id'))
     task_groups = list(TaskGroup.objects.filter(course_run=course_run)
                                         .order_by('name')
                                         .prefetch_related(prefetch))
-    participants = list(course_run.participants.all())
+    participants = course_run.participants.all()
+    if participant:
+        participants = participants.filter(pk=participant.pk)
+    participants = list(participants)
     archived_tasks = TaskSolveArchive.objects.filter(course_run=course_run)
     solve_lookup = defaultdict(set)
     for archived_task in archived_tasks:
@@ -368,7 +383,8 @@ def courserun_points(request, course_run_pk):
         'task_groups': task_groups,
         'course_run': course_run,
         'ordering': ordering,
-        'simple': 'simple' in request.GET
+        'simple': 'simple' in request.GET,
+        'view_type': 'participant' if participant else 'total'
     })
 
 
