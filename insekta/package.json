@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mathjax": "^2.7.5",
     "uglify-js": "^3.5.15",
     "vue": "^2.6.10"
