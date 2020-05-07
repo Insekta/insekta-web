@@ -8,6 +8,6 @@
   },
   "devDependencies": {
     "clean-css-cli": "^4.3.0",
-    "sass": "^1.20.1"
+    "sass": "^1.26.5"
   }
 }
