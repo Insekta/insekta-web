@@ -10,7 +10,7 @@ CLEANCSS := node_modules/.bin/cleancss --skip-rebase
 
 static_files = $(shell find \( -name '*.css' -o -name '*.js' \) -not \( -name '*.min.js' -o -name '*.min.css' \))
 
-all: css js components locales
+all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
@@ -24,7 +24,7 @@ ${scenarios_static}css/pygments.css:
 	pygmentize -S default -f html -a .highlight > $@
 
 ${base_static}css/bootstrap.css: ${base_static}scss/custom.scss node_modules/bootstrap
-	sass $< > $@
+	node_modules/.bin/sass $< > $@
 
 ${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css/fa-solid.css ${base_static}css/fontawesome.css ${base_static}css/custom.css ${scenarios_static}css/custom.css ${scenarios_static}css/pygments.css
 	cat $^ > $@
