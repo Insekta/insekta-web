@@ -5,7 +5,6 @@ import shutil
 import sys
 from collections import namedtuple
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models, IntegrityError
 from django.conf import settings
 from django.db.models import Count
@@ -268,7 +267,7 @@ class Task(models.Model):
 class TaskSolve(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    answer = JSONField(blank=True, null=True)
+    answer = models.JSONField(blank=True, null=True)
     is_correct = models.BooleanField(default=True)
 
     class Meta:
@@ -306,7 +305,7 @@ class TaskSolveArchive(models.Model):
     course_run = models.ForeignKey(CourseRun, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    answer = JSONField(blank=True, null=True)
+    answer = models.JSONField(blank=True, null=True)
     is_correct = models.BooleanField(default=True)
 
     class Meta:
