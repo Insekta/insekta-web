@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
