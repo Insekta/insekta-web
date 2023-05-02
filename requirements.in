@@ -1,0 +1,10 @@
+django
+jinja2
+cryptography
+django-widget-tweaks
+requests
+pygments
+bleach
+pytz
+psycopg2-binary
+django-loginas
