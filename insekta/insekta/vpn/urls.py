@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path, re_path
 
 from insekta.vpn import views
 
 
 app_name = 'vpn'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^([a-z0-9]{64})/insekta-vpn.ovpn$', views.download_config, name='download_config'),
+    path('', views.index, name='index'),
+    re_path(r'^([a-z0-9]{64})/insekta-vpn.ovpn$', views.download_config, name='download_config'),
 ]
