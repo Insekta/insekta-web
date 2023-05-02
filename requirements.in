@@ -8,3 +8,4 @@ bleach
 pytz
 psycopg2-binary
 django-loginas
+pynacl
