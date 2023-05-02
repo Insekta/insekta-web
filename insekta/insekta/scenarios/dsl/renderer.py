@@ -9,7 +9,8 @@ from django.urls import reverse
 from django.utils import html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
-from jinja2 import Environment, escape
+from jinja2 import Environment
+from markupsafe import escape
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
