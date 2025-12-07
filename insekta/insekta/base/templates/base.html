@@ -34,7 +34,15 @@
                     {% if user.is_staff %}
                     <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
                     {% endif %}
-                    <a class="nav-item nav-link" href="{% url 'account:logout' %}">{% trans 'Logout' %}</a>
+                    <!--<a class="nav-item nav-link" href="{% url 'account:logout' %}">{% trans 'Logout' %}</a> -->
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'account:logout' %}">
+                            {% csrf_token %}
+                            <button class="nav-link btn btn-link" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
                     {% else %}
                     <a class="nav-item nav-link{% if active_nav == 'login' %} active{% endif %}" href="{% url 'account:login' %}">Login</a>
                     {% endif %}

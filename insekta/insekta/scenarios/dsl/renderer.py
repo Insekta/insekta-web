@@ -101,7 +101,7 @@ class Renderer:
         yield '<input type="hidden" name="task" value="{}">\n'.format(task_mac)
         yield caller()
         if not is_solved:
-            yield '<p><button class="btn btn-primary">{}</button></p>\n'.format(
+            yield '<p><button class="btn btn-primary mt-3">{}</button></p>\n'.format(
                 _('Solve exercise'))
         yield '</form>\n'
         yield '</div>\n'
@@ -150,7 +150,7 @@ class Renderer:
     def _call_answer(self, label=None, caller=None, **kwargs):
         task = self._get_current_task()
         task_mac = task.get_mac(self.user, self.scenario)
-        yield '<div class="form-group">\n'
+        yield '<div class="form-group mb-3">\n'
         if label is None:
             label = _('Your answer')
         if label != '':
@@ -198,7 +198,7 @@ class Renderer:
     @collect_to_str
     def _call_hint(self, caller):
         yield '<form class="hint-form">\n'
-        yield '<button class="btn btn-sm btn-default hint-button">\n'
+        yield '<button class="btn btn-sm btn-default hint-button mt-3">\n'
         yield ' <span class="hint-text">' + _('Show hint') + '</span>\n'
         yield '</button>\n'
         yield '<div class="alert alert-hint hint-content">\n'

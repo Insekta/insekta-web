@@ -2,6 +2,8 @@ from django.urls import path
 
 from insekta.scenarios import views
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'scenarios'
 urlpatterns = [
@@ -34,3 +36,7 @@ urlpatterns = [
     path('options/<course_key>/<scenario_key>', views.show_options, name='show_options'),
     path('reset_tasks/<course_key>/<scenario_key>', views.reset_tasks, name='reset_tasks'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

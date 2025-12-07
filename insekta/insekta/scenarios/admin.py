@@ -24,11 +24,21 @@ class ScenarioGroupAdmin(admin.ModelAdmin):
     inlines = (ScenarioGroupEntryInline, )
 
 
+class TaskSolveInline(admin.TabularInline):
+    model = TaskSolve
+    extra = 0
+    fields = ["user", "answer", "is_correct"]
+    verbose_name_plural = "Task Solutions"
+
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('identifier', 'scenario', 'order_id', 'num_solved')
     list_filter = ('scenario__title', )
-    filter_horizontal = ('solved_by', )
+    #filter_horizontal = ('solved_by', )
     ordering = ('-scenario__pk', '-order_id')
+
+    inlines = [TaskSolveInline]
+
+    exclude = ["solved_by"]
 
     def num_solved(self, obj):
         return obj.solved_by.count()

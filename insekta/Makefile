@@ -4,7 +4,7 @@ base_static = insekta/base/static/
 scenarios_static = insekta/scenarios/static/scenarios/
 components_static = ${base_static}components/
 
-UGLIFYJS := node_modules/.bin/uglifyjs
+UGLIFYJS := node_modules/.bin/terser
 CLEANCSS := node_modules/.bin/cleancss --skip-rebase
 
 
@@ -14,7 +14,7 @@ all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/insekta.min.js ${base_static}js/vue.min.js ${scenarios_static}js/scenario.min.js
+js: ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js # ${base_static}js/vue.min.js
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
@@ -32,13 +32,13 @@ ${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css
 ${base_static}js/insekta.js: node_modules/jquery/dist/jquery.min.js node_modules/bootstrap/dist/js/bootstrap.js ${base_static}js/base.js ${base_static}js/automath.js
 	cat $^ > $@
 
-${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
-	cp $< $@
+#${base_static}js/vue.min.js: node_modules/vue/dist/vue.min.js
+#	cp $< $@
 
 %.min.css: %.css node_modules/.bin/cleancss
 	$(CLEANCSS) $< > $@
 
-%.min.js: %.js node_modules/.bin/uglifyjs
+%.min.js: %.js node_modules/.bin/terser
 	$(UGLIFYJS) $< > $@
 
 %.mo: %.po
@@ -58,7 +58,7 @@ node_modules: package.json
 	touch node_modules
 
 node_modules/bootstrap: node_modules
-node_modules/.bin/uglifyjs: node_modules
+node_modules/.bin/terser: node_modules
 node_modules/.bin/cssclean: node_modules
 node_modules/.bin/sass: node_modules
 

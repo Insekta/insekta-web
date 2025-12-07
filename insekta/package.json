@@ -1,10 +1,9 @@
 {
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.4.1",
-    "mathjax": "^2.7.5",
-    "uglify-js": "^3.5.15",
-    "vue": "^2.6.10"
+    "bootstrap": "^5.3.8",
+    "jquery": "^3.7.1",
+    "mathjax": "^4.0.0",
+    "terser": "^5.44.0"
   },
   "devDependencies": {
     "clean-css-cli": "^4.3.0",

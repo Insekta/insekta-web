@@ -16,4 +16,7 @@ insekta/node_modules/
 insekta/package-lock.json
 insekta/package.json
 insekta/_media/
+insekta/static
+insekta/media
+media
 venv/

@@ -17,11 +17,10 @@
 {% include 'account/nav.html' with tab='configure_help' %}
 <h2>{% trans 'Configure help' %}</h2>
 
-<form id="course_form" method="post" class="form-inline">
+<form id="course_form" method="post" class="d-flex align-items-center gap-2">
 {% csrf_token %}
-<div class="form-group">
-    <label for="id_course">{% trans 'Course:' %}</label>
-    {% render_field course_form.course %}
+<label for="id_course" class="mb-0">{% trans 'Course:' %}</label>
+{% render_field course_form.course %}
 </div>
 </form>
 

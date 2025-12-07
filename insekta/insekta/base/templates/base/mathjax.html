@@ -1,12 +1,29 @@
 {% load static %}
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ["\\(","\\)"] ],
-      displayMath: [ ["\\[","\\]"] ],
-      processEscapes: false,
-      preview: "none"
-    },
-  });
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: false  // This was false in v2, stays false in v4
+  },
+  svg: {
+    fontCache: 'global'
+  },
+  loader: {
+    load: ['ui/safe']  // Equivalent to the "Safe" config from v2
+  },
+  options: {
+    safeOptions: {
+      allow: {
+        URLs: 'safe',
+        classes: 'safe', 
+        cssIDs: 'safe',
+        styles: 'safe'
+      }
+    }
+  }
+};
 </script>
-<script type="text/javascript" async src="{% static 'components/mathjax/MathJax.js' %}?config=TeX-AMS-MML_SVG,Safe"></script>
+<script type="text/javascript" id="MathJax-script" async 
+  src="{% static 'components/mathjax/mathjax/tex-mml-svg.js' %}">
+</script>

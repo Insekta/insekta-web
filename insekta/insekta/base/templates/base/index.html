@@ -14,12 +14,12 @@
         <h1>{% trans 'Welcome to Insekta' %}</h1>
         {% url 'account:register' as register_url %}
         {% blocktrans %}<p>Want to learn something about IT security? <a href="{{ register_url }}">register for an account</a>.</p>{% endblocktrans %}
-        <form class="form-inline" action="{% url 'account:login' %}" method="post">
+        <form class="d-flex gap-2" action="{% url 'account:login' %}" method="post">
             {% csrf_token %}
-            <div class="form-group mr-1">
+            <div class="form-group">
                 <input type="text" name="username" placeholder="{% trans 'Username' %}" class="form-control">
             </div>
-            <div class="form-group mr-1">
+            <div class="form-group">
                 <input type="password" name="password" placeholder="{% trans 'Password' %}" class="form-control">
             </div>
             <button type="submit" class="btn btn-success mr-1">{% trans 'Sign in' %}</button>

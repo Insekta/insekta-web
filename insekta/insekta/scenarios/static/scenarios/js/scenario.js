@@ -1,4 +1,4 @@
-$(function() {
+document.addEventListener("DOMContentLoaded", () => {
     /*
      * Show hints if their buttons are clicked
      */
