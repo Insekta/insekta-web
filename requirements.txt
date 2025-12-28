@@ -4,27 +4,27 @@
 #
 #    pip-compile requirements.in
 #
-asgiref==3.10.0
+asgiref==3.11.0
     # via django
-bleach==6.2.0
+bleach==6.3.0
     # via -r requirements.in
-certifi==2025.10.5
+certifi==2025.11.12
     # via requests
 cffi==2.0.0
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.3
+charset-normalizer==3.4.4
     # via requests
-cryptography==46.0.2
+cryptography==46.0.3
     # via -r requirements.in
-django==5.2.7
+django==6.0
     # via -r requirements.in
-django-loginas==0.3.12
+django-loginas==0.3.13
     # via -r requirements.in
 django-widget-tweaks==1.5.0
     # via -r requirements.in
-idna==3.10
+idna==3.11
     # via requests
 jinja2==3.1.6
     # via -r requirements.in
@@ -32,21 +32,22 @@ markupsafe==3.0.3
     # via
     #   -r requirements.in
     #   jinja2
-psycopg2-binary==2.9.10
+psycopg2-binary==2.9.11
     # via -r requirements.in
 pycparser==2.23
     # via cffi
 pygments==2.19.2
     # via -r requirements.in
-pynacl==1.6.0
+pynacl==1.6.1
     # via -r requirements.in
 pytz==2025.2
     # via -r requirements.in
 requests==2.32.5
     # via -r requirements.in
-sqlparse==0.5.3
+sqlparse==0.5.4
     # via django
-urllib3==2.5.0
+urllib3==2.6.0
     # via requests
 webencodings==0.5.1
     # via bleach
+
