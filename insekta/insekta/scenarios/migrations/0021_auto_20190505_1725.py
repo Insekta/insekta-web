@@ -30,10 +30,5 @@ class Migration(migrations.Migration):
             name='solved_by',
             field=models.ManyToManyField(blank=True, related_name='solved_tasks', through='scenarios.TaskSolve', to=settings.AUTH_USER_MODEL),
         ),
-        migrations.AlterField(
-            model_name='task',
-            name='solved_by_old',
-            field=models.ManyToManyField(blank=True, related_name='solved_tasks_old', to=settings.AUTH_USER_MODEL),
-        ),
         migrations.RunPython(forwards_func, reverse_func)
     ]

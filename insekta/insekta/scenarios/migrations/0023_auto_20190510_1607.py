@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('scenarios', '0022_remove_task_solved_by_old'),
     ]
 
     operations = [

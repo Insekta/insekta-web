@@ -14,11 +14,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='task',
-            old_name='solved_by',
-            new_name='solved_by_old',
-        ),
         migrations.CreateModel(
             name='TaskSolve',
             fields=[
