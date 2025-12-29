@@ -10,6 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('scenarios', '0021_auto_20190505_1725')
     ]
 
     operations = [
