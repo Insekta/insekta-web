@@ -18,7 +18,7 @@ charset-normalizer==3.4.4
     # via requests
 cryptography==46.0.3
     # via -r requirements.in
-django==6.0.1
+django==6.0.2
     # via
     #   -r requirements.in
     #   django-widget-tweaks
@@ -52,4 +52,3 @@ urllib3==2.6.3
     # via requests
 webencodings==0.5.1
     # via bleach
-
