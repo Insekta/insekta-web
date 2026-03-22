@@ -76,7 +76,8 @@ This topic contains explanations of attack techniques from a black hat's perspec
 <div class="card mb-3">
     <div class="card-body">
         <div id="vm-panel">
-
+        {# warning is triggered by post in scenario.js if vm host unavailable #}
+        <p class="alert alert-warning" id="ping-error" style="display:none">Unable to reach virtualization host.</p>
         {% if vms_running %}
         <form method="post" action="{% url 'scenarios:disable_vms' course.key scenario.key %}">
         {% csrf_token %}

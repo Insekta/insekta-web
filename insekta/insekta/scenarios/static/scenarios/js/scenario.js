@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
             $.post(PING_URL, function(expire_time) {
                 $('#expire_time').text(expire_time)
             })
+            .fail(function () {
+                $('#ping-error').show()
+            });
         }, 60*1000);
     }
 

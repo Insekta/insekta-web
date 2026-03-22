@@ -19,7 +19,7 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
 from insekta.base.utils import describe_allowed_markup, sanitize_markup
-from insekta.remoteapi.client import remote_api
+from insekta.remoteapi.client import remote_api, RemoteApiError
 from insekta.scenarios.dsl.renderer import Renderer
 from insekta.scenarios.dsl.taskparser import ParserError
 from insekta.scenarios.dsl.tasks import TemplateTaskError
@@ -183,7 +183,10 @@ def disable_vms(request, course_key, scenario_key):
 @login_required
 def ping_vms(request, scenario_key):
     vm_resource = _get_scenario(scenario_key, request.user).get_vm_resource()
-    result = remote_api.ping_vm_resource(vm_resource, request.user)
+    try:
+        result = remote_api.ping_vm_resource(vm_resource, request.user)
+    except RemoteApiError:
+        return HttpResponse(status=503)
     return render(request, 'scenarios/expire_time.html', {
         'expire_time': result['expire_time']
     })
