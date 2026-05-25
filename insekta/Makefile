@@ -14,7 +14,7 @@ all: node_modules css js components locales
 
 css: ${base_static}css/insekta.min.css
 
-js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.min.js ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js # ${base_static}js/vue.min.js
+js: ${base_static}js/jquery.min.js ${base_static}js/bootstrap.bundle.min.js ${base_static}js/insekta.min.js ${scenarios_static}js/scenario.min.js # ${base_static}js/vue.min.js
 
 locales: locale/de_DE/LC_MESSAGES/django.mo locale/en_US/LC_MESSAGES/django.mo
 
@@ -32,7 +32,7 @@ ${base_static}css/insekta.css: ${base_static}css/bootstrap.css ${base_static}css
 ${base_static}js/jquery.min.js: node_modules/jquery/dist/jquery.min.js
 	cp $< $@
 	cp node_modules/jquery/dist/jquery.min.map ${base_static}js/jquery.min.map
-${base_static}js/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.bundle.min.js
+${base_static}js/bootstrap.bundle.min.js: node_modules/bootstrap/dist/js/bootstrap.bundle.min.js
 	cp $< $@
 	cp $<.map $@.map
 ${base_static}js/insekta.js: ${base_static}js/base.js ${base_static}js/automath.js
@@ -91,8 +91,8 @@ clean:
 		   ${scenarios_static}css/pygments.css \
 		   ${base_static}js/insekta.js \
 		   ${base_static}js/insekta.min.js \
-		   ${base_static}js/bootstrap.min.js \
-		   ${base_static}js/bootstrap.min.js.map \
+		   ${base_static}js/bootstrap.bundle.min.js \
+		   ${base_static}js/bootstrap.bundle.min.js.map \
 		   ${base_static}js/jquery.min.js \
 		   ${base_static}js/jquery.min.map \
 		   ${base_static}components \
