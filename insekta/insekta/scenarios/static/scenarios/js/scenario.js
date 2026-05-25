@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         paragraph.attr('data-comment-id', '').find('.comment').remove();
         var blockquote = $('<blockquote></blockquote>').append(paragraph);
         var commentDiv = $('<div></div>').html(html);
-        commentDiv.find('form').on('submit', function() {
+        commentDiv.find('form').on('submit', function(ev) {
             ev.stopPropagation();
             ev.preventDefault();
             return false;
@@ -190,8 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
         modalBody.append(blockquote).append(commentDiv);
-        runAutoMath();
-        scenarioModal.modal();
+        runAutoMath(modalBody[0]);
+        var modal = bootstrap.Modal.getOrCreateInstance(scenarioModal[0]);
+        modal.show();
     }
 
     if (!$.isEmptyObject(NUM_USER_COMMENTS)) {
