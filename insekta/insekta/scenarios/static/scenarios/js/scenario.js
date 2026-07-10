@@ -38,11 +38,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /*
      * Progress gears on starting/destroying virtual machines
+     *
+     * Starting a VM only tells the host to boot it. The guest OS may need longer
+     * before its services are reachable. 
+     * Keep the working indicator up for a while after the request so users don't connect too early 
+     * (an early failed connection gets HTTPS-upgraded and the VM looks permanently dead).
      */
     $('#vm-panel').find('form').submit(function() {
         $('#vm-panel').hide();
         $('#vm-panel-gears').show();
-        return true;
+        $.post(this.action, $(this).serialize())
+            .done(function() {
+                setTimeout(function() { window.location.reload(); }, 3000);
+            })
+            .fail(function() {
+                $('#vm-panel-gears').hide();
+                $('#vm-panel').show();
+                $('#ping-error').show();
+            });
+        return false;
     });
 
     /*

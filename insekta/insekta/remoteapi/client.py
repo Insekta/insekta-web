@@ -52,12 +52,17 @@ class RemoteApiClient:
         }, method=method)
 
     def _make_request(self, api_path, data, method):
-        if method == 'post':
-            resp = self.session.post(self.api_url + api_path, data=data, auth=self.auth)
-        elif method == 'get':
-            resp = self.session.get(self.api_url + api_path, params=data, auth=self.auth)
-        else:
-            raise ValueError('Invalid value for method: {}'.format(method))
+        try:
+            if method == 'post':
+                resp = self.session.post(self.api_url + api_path, data=data,
+                                         auth=self.auth, timeout=10)
+            elif method == 'get':
+                resp = self.session.get(self.api_url + api_path, params=data,
+                                        auth=self.auth, timeout=10)
+            else:
+                raise ValueError('Invalid value for method: {}'.format(method))
+        except requests.RequestException:
+            raise RemoteApiError("Could not reach libvirt host")
         if resp.status_code != STATUS_OK:
             raise RemoteApiError('{} {}. HttpCode: {}: {}'.format(
                 method.upper(), api_path, resp.status_code, resp.text))
