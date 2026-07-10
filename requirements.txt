@@ -6,19 +6,19 @@
 #
 asgiref==3.11.1
     # via django
-bleach==6.3.0
+bleach==6.4.0
     # via -r requirements.in
-certifi==2026.5.20
+certifi==2026.6.17
     # via requests
-cffi==2.0.0
+cffi==2.1.0
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.7
+charset-normalizer==3.4.9
     # via requests
-cryptography==48.0.0
+cryptography==49.0.0
     # via -r requirements.in
-django==6.0.5
+django==6.0.7
     # via
     #   -r requirements.in
     #   django-widget-tweaks
@@ -26,7 +26,7 @@ django-loginas==0.3.14
     # via -r requirements.in
 django-widget-tweaks==1.5.1
     # via -r requirements.in
-idna==3.16
+idna==3.18
     # via requests
 jinja2==3.1.6
     # via -r requirements.in
